@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<he                   <button id="equipes-btn" class="menu-option-btn" disabled>
+                        <div class="button-icon">🏆</div>
+                        <div class="button-content">
+                            <div class="button-title">EQUIPES</div>
+                            <div class="button-subtitle">Escolher</div>
+                        </div>
+                    </button>
+
+                    <button id="cores-btn" class="menu-option-btn" disabled>
+                        <div class="button-icon">🎨</div>
+                        <div class="button-content">
+                            <div class="button-title">CORES DAS EQUIPES</div>
+                            <div class="button-subtitle">Aguardando equipes</div>
+                        </div>
+                    </button>charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1º EUREKA DO PADRE - Gincana do Conhecimento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='img/Eureka.jpeg') }}" 
+                     alt="Eureka Logo" 
+                     class="logo-eureka" 
+                     onclick="playEurekaSound()">
+                <div class="title-container">
+                    <h1 class="main-title">1º EUREKA DO PADRE</h1>
+                    <p class="subtitle">Gincana do conhecimento</p>
+                </div>
+                <div class="game-type-buttons">
+                    <div class="game-type-badge active">🧩 Desafio Mental</div>
+                    <div class="game-type-badge">🥇 Competição</div>
+                    <div class="game-type-badge">🎓 Educativo</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Principal -->
+        <div id="config-menu" class="config-menu">
+            <div class="menu-panel">
+                <div class="menu-options">
+                    <button id="turma-btn" class="menu-option-btn">
+                        <div class="button-icon">🎓</div>
+                        <div class="button-content">
+                            <div class="button-title">TURMA</div>
+                            <div class="button-subtitle">Escolher</div>
+                        </div>
+                    </button>
+
+                    <button id="equipes-btn" class="menu-option-btn" disabled>
+                        <div class="button-icon">🏆</div>
+                        <div class="button-content">
+                            <div class="button-title">EQUIPES</div>
+                            <div class="button-subtitle">Escolher</div>
+                        </div>
+                    </button>
+
+                    <button id="cores-btn" class="menu-option-btn">
+                        <div class="button-icon">�</div>
+                        <div class="button-content">
+                            <div class="button-title">CORES DAS EQUIPES</div>
+                            <div class="button-subtitle">Escolher</div>
+                        </div>
+                    </button>
+                </div>
+                
+                <button id="iniciar-jogo" class="start-game-btn" disabled>
+                    <span>🎮 BORA COMEÇAR! </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Modais -->
+        <!-- Modal Turma -->
+        <div id="turma-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>👥 SELECIONAR TURMA</h3>
+                    <button class="close-modal" data-modal="turma-modal">✕</button>
+                </div>
+                <div class="modal-options">
+                    <button class="option-btn" data-value="6_ano">6º ANO</button>
+                    <button class="option-btn" data-value="7_ano">7º ANO</button>
+                    <button class="option-btn" data-value="8_ano">8º ANO</button>
+                    <button class="option-btn" data-value="9_ano">9º ANO</button>
+                    <button class="option-btn" data-value="ensino_medio">ENSINO MÉDIO</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Equipes -->
+        <div id="equipes-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>⚔️ NÚMERO DE EQUIPES</h3>
+                    <button class="close-modal" data-modal="equipes-modal">✕</button>
+                </div>
+                <div class="modal-options">
+                    <button class="option-btn" data-value="2">2 EQUIPES</button>
+                    <button class="option-btn" data-value="3">3 EQUIPES</button>
+                    <button class="option-btn" data-value="4">4 EQUIPES</button>
+                    <button class="option-btn" data-value="5">5 EQUIPES</button>
+                    <button class="option-btn" data-value="6">6 EQUIPES</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Cores -->
+        <div id="cores-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🎨 CORES DAS EQUIPES</h3>
+                    <button class="close-modal" data-modal="cores-modal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <p id="cores-instructions">Selecione <span id="cores-needed">X</span> cores para as equipes (clique para selecionar/desselecionar):</p>
+                    <div id="cores-container" class="cores-grid">
+                        <!-- Cores serão carregadas dinamicamente -->
+                    </div>
+                </div>
+                <button id="confirmar-cores" class="confirm-btn" disabled>CONFIRMAR</button>
+            </div>
+        </div>
+
+        <!-- Área Principal do Jogo -->
+        <div id="game-area" class="game-area" style="display: none;">
+            <!-- Placar -->
+            <div class="placar-section">
+                <h3>🏆 Placar</h3>
+                <div id="placar" class="placar-grid">
+                    <!-- Equipes serão exibidas aqui -->
+                </div>
+            </div>
+
+            <!-- Roleta de Disciplinas -->
+            <div class="roleta-section">
+                <h3>🎯 Roleta das Disciplinas</h3>
+                <div class="roleta-container">
+                    <div id="roleta" class="roleta">
+                        <!-- Linhas divisórias -->
+                        <div class="roleta-divider divider-1"></div>
+                        <div class="roleta-divider divider-2"></div>
+                        <div class="roleta-divider divider-3"></div>
+                        <div class="roleta-divider divider-4"></div>
+                        <div class="roleta-divider divider-5"></div>
+                        <div class="roleta-divider divider-6"></div>
+                        
+                        <!-- Ícones das disciplinas posicionados na roleta -->
+                        <div class="disciplina-icon" data-disciplina="matematica" style="transform: rotate(0deg) translateY(-60px) rotate(0deg);">
+                            <span class="icon">📊</span>
+                            <span class="label">MAT</span>
+                        </div>
+                        <div class="disciplina-icon" data-disciplina="portugues" style="transform: rotate(60deg) translateY(-60px) rotate(-60deg);">
+                            <span class="icon">📚</span>
+                            <span class="label">PORT</span>
+                        </div>
+                        <div class="disciplina-icon" data-disciplina="historia" style="transform: rotate(120deg) translateY(-60px) rotate(-120deg);">
+                            <span class="icon">🏛️</span>
+                            <span class="label">HIST</span>
+                        </div>
+                        <div class="disciplina-icon" data-disciplina="geografia" style="transform: rotate(180deg) translateY(-60px) rotate(-180deg);">
+                            <span class="icon">🌍</span>
+                            <span class="label">GEO</span>
+                        </div>
+                        <div class="disciplina-icon" data-disciplina="ciencias" style="transform: rotate(240deg) translateY(-60px) rotate(-240deg);">
+                            <span class="icon">🔬</span>
+                            <span class="label">CIEN</span>
+                        </div>
+                        <div class="disciplina-icon" data-disciplina="ingles" style="transform: rotate(300deg) translateY(-60px) rotate(-300deg);">
+                            <span class="icon">🇺🇸</span>
+                            <span class="label">ING</span>
+                        </div>
+                        
+                        <!-- Ponteiro central -->
+                        <div class="ponteiro"></div>
+                    </div>
+                    <button id="girar-roleta" class="girar-btn">🎲 GIRAR ROLETA</button>
+                </div>
+                <div id="disciplina-selecionada" class="disciplina-resultado"></div>
+            </div>
+
+            <!-- Pergunta -->
+            <div id="pergunta-section" class="pergunta-section" style="display: none;">
+                <div class="pergunta-container">
+                    <h3 id="pergunta-titulo">Pergunta</h3>
+                    <p id="pergunta-texto"></p>
+                    <div id="opcoes-container" class="opcoes-container">
+                        <!-- Opções de resposta aparecerão aqui -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="controles">
+                <button id="voltar-config" class="control-btn secondary">↩️ Voltar para Configuração</button>
+                <button id="reset-jogo" class="control-btn danger">🔄 Reiniciar Jogo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

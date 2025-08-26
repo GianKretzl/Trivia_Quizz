@@ -1,0 +1,353 @@
+{
+  "6_ano": {
+    "portugues": [
+      {
+        "pergunta": "Leia o texto: 'Reciclagem: uma atitude inteligente. Jogar lixo no lugar certo é mais do que uma obrigação: é um compromisso com o futuro. Separar papel, vidro, plástico e metal ajuda o meio ambiente e reduz o volume de lixo nas cidades.' Qual é o tema principal do texto?",
+        "opcoes": [
+          "O uso de produtos industrializados",
+          "A preservação da água nas cidades", 
+          "A importância da reciclagem para o meio ambiente",
+          "A produção de lixo nas indústrias"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Leia o texto: 'O poder dos livros. Um livro é uma janela para mundos diferentes. Ele pode nos levar a aventuras incríveis, ensinar coisas novas e até nos fazer sentir melhor em dias tristes.' O tema principal do texto é:",
+        "opcoes": [
+          "A diferença entre livros de aventura e ficção",
+          "A importância da leitura e seus benefícios",
+          "Como escrever um livro interessante", 
+          "Os diferentes tipos de histórias infantis"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Ana chegou ao pátio da escola e percebeu que seus colegas estavam todos em volta de uma mesa. Ao se aproximar, viu um bolo e balões coloridos. Logo, começaram a cantar parabéns. O que se pode inferir?",
+        "opcoes": [
+          "Ana preparou a festa para os colegas",
+          "Era o aniversário de um dos colegas",
+          "Os colegas fizeram uma festa surpresa para Ana",
+          "Ana estava triste com a festa"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Lucas entrou em casa esbaforido, jogou a mochila no sofá e foi direto para a geladeira. Pegou uma garrafa d'água e bebeu tudo de uma vez. O que se pode inferir sobre o que Lucas estava fazendo?",
+        "opcoes": [
+          "Estava assistindo televisão",
+          "Estava em uma festa",
+          "Estava fazendo um exercício físico ou correndo",
+          "Estava dormindo no sofá"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Leia as frases: '1. Que surpresa, você chegou!' e '2. Que surpresa... você chegou.' Qual a diferença entre elas?",
+        "opcoes": [
+          "A primeira mostra surpresa e alegria; a segunda, dúvida ou suspense",
+          "As duas frases significam a mesma coisa",
+          "A segunda frase demonstra surpresa e alegria; a primeira, dúvida",
+          "A pontuação não altera o sentido"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "No texto sobre bicicletas: 'A bicicleta é um dos meios de transporte mais antigos. Pedalar faz bem à saúde, pois melhora a respiração e fortalece os músculos. Na opinião de muitos ciclistas, andar de bicicleta é a melhor forma de se deslocar.' Qual informação é um fato?",
+        "opcoes": [
+          "Pedalar faz bem à saúde e fortalece os músculos",
+          "Andar de bicicleta é a melhor forma de transporte",
+          "Muitos ciclistas gostam de pedalar nas cidades",
+          "O trânsito fica melhor com bicicletas"
+        ],
+        "resposta_correta": 0
+      }
+    ],
+    "matematica": [
+      {
+        "pergunta": "Em x² = 25, o valor de x é:",
+        "opcoes": ["2", "3", "4", "5"],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Na divisão de potências de mesma base nós:",
+        "opcoes": [
+          "dividimos os expoentes",
+          "subtraímos os expoentes", 
+          "somamos os expoentes",
+          "multiplicamos os expoentes"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Com base na propriedade da divisão de potências, 5⁷ ÷ 5³ é igual a:",
+        "opcoes": ["5⁴", "5¹⁰", "3⁷", "7³"],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "A raiz quadrada de 36 é:",
+        "opcoes": ["2", "4", "6", "8"],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O valor posicional do algarismo 5 no número 650.703 é:",
+        "opcoes": ["5", "50", "500", "50.000"],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Vinícius comprou uma bicicleta por R$ 625,00 e ainda lhe sobraram R$ 416,00. Quantos reais Vinícius tinha?",
+        "opcoes": ["R$ 1.141,00", "R$ 1.041,00", "R$ 1.031,00", "R$ 211,00"],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Seis amigos foram jantar e a conta deu R$ 258,00. Dividindo igualmente, quanto cada um pagará?",
+        "opcoes": ["R$ 35,00", "R$ 43,00", "R$ 46,00", "R$ 52,00"],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O único número que é múltiplo de 2, 3 e 5 ao mesmo tempo é:",
+        "opcoes": ["235", "520", "230", "510"],
+        "resposta_correta": 3
+      }
+    ],
+    "ciencias": [
+      {
+        "pergunta": "A principal consequência do movimento de rotação da Terra é:",
+        "opcoes": [
+          "A mudança de estações do ano",
+          "A ocorrência dos eclipses",
+          "A sucessão dos dias e das noites",
+          "O movimento das marés"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O movimento de translação da Terra é responsável:",
+        "opcoes": [
+          "Pela formação das fases da Lua",
+          "Pela sucessão do dia e da noite", 
+          "Pela ocorrência dos ventos",
+          "Pela mudança das estações do ano"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "A mudança de estado físico da água de líquido para gasoso é chamada:",
+        "opcoes": ["Condensação", "Fusão", "Solidificação", "Vaporização"],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Ao misturar água e areia, temos:",
+        "opcoes": [
+          "Uma substância pura",
+          "Uma mistura heterogênea",
+          "Uma mistura homogênea", 
+          "Uma reação química"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Quais são os três estados físicos da água?",
+        "opcoes": [
+          "Gasoso, viscoso e sólido",
+          "Líquido, mole e duro",
+          "Sólido, seco e úmido",
+          "Sólido, líquido e gasoso"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "As fases da Lua são consequência de:",
+        "opcoes": [
+          "A rotação da Terra",
+          "A inclinação do Sol",
+          "O movimento da Lua em torno da Terra",
+          "A presença de nuvens"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "As minhocas contribuem para o solo porque:",
+        "opcoes": [
+          "Diminuem os nutrientes",
+          "Retêm toda a água",
+          "Decompõem as rochas",
+          "Facilitam a entrada de ar e água"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Ao colocarmos água no congelador, ela vira gelo. Esse processo é chamado:",
+        "opcoes": ["Solidificação", "Fusão", "Condensação", "Evaporação"],
+        "resposta_correta": 0
+      }
+    ],
+    "geografia": [
+      {
+        "pergunta": "O que é o espaço geográfico?",
+        "opcoes": [
+          "O lugar onde vivem apenas os animais",
+          "Um local onde ocorrem apenas fenômenos naturais",
+          "O espaço onde acontecem as interações entre a natureza e as atividades humanas",
+          "O fundo do oceano"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O conceito geográfico associado ao cotidiano, às relações afetivas e à identidade do ser humano é:",
+        "opcoes": ["Paisagem", "Lugar", "Espaço geográfico", "Região"],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Se você está caminhando e o Sol está se pondo à sua frente, qual direção você está seguindo?",
+        "opcoes": ["Norte", "Sul", "Leste", "Oeste"],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Como é chamada a distância entre um ponto da superfície terrestre e a Linha do Equador?",
+        "opcoes": ["Latitude", "Amplitude", "Longitude", "Meridiano"],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Qual é o movimento da Terra que resulta em dias e noites e dura 24 horas?",
+        "opcoes": ["Translação", "Rotação", "Revolução", "Órbita"],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual estação do ano vem depois do inverno?",
+        "opcoes": ["Outono", "Verão", "Primavera", "Nenhuma das alternativas"],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que representa o título de um mapa?",
+        "opcoes": [
+          "Relação matemática entre o espaço real e a representação",
+          "Indica a direção e a localização por meio da rosa-dos-ventos",
+          "Indica o tema que será retratado no mapa",
+          "Representa o significado dos símbolos que aparecem no mapa"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A zona térmica tropical está localizada:",
+        "opcoes": ["Nos pólos", "Na linha do equador", "Entre os trópicos", "Nenhuma das alternativas"],
+        "resposta_correta": 2
+      }
+    ],
+    "historia": [
+      {
+        "pergunta": "Sobre as sociedades indígenas no Brasil antes da chegada dos portugueses:",
+        "opcoes": [
+          "Todos viviam de forma semelhante, com economia agrícola e organização hierárquica",
+          "Eram diversas, com diferentes formas de organização social, política e econômica",
+          "Não possuíam organização social, sendo apenas nômades",
+          "Possuíam apenas uma forma de organização baseada na agricultura"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Sobre o processo de colonização portuguesa no Brasil:",
+        "opcoes": [
+          "Teve início com a fundação de cidades e rápida urbanização",
+          "O objetivo principal era estabelecer presença militar",
+          "A exploração envolveu principalmente a produção de açúcar",
+          "Foi realizada sem conflitos com os povos indígenas"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Sobre o sistema escravista no Brasil Colonial:",
+        "opcoes": [
+          "Se limitou ao trabalho nas lavouras de café",
+          "Teve início com os portugueses e expandiu as plantações de açúcar",
+          "Foi exclusiva para os indígenas",
+          "A resistência criou quilombos apenas no nordeste"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual era a principal atividade econômica nas primeiras décadas de colonização?",
+        "opcoes": [
+          "A produção de ouro",
+          "A produção de açúcar, especialmente no Nordeste",
+          "O cultivo de trigo",
+          "A produção de tabaco"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Uma das consequências do contato entre portugueses e indígenas foi:",
+        "opcoes": [
+          "A integração rápida das tribos à sociedade portuguesa",
+          "Muitos povos indígenas foram dizimados por doenças como varíola",
+          "A criação de um grande império indígena de resistência",
+          "Uma troca de terras que garantiu autonomia indígena"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Sobre o trabalho escravo no Brasil Colonial:",
+        "opcoes": [
+          "Se concentrou apenas nas lavouras de açúcar e minas de ouro",
+          "Os portugueses preferiram escravizar indígenas",
+          "Foi a principal base da economia colonial brasileira",
+          "Os escravizados viviam em boas condições e recebiam salário"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Sobre o sistema colonial português no Brasil:",
+        "opcoes": [
+          "Foi orientado exclusivamente para exploração de metais preciosos",
+          "O Brasil foi dividido em capitanias administradas diretamente pelo rei",
+          "As capitanias hereditárias enfrentaram dificuldades e resistência indígena",
+          "O sistema teve sucesso imediato em todo o Brasil"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "educacao_fisica": [
+      {
+        "pergunta": "Quais são os instrumentos que compõem a bateria da capoeira?",
+        "opcoes": [
+          "Berimbau, atabaque e pandeiro",
+          "Violino, flauta e clarinete",
+          "Guitarra, bateria e baixo",
+          "Piano, trompete e saxofone"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Qual luta é uma prática tradicional dos povos Xingu, realizada com os lutadores ajoelhados?",
+        "opcoes": ["Laanb", "Huka huka", "Capoeira", "Sabe"],
+        "resposta_correta": 1
+      }
+    ],
+    "lingua_inglesa": [
+      {
+        "pergunta": "Leia: 'Families are big, and families are small. Families are different and we love them all. Some have mothers. Some have fathers. I love my family!' Que tipo de texto é esse?",
+        "opcoes": ["A poem", "An ad", "A story", "A notice"],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "No texto acima, 'I love my family!' indica que a autora:",
+        "opcoes": [
+          "Discorda da família",
+          "Demonstra saudade",
+          "Expressa um sentimento positivo",
+          "Apresenta uma reclamação"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "No trecho 'Some have mothers. Some have fathers.', a palavra 'some' é um exemplo de:",
+        "opcoes": [
+          "Substantivo",
+          "Pronome indefinido",
+          "Pronome possessivo",
+          "Verbo auxiliar"
+        ],
+        "resposta_correta": 1
+      }
+    ]
+  }
+}
