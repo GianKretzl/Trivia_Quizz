@@ -89,22 +89,28 @@
             btnGirar.style.cursor = 'pointer';
         }, 4100);
     }
-    // Exemplo de placar dinâmico (substitua por integração real)
-    function atualizarPlacar(equipes) {
-        const placarDiv = document.getElementById('placar');
-        placarDiv.innerHTML = '';
-        equipes.forEach(eq => {
-            const el = document.createElement('div');
-            el.className = 'equipe-placar';
-            el.innerHTML = `<span class='equipe-nome'>${eq.nome}</span><span class='equipe-pontos'>${eq.pontos}</span>`;
-            placarDiv.appendChild(el);
-        });
-    }
+    
     // Exemplo inicial
-    atualizarPlacar([
-        {nome: 'Equipe Azul', pontos: 0},
-        {nome: 'Equipe Laranja', pontos: 0}
-    ]);
+    // Carregar equipes reais do backend (GET)
+    fetch('/api/estado_jogo')
+        .then(response => response.json())
+        .then(data => {
+            if (data.equipes && data.equipes.length > 0) {
+                atualizarPlacar(data.equipes);
+            } else {
+                // fallback: mostra exemplo
+                atualizarPlacar([
+                    {nome: 'Equipe Azul', cor: 'azul', pontos: 0},
+                    {nome: 'Equipe Laranja', cor: 'laranja', pontos: 0}
+                ]);
+            }
+        })
+        .catch(() => {
+            atualizarPlacar([
+                {nome: 'Equipe Azul', cor: 'azul', pontos: 0},
+                {nome: 'Equipe Laranja', cor: 'laranja', pontos: 0}
+            ]);
+        });
     </script>
 </body>
 </html>

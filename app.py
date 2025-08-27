@@ -5,6 +5,16 @@ import os
 
 app = Flask(__name__)
 
+@app.route('/api/estado_jogo', methods=['GET'])
+def estado_jogo():
+    """Retorna o estado atual do jogo (equipes, cores, pontuação, etc)"""
+    global jogo_estado
+    return jsonify({
+        'equipes': jogo_estado.get('equipes', []),
+        'turma': jogo_estado.get('turma_selecionada'),
+        'pontuacao': jogo_estado.get('pontuacao', {})
+    })
+
 # Estado do jogo
 jogo_estado = {
     'turma_selecionada': None,
