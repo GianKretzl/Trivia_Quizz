@@ -1,18 +1,103 @@
-from flask import Flask, render_template, jsonify, request
+import json
+def importar_perguntas_6ano():
+    try:
+        with open('data/perguntas.json', encoding='utf-8') as f:
+            perguntas = json.load(f)
+        turma = Turma.query.filter_by(nome='6_ano').first()
+        if not turma:
+            turma = Turma(nome='6_ano')
+            db.session.add(turma)
+            db.session.commit()
+        # Só importa se não houver questões dessa turma
+        existe = Questao.query.filter_by(turma_id=turma.id).first()
+        if not existe:
+            for disciplina, lista in perguntas['6_ano'].items():
+                for p in lista:
+                    enunciado = p['pergunta']
+                    alternativas = json.dumps(p['opcoes'], ensure_ascii=False)
+                    resposta_correta = str(p['resposta_correta'])
+                    tema = disciplina
+                    questao = Questao(
+                        turma_id=turma.id,
+                        enunciado=enunciado,
+                        resposta_correta=resposta_correta,
+                        alternativas=alternativas,
+                        tema=tema
+                    )
+                    db.session.add(questao)
+            db.session.commit()
+            print('Perguntas do 6º ano importadas automaticamente.')
+    except Exception as e:
+        print('Erro ao importar perguntas do 6º ano:', e)
+from flask import Flask, render_template, jsonify, request, redirect, url_for
+import os
+from models import db, Turma, Equipe, Questao, Rodada
 import json
 import random
 import os
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trivia_quizz.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
+
+# Inicializar banco de dados se não existir
+with app.app_context():
+    db.create_all()
+    importar_perguntas_6ano()
+# Rotas extras para relatório, novo jogo e pergunta
+@app.route('/relatorio')
+def relatorio():
+    # Busca rodadas, equipes, temas, perguntas e acertos usando SQLAlchemy
+    rodadas = (
+        db.session.query(
+            Rodada.numero,
+            Turma.nome.label('turma'),
+            Equipe.nome.label('equipe'),
+            Equipe.cor,
+            Questao.tema,
+            Questao.enunciado,
+            Rodada.resposta,
+            Rodada.acertou
+        )
+        .join(Equipe, Rodada.equipe_id == Equipe.id)
+        .join(Questao, Rodada.questao_id == Questao.id)
+        .join(Turma, Equipe.turma_id == Turma.id)
+        .order_by(Rodada.numero.asc())
+        .all()
+    )
+    return render_template('relatorio.html', rodadas=rodadas)
+
+@app.route('/novo_jogo')
+def novo_jogo():
+    # Limpa apenas rodadas, equipes e turmas, mantendo as questões
+    Rodada.query.delete()
+    Equipe.query.delete()
+    Turma.query.delete()
+    db.session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/pergunta')
+def pergunta():
+    return render_template('pergunta.html')
 
 @app.route('/api/estado_jogo', methods=['GET'])
 def estado_jogo():
-    """Retorna o estado atual do jogo (equipes, cores, pontuação, etc)"""
-    global jogo_estado
+    """Retorna o estado atual do jogo (equipes, cores, pontuação, etc) do banco"""
+    turma = Turma.query.order_by(Turma.id.desc()).first()
+    equipes = []
+    if turma:
+        equipes_db = Equipe.query.filter_by(turma_id=turma.id).all()
+        for eq in equipes_db:
+            equipes.append({
+                'id': eq.id,
+                'nome': eq.nome,
+                'cor': eq.cor,
+                'pontos': 0
+            })
     return jsonify({
-        'equipes': jogo_estado.get('equipes', []),
-        'turma': jogo_estado.get('turma_selecionada'),
-        'pontuacao': jogo_estado.get('pontuacao', {})
+        'equipes': equipes,
+        'turma': turma.nome if turma else None
     })
 
 # Estado do jogo
@@ -82,65 +167,54 @@ def roleta():
 
 @app.route('/api/configurar_jogo', methods=['POST'])
 def configurar_jogo():
-    """Configura o jogo com turma e equipes selecionadas"""
-    global jogo_estado
-    
+    """Configura o jogo com turma e equipes selecionadas, salvando no banco"""
     dados = request.get_json()
     print(f"Configurando jogo com dados: {dados}")
-    
-    turma = dados.get('turma')
+    turma_nome = dados.get('turma')
     num_equipes = dados.get('num_equipes')
     cores_selecionadas = dados.get('cores_equipes', [])
-    
-    # Validações
-    if not turma or turma not in ['6_ano', '7_ano', '8_ano', '9_ano', 'ensino_medio']:
+    if not turma_nome or turma_nome not in ['6_ano', '7_ano', '8_ano', '9_ano', 'ensino_medio']:
         return jsonify({'erro': 'Turma inválida'}), 400
-    
     if not num_equipes or num_equipes < 2 or num_equipes > 12:
         return jsonify({'erro': 'Número de equipes deve ser entre 2 e 12'}), 400
-    
     if len(cores_selecionadas) != num_equipes:
         return jsonify({'erro': 'Número de cores deve corresponder ao número de equipes'}), 400
-    
-    # Validar se as cores selecionadas existem
     nomes_cores_validas = [cor['nome'] for cor in CORES_EQUIPES]
     for cor_nome in cores_selecionadas:
         if cor_nome not in nomes_cores_validas:
             return jsonify({'erro': f'Cor inválida: {cor_nome}'}), 400
-    
-    # Configurar o estado do jogo
-    jogo_estado['turma_selecionada'] = turma
-    jogo_estado['equipes'] = []
-    jogo_estado['pontuacao'] = {}
-    
-    # Buscar informações completas das cores
-    cores_completas = []
-    for cor_nome in cores_selecionadas:
+    # Cria turma (ou busca existente)
+    turma = Turma.query.filter_by(nome=turma_nome).first()
+    if not turma:
+        turma = Turma(nome=turma_nome)
+        db.session.add(turma)
+        db.session.commit()
+    # Remove equipes antigas dessa turma
+    Equipe.query.filter_by(turma_id=turma.id).delete()
+    db.session.commit()
+    # Adiciona equipes novas
+    equipes = []
+    for i, cor_nome in enumerate(cores_selecionadas):
         cor_info = next((cor for cor in CORES_EQUIPES if cor['nome'] == cor_nome), None)
-        if cor_info:
-            cores_completas.append(cor_info)
-        else:
-            # Fallback se não encontrar a cor
-            cores_completas.append({'nome': cor_nome, 'hex': '#808080'})
-    
-    for i, cor_info in enumerate(cores_completas):
-        equipe = {
+        equipe = Equipe(
+            nome=f'Equipe {cor_nome}',
+            cor=cor_nome,
+            turma_id=turma.id
+        )
+        db.session.add(equipe)
+        equipes.append({
             'id': i + 1,
-            'nome': f'Equipe {cor_info["nome"]}',
-            'cor': cor_info['nome'],
-            'hex': cor_info['hex'],
+            'nome': f'Equipe {cor_nome}',
+            'cor': cor_nome,
             'pontos': 0
-        }
-        jogo_estado['equipes'].append(equipe)
-        jogo_estado['pontuacao'][f'equipe_{i + 1}'] = 0
-    
-    print(f"Jogo configurado com sucesso! Equipes: {jogo_estado['equipes']}")
-    
+        })
+    db.session.commit()
+    print(f"Jogo configurado com sucesso! Equipes: {equipes}")
     return jsonify({
         'sucesso': True,
-        'turma': turma,
+        'turma': turma_nome,
         'num_equipes': num_equipes,
-        'equipes': jogo_estado['equipes'],
+        'equipes': equipes,
         'mensagem': f'Jogo configurado com sucesso! {num_equipes} equipes prontas para a gincana.'
     })
 

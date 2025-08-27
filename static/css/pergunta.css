@@ -1,0 +1,22 @@
+body {
+    background: #f7fafc;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-pergunta {
+    max-width: 600px;
+    margin: 60px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 40px 32px;
+    text-align: center;
+}
+
+.container-pergunta h1 {
+    color: #2b6cb0;
+    margin-bottom: 24px;
+    font-size: 2.2rem;
+}

@@ -1,3 +1,26 @@
+/* Botões abaixo do placar */
+.placar-botoes {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    justify-content: center;
+}
+.btn-relatorio, .btn-novo-jogo {
+    background: #fff;
+    color: #118AB2;
+    border: 2px solid #118AB2;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.btn-relatorio:hover, .btn-novo-jogo:hover {
+    background: #118AB2;
+    color: #fff;
+}
 body {
     overflow: hidden;
 }

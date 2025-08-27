@@ -1,0 +1,62 @@
+/* Círculo de cor para relatório */
+.cor-circulo {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 6px;
+    background: #888;
+}
+.cor-verde { background: #00FF00; }
+.cor-amarelo { background: #FFFF00; }
+.cor-vermelho { background: #FF0000; }
+.cor-azul { background: #0066FF; }
+.cor-laranja { background: #FFA500; }
+.cor-roxo { background: #8A2BE2; }
+.cor-azul_claro { background: #87CEEB; }
+.cor-preto { background: #000000; }
+.cor-branco { background: #FFFFFF; border: 1px solid #ccc; }
+.cor-rosa_bebê { background: #FFB6C1; }
+body {
+    background: #f7fafc;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-relatorio {
+    max-width: 1100px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+}
+
+.container-relatorio h1 {
+    color: #2b6cb0;
+    margin-bottom: 24px;
+    font-size: 2rem;
+}
+
+.container-relatorio table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+.container-relatorio th, .container-relatorio td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 8px;
+    text-align: center;
+}
+
+.container-relatorio th {
+    background: #f0f4f8;
+    color: #2b6cb0;
+}
+
+.container-relatorio tr:nth-child(even) {
+    background: #f9fafb;
+}

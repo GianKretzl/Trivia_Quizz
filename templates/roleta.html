@@ -13,7 +13,25 @@
             <div class="placar-header">
                 <h2>🏆 Placar</h2>
                 <div id="placar" class="placar-grid"></div>
-            </div>
+                <div class="placar-botoes">
+                        <a href="/relatorio" class="btn-relatorio">📊 Relatório</a>
+                        <a href="/novo_jogo" class="btn-novo-jogo">🔄 Novo Jogo</a>
+                    </div>
+                </div>
+                <script>
+                function atualizarPlacar(equipes) {
+                    const placarDiv = document.getElementById('placar');
+                    placarDiv.innerHTML = '';
+                    equipes.forEach(eq => {
+                        // Corrige nome da cor para classe CSS: minúsculo e espaços/acentos para underline
+                        let corClasse = eq.cor.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').replace(/\s+/g, '_');
+                        const el = document.createElement('div');
+                        el.className = `equipe-placar cor-${corClasse}`;
+                        el.innerHTML = `<span class='equipe-nome'>${eq.nome}</span><span class='equipe-pontos'>${eq.pontos}</span>`;
+                        placarDiv.appendChild(el);
+                    });
+                }
+                </script>
         </aside>
         <!-- Roleta central -->
         <main class="roleta-col">
@@ -50,6 +68,11 @@
                 <div id="tema-sorteado" class="tema-sorteado">Nenhum</div>
                 <button id="btnIrPergunta" class="btn-primary" disabled>IR PARA PERGUNTA</button>
             </div>
+            <script>
+            document.getElementById('btnIrPergunta').onclick = function() {
+                window.location.href = '/pergunta';
+            };
+            </script>
         </aside>
     </div>
     <script>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Rodadas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/relatorio.css') }}">
+</head>
+<body>
+    <div class="container-relatorio">
+        <h1>Relatório de Rodadas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rodada</th>
+                    <th>Turma</th>
+                    <th>Equipe</th>
+                    <th>Cor</th>
+                    <th>Tema</th>
+                    <th>Pergunta</th>
+                    <th>Resposta</th>
+                    <th>Acertou?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rodadas %}
+                <tr>
+                    <td>{{ r['numero'] }}</td>
+                    <td>{{ r['turma'] }}</td>
+                    <td>{{ r['equipe'] }}</td>
+                    <td>
+                        {% set cor_nome = r['cor']|lower|replace(' ', '_') %}
+                        <span class="cor-circulo cor-{{ cor_nome }}"></span>
+                        <span style="font-weight:bold;">{{ r['cor']|default('Sem cor') }}</span>
+                    </td>
+                    <td>{{ r['tema'] }}</td>
+                    <td>{{ r['enunciado'] }}</td>
+                    <td>{{ r['resposta'] }}</td>
+                    <td>{{ 'Sim' if r['acertou'] else 'Não' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
