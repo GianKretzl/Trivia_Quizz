@@ -480,11 +480,8 @@ async function iniciarJogo() {
         const data = await response.json();
         
         if (data.sucesso) {
-            equipesSelecionadas = data.equipes;
-            jogoAtivo = true;
-            mostrarAreaJogo();
-            atualizarPlacar();
-            preencherSelectEquipes();
+            // Redireciona para a rota da roleta
+            window.location.href = '/roleta';
         } else {
             alert('Erro ao configurar o jogo: ' + data.erro);
         }
