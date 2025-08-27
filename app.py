@@ -59,10 +59,16 @@ def carregar_perguntas():
         print("Arquivo de perguntas não encontrado!")
         return {}
 
+
 @app.route('/')
 def index():
     """Página principal do jogo"""
     return render_template('index.html')
+
+@app.route('/roleta')
+def roleta():
+    """Tela da roleta e placar"""
+    return render_template('roleta.html')
 
 @app.route('/api/configurar_jogo', methods=['POST'])
 def configurar_jogo():

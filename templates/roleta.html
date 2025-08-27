@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roleta - Eureka do Padre</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/roleta.css') }}">
+</head>
+<body>
+    <div class="placar-header">
+        <h2>🏆 Placar</h2>
+        <div id="placar" class="placar-grid"></div>
+    </div>
+    <div class="roleta-main">
+        <h2>🎯 Roleta das Disciplinas</h2>
+        <div class="roleta-container">
+            <div id="roleta" class="roleta"></div>
+            <button id="girar-roleta" class="girar-btn">🎲 GIRAR ROLETA</button>
+        </div>
+        <div id="disciplina-selecionada" class="disciplina-resultado"></div>
+    </div>
+</body>
+</html>

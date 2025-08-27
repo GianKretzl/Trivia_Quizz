@@ -1,3 +1,88 @@
+/* Ajuste para modal de cores responsivo e sem barra horizontal */
+#cores-modal .modal-content {
+    max-width: 480px;
+    width: 95vw;
+    min-width: 280px;
+    overflow-x: hidden;
+}
+
+#cores-modal .cores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 18px;
+    justify-items: center;
+    width: 100%;
+    margin: 0 auto 20px auto;
+    box-sizing: border-box;
+}
+
+#cores-modal .cor-option {
+    min-width: 80px;
+    max-width: 110px;
+    width: 100%;
+}
+.logo-eureka {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 7px solid #FFD700;
+    box-shadow: 0 0 60px 0 #FFD70055, 0 0 120px 0 #fff70022, 0 8px 32px #0005;
+    animation: logoFloat 3s ease-in-out infinite;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.4,2,.3,1);
+    background: linear-gradient(145deg, #fffbe7 60%, #ffe066 100%);
+    filter: drop-shadow(0 0 12px #ffe066cc);
+}
+
+.ultra-big-logo {
+    width: 270px;
+    height: 270px;
+    min-width: 180px;
+    min-height: 180px;
+    max-width: 90vw;
+    max-height: 40vh;
+}
+
+.logo-eureka:hover {
+    transform: scale(1.08) rotate(2deg);
+    box-shadow: 0 0 80px 0 #FFD700cc, 0 0 160px 0 #fff70055, 0 12px 48px #000a;
+    animation: logoSpin 1.2s linear infinite;
+}
+
+.main-title.clean-title {
+    font-size: 3.2rem;
+    margin-bottom: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    color: #fffbe7;
+    text-shadow: 0 2px 8px #0008, 0 0 2px #FFD700, 0 0 1px #fffbe7;
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    background-clip: initial;
+    position: relative;
+    z-index: 2;
+}
+
+.logo-container.modern-header.no-border-header {
+    border: none !important;
+    box-shadow: 0 8px 40px 0 #0002;
+    background: rgba(255,255,255,0.10);
+    border-radius: 32px;
+    margin-bottom: 18px;
+}
+
+.header.header-no-border {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    position: relative;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
 /* Remover partículas animadas do header */
 .header-particles, .header-particles .particle {
     display: none !important;
@@ -894,18 +979,27 @@ body {
     }
 }
 
-/* Efeitos especiais para cada ícone */
-.button-icon:before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: -1;
-    animation: iconGlow 3s ease-in-out infinite alternate;
+
+/* Sempre manter a cor dos ícones dos botões do menu */
+.menu-option-btn .button-icon {
+    color: #222;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    background-clip: initial !important;
+    filter: none !important;
+    transition: color 0.2s;
+}
+
+.menu-option-btn.selected .button-icon,
+.menu-option-btn.configured .button-icon,
+.menu-option-btn:disabled .button-icon {
+    color: #222 !important;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    background-clip: initial !important;
+    filter: none !important;
 }
 
 @keyframes iconFloat {

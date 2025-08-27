@@ -1,0 +1,67 @@
+/* CSS exclusivo para a tela da roleta */
+.placar-header {
+    background: #fffbe7;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px #0001;
+    padding: 24px 32px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+.placar-header h2 {
+    color: #ff8c42;
+    margin-bottom: 18px;
+}
+.placar-grid {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+.roleta-main {
+    background: #e0fff6;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px #0001;
+    padding: 32px 32px 40px 32px;
+    text-align: center;
+}
+.roleta-main h2 {
+    color: #118ab2;
+    margin-bottom: 18px;
+}
+.roleta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 18px;
+}
+.roleta {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 8px solid #444;
+    background: conic-gradient(from 0deg, #8B4513 0deg 51.4deg, #FFA500 51.4deg 102.8deg, #FFD700 102.8deg 154.2deg, #32CD32 154.2deg 205.6deg, #4169E1 205.6deg 257deg, #9370DB 257deg 308.4deg, #FF69B4 308.4deg 360deg);
+    margin-bottom: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    position: relative;
+}
+.girar-btn {
+    background: linear-gradient(145deg, #4CAF50, #45a049);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 32px;
+    margin-top: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px #0002;
+    transition: background 0.2s;
+}
+.girar-btn:hover {
+    background: linear-gradient(145deg, #45a049, #4CAF50);
+}
+.disciplina-resultado {
+    margin-top: 18px;
+    font-size: 1.3rem;
+    color: #ff8c42;
+    font-weight: bold;
+}
