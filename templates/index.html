@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<he                   <button id="equipes-btn" class="menu-option-btn" disabled>
-                        <div class="button-icon">🏆</div>
-                        <div class="button-content">
-                            <div class="button-title">EQUIPES</div>
-                            <div class="button-subtitle">Escolher</div>
-                        </div>
-                    </button>
-
-                    <button id="cores-btn" class="menu-option-btn" disabled>
-                        <div class="button-icon">🎨</div>
-                        <div class="button-content">
-                            <div class="button-title">CORES DAS EQUIPES</div>
-                            <div class="button-subtitle">Aguardando equipes</div>
-                        </div>
-                    </button>charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1º EUREKA DO PADRE - Gincana do Conhecimento</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -23,19 +10,20 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="logo-container">
+
+            <div class="logo-container modern-header">
                 <img src="{{ url_for('static', filename='img/Eureka.jpeg') }}" 
                      alt="Eureka Logo" 
-                     class="logo-eureka" 
+                     class="logo-eureka big-logo" 
                      onclick="playEurekaSound()">
-                <div class="title-container">
-                    <h1 class="main-title">1º EUREKA DO PADRE</h1>
+                <div class="title-container modern-title">
+                    <h1 class="main-title neon-title">1º EUREKA DO PADRE</h1>
                     <p class="subtitle">Gincana do conhecimento</p>
-                </div>
-                <div class="game-type-buttons">
-                    <div class="game-type-badge active">🧩 Desafio Mental</div>
-                    <div class="game-type-badge">🥇 Competição</div>
-                    <div class="game-type-badge">🎓 Educativo</div>
+                    <div class="game-type-buttons modern-game-type">
+                        <div class="game-type-badge active glass">🧩 Desafio Mental</div>
+                        <div class="game-type-badge glass">🥇 Competição</div>
+                        <div class="game-type-badge glass">🎓 Educativo</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,7 +48,7 @@
                         </div>
                     </button>
 
-                    <button id="cores-btn" class="menu-option-btn">
+                    <button id="cores-btn" class="menu-option-btn" disabled>
                         <div class="button-icon">�</div>
                         <div class="button-content">
                             <div class="button-title">CORES DAS EQUIPES</div>
