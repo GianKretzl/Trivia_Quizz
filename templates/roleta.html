@@ -6,7 +6,7 @@
     <title>Roleta - Eureka do Padre</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/roleta.css') }}">
 </head>
-<body style="overflow:hidden;">
+<body>
     <div class="roleta-layout">
         <!-- Placar à esquerda -->
         <aside class="placar-col">
@@ -18,7 +18,9 @@
         <!-- Roleta central -->
         <main class="roleta-col">
             <div class="folha">
-                <div class="seta"></div>
+                <div class="seta-roleta-externa">
+                    <div class="seta"></div>
+                </div>
                 <div class="roleta" id="roleta">
                     <div class="box1"></div>
                     <div class="box2"></div>
@@ -37,8 +39,7 @@
                     <div class="premio premio6" id="opt4">Inglês</div>
                     <div class="premio premio7" id="opt3">Arte</div>
                     <div class="premio premio8" id="opt2">Educação Física</div>
-                    <div id="btnPlay" class="btnRoleta play" onclick="playOnClick()">►</div>
-                    <div id="btnStop" class="btnRoleta stop" onclick="stopOnClick()">❚❚</div>
+                    <div id="btnGirar" class="btnRoleta play" onclick="girarRoleta()">GIRAR</div>
                 </div>
             </div>
         </main>
@@ -47,38 +48,46 @@
             <div class="tema-sorteado-box">
                 <h2>Tema Sorteado</h2>
                 <div id="tema-sorteado" class="tema-sorteado">Nenhum</div>
-                <button id="btnIrPergunta" class="btn-primary" style="margin-top: 24px;" disabled>IR PARA PERGUNTA</button>
+                <button id="btnIrPergunta" class="btn-primary" disabled>IR PARA PERGUNTA</button>
             </div>
         </aside>
     </div>
     <script>
-    let globalObjects;
-    function playOnClick() {
-        globalObjects = {
-            btnPlay: document.getElementById("btnPlay"),
-            roleta: document.getElementById("roleta"),
-            btnStop: document.getElementById("btnStop"),
-        };
-        globalObjects.timeInitial = new Date();
-        globalObjects.btnPlay.style.visibility = "hidden";
-        globalObjects.btnStop.style.visibility = "visible";
-        document.getElementById("btnIrPergunta").disabled = true;
-        document.getElementById("tema-sorteado").innerHTML = 'Nenhum';
-        const randomRotation = Math.floor(Math.random() * 3600) + 360;
-        globalObjects.roleta.style.transition = "transform 4s ease-out";
-        globalObjects.roleta.style.transform = `rotate(${randomRotation}deg)`;
-    }
-    function stopOnClick() {
-        globalObjects.btnStop.style.visibility = "hidden";
-        const transformValue = globalObjects.roleta.style.transform;
-        const rotationDegrees = parseInt(transformValue.replace(/[^0-9]/g, '')) % 360;
-        const sections = 8;
-        const sectionDegree = 360 / sections;
-        const winningSection = Math.floor(rotationDegrees / sectionDegree);
-        const boxGanhador = document.getElementById("opt".concat(winningSection));
-        document.getElementById("tema-sorteado").innerHTML = boxGanhador.innerHTML;
-        document.getElementById("btnIrPergunta").disabled = false;
-        globalObjects.btnPlay.style.visibility = "visible";
+    function girarRoleta() {
+        const roleta = document.getElementById("roleta");
+        const btnGirar = document.getElementById("btnGirar");
+        const btnIrPergunta = document.getElementById("btnIrPergunta");
+        const temaDiv = document.getElementById("tema-sorteado");
+        btnGirar.disabled = true;
+        btnGirar.style.opacity = 0.6;
+        btnGirar.style.cursor = 'not-allowed';
+        btnIrPergunta.disabled = true;
+        btnIrPergunta.style.opacity = 0.6;
+        btnIrPergunta.style.cursor = 'not-allowed';
+        temaDiv.style.opacity = 0;
+        // Gira entre 5 e 10 voltas + ângulo aleatório
+        const randomRotation = Math.floor(Math.random() * 360) + 1800;
+        roleta.style.transition = "transform 4s cubic-bezier(.17,.67,.83,.67)";
+        roleta.style.transform = `rotate(${randomRotation}deg)`;
+        setTimeout(() => {
+            // Após a rotação, calcula o tema sorteado
+            let rotationDegrees = randomRotation % 360;
+            if (rotationDegrees < 0) rotationDegrees += 360;
+            const sections = 8;
+            const sectionDegree = 360 / sections;
+            let winningSection = Math.floor(((360 - rotationDegrees + sectionDegree/2) % 360) / sectionDegree);
+            if (winningSection < 0) winningSection = 0;
+            if (winningSection > 7) winningSection = 7;
+            const boxGanhador = document.getElementById("opt".concat(winningSection));
+            temaDiv.innerHTML = boxGanhador ? boxGanhador.innerHTML : 'Erro';
+            temaDiv.style.opacity = 1;
+            btnIrPergunta.disabled = false;
+            btnIrPergunta.style.opacity = 1;
+            btnIrPergunta.style.cursor = 'pointer';
+            btnGirar.disabled = false;
+            btnGirar.style.opacity = 1;
+            btnGirar.style.cursor = 'pointer';
+        }, 4100);
     }
     // Exemplo de placar dinâmico (substitua por integração real)
     function atualizarPlacar(equipes) {
