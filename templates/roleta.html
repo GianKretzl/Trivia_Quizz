@@ -14,51 +14,15 @@
                 <h2>🏆 Placar</h2>
                 <div id="placar" class="placar-grid"></div>
                 <div class="placar-botoes">
-                        <a href="/relatorio" class="btn-relatorio">📊 Relatório</a>
-                        <a href="/novo_jogo" class="btn-novo-jogo">🔄 Novo Jogo</a>
-                    </div>
+                    <a href="/relatorio" class="btn-relatorio">📊 Relatório</a>
+                    <a href="/novo_jogo" class="btn-novo-jogo">🔄 Novo Jogo</a>
                 </div>
-                <script>
-                function atualizarPlacar(equipes) {
-                    const placarDiv = document.getElementById('placar');
-                    placarDiv.innerHTML = '';
-                    equipes.forEach(eq => {
-                        // Corrige nome da cor para classe CSS: minúsculo e espaços/acentos para underline
-                        let corClasse = eq.cor.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').replace(/\s+/g, '_');
-                        const el = document.createElement('div');
-                        el.className = `equipe-placar cor-${corClasse}`;
-                        el.innerHTML = `<span class='equipe-nome'>${eq.nome}</span><span class='equipe-pontos'>${eq.pontos}</span>`;
-                        placarDiv.appendChild(el);
-                    });
-                }
-                </script>
+            </div>
         </aside>
-        <!-- Roleta central -->
+        <!-- Box cinza central -->
         <main class="roleta-col">
-            <div class="folha">
-                <div class="seta-roleta-externa">
-                    <div class="seta"></div>
-                </div>
-                <div class="roleta" id="roleta">
-                    <div class="box1"></div>
-                    <div class="box2"></div>
-                    <div class="box3"></div>
-                    <div class="box4"></div>
-                    <div class="box5"></div>
-                    <div class="box6"></div>
-                    <div class="box7"></div>
-                    <div class="box8"></div>
-                    <!-- Disciplinas -->
-                    <div class="premio premio1" id="opt1">Matemática</div>
-                    <div class="premio premio2" id="opt0">Português</div>
-                    <div class="premio premio3" id="opt7">História</div>
-                    <div class="premio premio4" id="opt6">Geografia</div>
-                    <div class="premio premio5" id="opt5">Ciências</div>
-                    <div class="premio premio6" id="opt4">Inglês</div>
-                    <div class="premio premio7" id="opt3">Arte</div>
-                    <div class="premio premio8" id="opt2">Educação Física</div>
-                    <div id="btnGirar" class="btnRoleta play" onclick="girarRoleta()">GIRAR</div>
-                </div>
+            <div class="box-cinza-central" style="width: 320px; height: 320px; background: #e0e0e0; border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #888;">
+                Área da Roleta
             </div>
         </main>
         <!-- Tema sorteado à direita -->
@@ -68,52 +32,23 @@
                 <div id="tema-sorteado" class="tema-sorteado">Nenhum</div>
                 <button id="btnIrPergunta" class="btn-primary" disabled>IR PARA PERGUNTA</button>
             </div>
-            <script>
-            document.getElementById('btnIrPergunta').onclick = function() {
-                window.location.href = '/pergunta';
-            };
-            </script>
         </aside>
     </div>
     <script>
-    function girarRoleta() {
-        const roleta = document.getElementById("roleta");
-        const btnGirar = document.getElementById("btnGirar");
-        const btnIrPergunta = document.getElementById("btnIrPergunta");
-        const temaDiv = document.getElementById("tema-sorteado");
-        btnGirar.disabled = true;
-        btnGirar.style.opacity = 0.6;
-        btnGirar.style.cursor = 'not-allowed';
-        btnIrPergunta.disabled = true;
-        btnIrPergunta.style.opacity = 0.6;
-        btnIrPergunta.style.cursor = 'not-allowed';
-        temaDiv.style.opacity = 0;
-        // Gira entre 5 e 10 voltas + ângulo aleatório
-        const randomRotation = Math.floor(Math.random() * 360) + 1800;
-        roleta.style.transition = "transform 4s cubic-bezier(.17,.67,.83,.67)";
-        roleta.style.transform = `rotate(${randomRotation}deg)`;
-        setTimeout(() => {
-            // Após a rotação, calcula o tema sorteado
-            let rotationDegrees = randomRotation % 360;
-            if (rotationDegrees < 0) rotationDegrees += 360;
-            const sections = 8;
-            const sectionDegree = 360 / sections;
-            let winningSection = Math.floor(((360 - rotationDegrees + sectionDegree/2) % 360) / sectionDegree);
-            if (winningSection < 0) winningSection = 0;
-            if (winningSection > 7) winningSection = 7;
-            const boxGanhador = document.getElementById("opt".concat(winningSection));
-            temaDiv.innerHTML = boxGanhador ? boxGanhador.innerHTML : 'Erro';
-            temaDiv.style.opacity = 1;
-            btnIrPergunta.disabled = false;
-            btnIrPergunta.style.opacity = 1;
-            btnIrPergunta.style.cursor = 'pointer';
-            btnGirar.disabled = false;
-            btnGirar.style.opacity = 1;
-            btnGirar.style.cursor = 'pointer';
-        }, 4100);
+    // Função para atualizar o placar dinamicamente
+    function atualizarPlacar(equipes) {
+        const placarDiv = document.getElementById('placar');
+        placarDiv.innerHTML = '';
+        equipes.forEach(eq => {
+            // Corrige nome da cor para classe CSS: minúsculo e espaços/acentos para underline
+            let corClasse = eq.cor.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').replace(/\s+/g, '_');
+            const el = document.createElement('div');
+            el.className = `equipe-placar cor-${corClasse}`;
+            el.innerHTML = `<span class='equipe-nome'>${eq.nome}</span><span class='equipe-pontos'>${eq.pontos}</span>`;
+            placarDiv.appendChild(el);
+        });
     }
-    
-    // Exemplo inicial
+
     // Carregar equipes reais do backend (GET)
     fetch('/api/estado_jogo')
         .then(response => response.json())
@@ -135,5 +70,3 @@
             ]);
         });
     </script>
-</body>
-</html>
