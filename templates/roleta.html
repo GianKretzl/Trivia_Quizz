@@ -6,18 +6,96 @@
     <title>Roleta - Eureka do Padre</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/roleta.css') }}">
 </head>
-<body>
-    <div class="placar-header">
-        <h2>🏆 Placar</h2>
-        <div id="placar" class="placar-grid"></div>
+<body style="overflow:hidden;">
+    <div class="roleta-layout">
+        <!-- Placar à esquerda -->
+        <aside class="placar-col">
+            <div class="placar-header">
+                <h2>🏆 Placar</h2>
+                <div id="placar" class="placar-grid"></div>
+            </div>
+        </aside>
+        <!-- Roleta central -->
+        <main class="roleta-col">
+            <div class="folha">
+                <div class="seta"></div>
+                <div class="roleta" id="roleta">
+                    <div class="box1"></div>
+                    <div class="box2"></div>
+                    <div class="box3"></div>
+                    <div class="box4"></div>
+                    <div class="box5"></div>
+                    <div class="box6"></div>
+                    <div class="box7"></div>
+                    <div class="box8"></div>
+                    <!-- Disciplinas -->
+                    <div class="premio premio1" id="opt1">Matemática</div>
+                    <div class="premio premio2" id="opt0">Português</div>
+                    <div class="premio premio3" id="opt7">História</div>
+                    <div class="premio premio4" id="opt6">Geografia</div>
+                    <div class="premio premio5" id="opt5">Ciências</div>
+                    <div class="premio premio6" id="opt4">Inglês</div>
+                    <div class="premio premio7" id="opt3">Arte</div>
+                    <div class="premio premio8" id="opt2">Educação Física</div>
+                    <div id="btnPlay" class="btnRoleta play" onclick="playOnClick()">►</div>
+                    <div id="btnStop" class="btnRoleta stop" onclick="stopOnClick()">❚❚</div>
+                </div>
+            </div>
+        </main>
+        <!-- Tema sorteado à direita -->
+        <aside class="tema-col">
+            <div class="tema-sorteado-box">
+                <h2>Tema Sorteado</h2>
+                <div id="tema-sorteado" class="tema-sorteado">Nenhum</div>
+                <button id="btnIrPergunta" class="btn-primary" style="margin-top: 24px;" disabled>IR PARA PERGUNTA</button>
+            </div>
+        </aside>
     </div>
-    <div class="roleta-main">
-        <h2>🎯 Roleta das Disciplinas</h2>
-        <div class="roleta-container">
-            <div id="roleta" class="roleta"></div>
-            <button id="girar-roleta" class="girar-btn">🎲 GIRAR ROLETA</button>
-        </div>
-        <div id="disciplina-selecionada" class="disciplina-resultado"></div>
-    </div>
+    <script>
+    let globalObjects;
+    function playOnClick() {
+        globalObjects = {
+            btnPlay: document.getElementById("btnPlay"),
+            roleta: document.getElementById("roleta"),
+            btnStop: document.getElementById("btnStop"),
+        };
+        globalObjects.timeInitial = new Date();
+        globalObjects.btnPlay.style.visibility = "hidden";
+        globalObjects.btnStop.style.visibility = "visible";
+        document.getElementById("btnIrPergunta").disabled = true;
+        document.getElementById("tema-sorteado").innerHTML = 'Nenhum';
+        const randomRotation = Math.floor(Math.random() * 3600) + 360;
+        globalObjects.roleta.style.transition = "transform 4s ease-out";
+        globalObjects.roleta.style.transform = `rotate(${randomRotation}deg)`;
+    }
+    function stopOnClick() {
+        globalObjects.btnStop.style.visibility = "hidden";
+        const transformValue = globalObjects.roleta.style.transform;
+        const rotationDegrees = parseInt(transformValue.replace(/[^0-9]/g, '')) % 360;
+        const sections = 8;
+        const sectionDegree = 360 / sections;
+        const winningSection = Math.floor(rotationDegrees / sectionDegree);
+        const boxGanhador = document.getElementById("opt".concat(winningSection));
+        document.getElementById("tema-sorteado").innerHTML = boxGanhador.innerHTML;
+        document.getElementById("btnIrPergunta").disabled = false;
+        globalObjects.btnPlay.style.visibility = "visible";
+    }
+    // Exemplo de placar dinâmico (substitua por integração real)
+    function atualizarPlacar(equipes) {
+        const placarDiv = document.getElementById('placar');
+        placarDiv.innerHTML = '';
+        equipes.forEach(eq => {
+            const el = document.createElement('div');
+            el.className = 'equipe-placar';
+            el.innerHTML = `<span class='equipe-nome'>${eq.nome}</span><span class='equipe-pontos'>${eq.pontos}</span>`;
+            placarDiv.appendChild(el);
+        });
+    }
+    // Exemplo inicial
+    atualizarPlacar([
+        {nome: 'Equipe Azul', pontos: 0},
+        {nome: 'Equipe Laranja', pontos: 0}
+    ]);
+    </script>
 </body>
 </html>
