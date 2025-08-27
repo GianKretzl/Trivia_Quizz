@@ -78,8 +78,85 @@ def novo_jogo():
     return redirect(url_for('index'))
 
 @app.route('/pergunta')
-def pergunta():
-    return render_template('pergunta.html')
+@app.route('/pergunta/<tema>')
+def pergunta(tema=None):
+    import random
+    import json
+    
+    # Se não há tema especificado, tenta buscar do parâmetro GET
+    if not tema:
+        tema = request.args.get('tema')
+    
+    # Mapeamento de nomes de disciplinas
+    mapeamento_temas = {
+        'Português': 'portugues',
+        'Matemática': 'matematica',
+        'Ciências': 'ciencias',
+        'História': 'historia',
+        'Geografia': 'geografia',
+        'Língua Inglesa': 'lingua_inglesa',
+        'Educação Física': 'educacao_fisica'
+    }
+    
+    tema_db = mapeamento_temas.get(tema, tema.lower() if tema else None)
+    
+    if not tema_db:
+        return "Erro: Tema não especificado", 400
+    
+    # Buscar uma pergunta aleatória do tema
+    turma = Turma.query.order_by(Turma.id.desc()).first()
+    if not turma:
+        return "Erro: Nenhuma turma encontrada", 404
+    
+    questoes = Questao.query.filter_by(turma_id=turma.id, tema=tema_db).all()
+    if not questoes:
+        return f"Erro: Nenhuma pergunta encontrada para o tema {tema}", 404
+    
+    questao_escolhida = random.choice(questoes)
+    alternativas = json.loads(questao_escolhida.alternativas)
+    
+    # Buscar equipes da turma
+    equipes = Equipe.query.filter_by(turma_id=turma.id).all()
+    
+    return render_template('pergunta.html', 
+                         questao=questao_escolhida,
+                         alternativas=alternativas,
+                         tema=tema,
+                         equipes=equipes)
+
+@app.route('/processar_respostas', methods=['POST'])
+def processar_respostas():
+    dados = request.get_json()
+    questao_id = dados.get('questao_id')
+    equipes_acertos = dados.get('equipes_acertos', [])
+    
+    questao = Questao.query.get(questao_id)
+    if not questao:
+        return jsonify({'erro': 'Questão não encontrada'}), 404
+    
+    # Pegar o último número de rodada
+    ultima_rodada = db.session.query(db.func.max(Rodada.numero)).scalar() or 0
+    novo_numero_rodada = ultima_rodada + 1
+    
+    # Registrar rodadas para todas as equipes
+    turma = Turma.query.order_by(Turma.id.desc()).first()
+    equipes = Equipe.query.filter_by(turma_id=turma.id).all()
+    
+    for equipe in equipes:
+        acertou = equipe.id in equipes_acertos
+        rodada = Rodada(
+            equipe_id=equipe.id,
+            questao_id=questao_id,
+            tema=questao.tema,
+            acertou=acertou,
+            resposta=questao.resposta_correta if acertou else "",
+            numero=novo_numero_rodada
+        )
+        db.session.add(rodada)
+    
+    db.session.commit()
+    
+    return jsonify({'sucesso': True, 'rodada': novo_numero_rodada})
 
 @app.route('/api/estado_jogo', methods=['GET'])
 def estado_jogo():

@@ -2,13 +2,112 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Pergunta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pergunta - {{ tema }} - Eureka do Padre</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pergunta.css') }}">
 </head>
 <body>
-    <div class="container-pergunta">
-        <h1>Pergunta</h1>
-        <!-- Conteúdo da pergunta será implementado depois -->
+    <div class="pergunta-container">
+        <!-- Cabeçalho com tema -->
+        <div class="tema-header">
+            <h1>{{ tema }}</h1>
+        </div>
+
+        <!-- Pergunta principal -->
+        <div class="pergunta-box">
+            <div class="pergunta-icone">?</div>
+            <div class="pergunta-texto">{{ questao.enunciado }}</div>
+        </div>
+
+        <!-- Alternativas -->
+        <div class="alternativas-grid">
+            {% for alternativa in alternativas %}
+            <div class="alternativa" data-opcao="{{ loop.index0 }}">
+                <div class="alternativa-letra">{{ ['A', 'B', 'C', 'D'][loop.index0] }}</div>
+                <div class="alternativa-texto">{{ alternativa }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botões de ação -->
+        <div class="acoes">
+            <button id="btnRevelarResposta" class="btn-revelar">REVELAR RESPOSTA</button>
+        </div>
+
+        <!-- Seção de equipes (inicialmente oculta) -->
+        <div id="secaoEquipes" class="secao-equipes" style="display: none;">
+            <h2>Quais equipes acertaram?</h2>
+            <div class="equipes-grid">
+                {% for equipe in equipes %}
+                <div class="equipe-item">
+                    <input type="checkbox" id="equipe_{{ equipe.id }}" value="{{ equipe.id }}">
+                    <label for="equipe_{{ equipe.id }}" class="equipe-label">
+                        {{ equipe.nome }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="acoes-finais">
+                <button id="btnConfirmarAcertos" class="btn-confirmar">CONFIRMAR ACERTOS</button>
+                <button id="btnVoltarRoleta" class="btn-voltar">VOLTAR À ROLETA</button>
+            </div>
+        </div>
     </div>
+
+    <script>
+        const questaoId = {{ questao.id }};
+        const respostaCorreta = {{ questao.resposta_correta }};
+
+        document.getElementById('btnRevelarResposta').addEventListener('click', function() {
+            // Destacar resposta correta
+            const alternativas = document.querySelectorAll('.alternativa');
+            alternativas.forEach(alt => {
+                const opcao = parseInt(alt.getAttribute('data-opcao'));
+                if (opcao === respostaCorreta) {
+                    alt.classList.add('correta');
+                } else {
+                    alt.classList.add('incorreta');
+                }
+            });
+
+            // Mostrar seção de equipes
+            document.getElementById('secaoEquipes').style.display = 'block';
+            this.style.display = 'none';
+        });
+
+        document.getElementById('btnConfirmarAcertos').addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const equipesAcertos = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+            fetch('/processar_respostas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    questao_id: questaoId,
+                    equipes_acertos: equipesAcertos
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.sucesso) {
+                    alert('Respostas registradas com sucesso!');
+                    // Habilitar botão de voltar
+                    document.getElementById('btnVoltarRoleta').disabled = false;
+                } else {
+                    alert('Erro ao registrar respostas');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao processar respostas');
+            });
+        });
+
+        document.getElementById('btnVoltarRoleta').addEventListener('click', function() {
+            window.location.href = '/roleta';
+        });
+    </script>
 </body>
 </html>

@@ -21,11 +21,9 @@
         </aside>
         <!-- Box cinza central -->
         <main class="roleta-col">
-            <div class="box-cinza-central" style="width: 320px; height: 320px; background: #e0e0e0; border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #888;">
+            <div class="box-cinza-central">
                <div class="folha">
-
                     <div class="seta"></div>
-
                     <div class="roleta" id="roleta">
                         <div class="box1"></div>
                         <div class="box2"></div>
@@ -36,19 +34,17 @@
                         <div class="box7"></div>
                         <div class="box8"></div>
 
-                        <div class="premio premio1" id="opt1">100 reais</div>
-                        <div class="premio premio2" id="opt0">110 reais</div>
-                        <div class="premio premio3" id="opt7">115 reais</div>
-                        <div class="premio premio4" id="opt6">120 reais</div>
-                        <div class="premio premio5" id="opt5">125 reais</div>
-                        <div class="premio premio6" id="opt4">130 reais</div>
-                        <div class="premio premio7" id="opt3">140 reais</div>
-                        <div class="premio premio8" id="opt2">150 reais</div>
-                        <div id="btnPlay" class="btnRoleta play" onclick="playOnClick()">►</div>
-                        <div id="btnStop" class="btnRoleta stop" onclick="stopOnClick()">❚❚</div>
-
+                        <div class="premio premio0" id="opt0">Português</div>
+                        <div class="premio premio1" id="opt1">Matemática</div>
+                        <div class="premio premio2" id="opt2">Geografia </div>
+                        <div class="premio premio3" id="opt3">Língua Inglesa </div>
+                        <div class="premio premio4" id="opt4">Ciências</div>
+                        <div class="premio premio5" id="opt5">História</div>
+                        <div class="premio premio6" id="opt6">Educação Física</div>
+                        <div class="premio premio7" id="opt7">Filosofia</div>
+                        <div id="btnPlay" class="btnRoleta play" onclick="playOnClick()">GIRAR</div>
+      
                     </div>
-
                 </div>
             </div>
         </main>
@@ -79,33 +75,78 @@
 
     let globalObjects;
 
+
+            // Variável para guardar o tema sorteado da rodada
+            let temaSorteadoRodada = null;
+
             function playOnClick() {
-
                 globalObjects = {
-
                     btnPlay: document.getElementById("btnPlay"),
-
                     roleta: document.getElementById("roleta"),
-
-                    btnStop: document.getElementById("btnStop"),
-
                 };
-
                 globalObjects.timeInitial = new Date();
-
-                globalObjects.btnPlay.style.visibility = "hidden";
-
-                globalObjects.btnStop.style.visibility = "visible";
-
-                
-
+                // Não esconder o botão GIRAR
                 const randomRotation = Math.floor(Math.random() * 3600) + 360; // Rotação aleatória entre 360 e 3960 graus
-
-                globalObjects.roleta.style.transition = "transform 4s ease-out"; // Transição suave
-
+                globalObjects.roleta.style.transition = "transform 4s cubic-bezier(0.23, 1, 0.32, 1)"; // Transição suave
                 globalObjects.roleta.style.transform = `rotate(${randomRotation}deg)`;
 
+                // Após o giro, identificar o tema sorteado
+                setTimeout(() => {
+                    // Extrair o valor da rotação final da roleta
+                    const transformValue = globalObjects.roleta.style.transform;
+                    // Extrai o número do rotate
+                    const match = /rotate\(([-\d.]+)deg\)/.exec(transformValue);
+                    let rotationDegrees = 0;
+                    if (match) {
+                        rotationDegrees = parseFloat(match[1]) % 360;
+                        if (rotationDegrees < 0) rotationDegrees += 360;
+                    }
+                    
+                    // Calcular qual seção foi selecionada
+                    // A seta aponta para o topo (0°), então precisamos ajustar o cálculo
+                    // Cada seção tem 45° (360° / 8 seções)
+                    const sections = 8;
+                    const sectionDegree = 360 / sections; // 45°
+                    
+                    // Ajustar para a seta no topo - invertemos a rotação e adicionamos offset
+                    let adjustedRotation = (360 - rotationDegrees + (sectionDegree / 2)) % 360;
+                    let winningSection = Math.floor(adjustedRotation / sectionDegree) % sections;
+                    
+                    console.log(`Rotação: ${rotationDegrees}°, Seção vencedora: ${winningSection}`);
+                    
+                    // IDs dos temas: opt0, opt1, ..., opt7
+                    const boxGanhador = document.getElementById("opt" + winningSection);
+                    temaSorteadoRodada = boxGanhador ? boxGanhador.innerText : "";
+                    
+                    // Exibir no painel de tema sorteado
+                    const temaSorteadoDiv = document.getElementById("tema-sorteado");
+                    if (temaSorteadoDiv) {
+                        temaSorteadoDiv.textContent = temaSorteadoRodada;
+                        temaSorteadoDiv.classList.add("mostrar");
+                    }
+                    
+                    // Habilitar botão IR PARA PERGUNTA
+                    const btnIrPergunta = document.getElementById("btnIrPergunta");
+                    if (btnIrPergunta) {
+                        btnIrPergunta.disabled = false;
+                        btnIrPergunta.classList.remove("disabled");
+                    }
+                    // Aqui você pode salvar temaSorteadoRodada para o relatório
+                }, 4100); // tempo do giro + leve atraso
             }
+
+            // Adicionar evento de clique ao botão IR PARA PERGUNTA
+            document.addEventListener('DOMContentLoaded', function() {
+                const btnIrPergunta = document.getElementById("btnIrPergunta");
+                if (btnIrPergunta) {
+                    btnIrPergunta.addEventListener('click', function() {
+                        if (!this.disabled && temaSorteadoRodada) {
+                            // Redirecionar para a página de pergunta com o tema sorteado
+                            window.location.href = `/pergunta?tema=${encodeURIComponent(temaSorteadoRodada)}`;
+                        }
+                    });
+                }
+            });
 
             function stopOnClick() {
 

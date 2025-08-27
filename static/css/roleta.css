@@ -279,3 +279,187 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+.folha {
+    position: relative;
+    background-color: #cdcdcd;
+    width: 600px;
+    height: 600px;
+    padding: 50px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.roleta {
+    border: 10px solid #FFF;
+    margin-bottom: 58px;
+    position: relative;
+    width: 580px;
+    height: 580px;
+    max-width: 90vw;
+    max-height: 90vw;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    /* animation: roleta 5s linear infinite; */
+}
+path {
+  fill: transparent;
+}
+.seta {
+    position: absolute;
+    left: 50%;
+    top: 3px;
+    margin-left: 9px;
+    transform: translateX(-50%);
+    border-bottom: 0px solid transparent;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 40px solid #33c9dc;
+    width: 0;
+    height: 0;
+    z-index: 999;
+}
+.box1,
+.box2,
+.box3,
+.box4,
+.box5,
+.box6,
+.box7,
+.box8 {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.box1 {
+    border-top: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 150px solid #f6685e;
+    border-left: 150px solid #f6685e;
+}
+
+.box5 {
+    border-top: 150px solid #e91e63;
+    border-right: 150px solid #e91e63;
+    border-bottom: 150px solid transparent;
+    border-left: 150px solid transparent;
+}
+
+.box2 {
+    border-top: 150px solid #9c27b0;
+    border-right: 150px solid transparent;
+    border-bottom: 150px solid transparent;
+    border-left: 150px solid #9c27b0;
+    left: 50%;
+}
+
+.box6 {
+    border-top: 150px solid transparent;
+    border-right: 150px solid #673ab7;
+    border-bottom: 150px solid #673ab7;
+    border-left: 150px solid transparent;
+    left: 50%
+}
+
+.box4 {
+    border-top: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 150px solid #2196f3;
+    border-left: 150px solid #2196f3;
+    top: 50%;
+    left: 50%;
+}
+
+.box8 {
+    border-top: 150px solid #34399d;
+    border-right: 150px solid #34399d;
+    border-bottom: 150px solid transparent;
+    border-left: 150px solid transparent;
+    top: 50%;
+    left: 50%;
+}
+
+.box3 {
+    border-top: 150px solid #009688;
+    border-right: 150px solid transparent;
+    border-bottom: 150px solid transparent;
+    border-left: 150px solid #009688;
+    top: 50%;
+}
+
+.box7 {
+    border-top: 150px solid transparent;
+    border-right: 150px solid #ffeb3b;
+    border-bottom: 150px solid #ffeb3b;
+    border-left: 150px solid transparent;
+    top: 50%;
+}
+@keyframes roleta {
+    0% {
+        transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+@keyframes animacaoSeta {
+    0% { transform: rotate(0deg)}
+    25% { transform: rotate(-15deg)}
+    75% { transform: rotate(15deg)}
+    100% { transform: rotate(0deg)}
+}
+.premio {
+    position: absolute;
+    z-index: 999;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    pointer-events: none;
+    text-align: center;
+    width: 110px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    word-break: break-word;
+    white-space: normal;
+    padding: 0 2px;
+}
+.premio1 { top: 35%; left: 8%; transform: rotate(0deg); }
+.premio2 { top: 15%; left: 30%; transform: rotate(0deg); }
+.premio3 { top: 15%; left: 55%; transform: rotate(0deg); }
+.premio4 { top: 33%; right: 10%; transform: rotate(0deg); }
+.premio5 { top: 60%; right: 10%; transform: rotate(0deg); }
+.premio6 { top: 80%; right: 30%; transform: rotate(0deg); }
+.premio7 { top: 80%; left: 30%; transform: rotate(0deg); }
+.premio0 { top: 50%; left: 5%; transform: rotate(0deg); }
+.btnRoleta {
+    position: absolute;
+    color: white;
+    background-color: #000;
+    border: 15px solid #000;
+    cursor: pointer;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    border-radius: 50%;
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 1000;
+    user-select: none;
+    transition: background 0.2s, color 0.2s;
+}
+.play {
+    z-index: 1000;
+}
+
+        
