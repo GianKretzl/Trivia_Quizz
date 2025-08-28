@@ -36,27 +36,39 @@
 
         <!-- Seção de equipes (inicialmente oculta) -->
         <div id="secaoEquipes" class="secao-equipes" style="display: none;">
-            <h2>Quais equipes acertaram?</h2>
+            <div class="equipes-header">
+                <h2>🎯 Quais equipes acertaram?</h2>
+                <p class="equipes-subtitle">Clique nas equipes que deram a resposta correta</p>
+            </div>
             <div class="equipes-grid">
                 {% for equipe in equipes %}
-                <div class="equipe-item">
-                    <input type="checkbox" id="equipe_{{ equipe.id }}" value="{{ equipe.id }}">
-                    <label for="equipe_{{ equipe.id }}" class="equipe-label">
-                        {{ equipe.nome }}
-                    </label>
+                <div class="equipe-card" data-equipe-id="{{ equipe.id }}">
+                    <div class="equipe-card-inner">
+                        <div class="equipe-icon">🏆</div>
+                        <div class="equipe-nome">{{ equipe.nome }}</div>
+                        <div class="equipe-status">
+                            <div class="status-icon">❌</div>
+                            <div class="status-text">Não selecionada</div>
+                        </div>
+                        <div class="equipe-points">+10 pontos</div>
+                    </div>
+                    <div class="equipe-glow"></div>
+                    <input type="checkbox" id="equipe_{{ equipe.id }}" value="{{ equipe.id }}" style="display: none;">
                 </div>
                 {% endfor %}
             </div>
             <div class="acoes-finais">
-                <button id="btnConfirmarAcertos" class="btn-confirmar">CONFIRMAR ACERTOS</button>
-                <button id="btnVoltarRoleta" class="btn-voltar">VOLTAR À ROLETA</button>
+                <button id="btnConfirmarVoltar" class="btn-confirmar-voltar">
+                    <span class="btn-icon">✅</span>
+                    <span class="btn-text">CONFIRMAR E VOLTAR À ROLETA</span>
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        const questaoId = {{ questao.id }};
-        const respostaCorreta = {{ questao.resposta_correta }};
+        const questaoId = parseInt('{{ questao.id }}');
+        const respostaCorreta = parseInt('{{ questao.resposta_correta }}');
 
         document.getElementById('btnRevelarResposta').addEventListener('click', function() {
             // Destacar resposta correta
@@ -73,9 +85,93 @@
             // Mostrar seção de equipes
             document.getElementById('secaoEquipes').style.display = 'block';
             this.style.display = 'none';
+            
+            // Configurar interatividade dos cards das equipes
+            setupEquipeCards();
         });
 
-        document.getElementById('btnConfirmarAcertos').addEventListener('click', function() {
+        function setupEquipeCards() {
+            const equipeCards = document.querySelectorAll('.equipe-card');
+            
+            equipeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const equipeId = this.getAttribute('data-equipe-id');
+                    const checkbox = document.getElementById(`equipe_${equipeId}`);
+                    const statusIcon = this.querySelector('.status-icon');
+                    const statusText = this.querySelector('.status-text');
+                    const isSelected = checkbox.checked;
+                    
+                    if (isSelected) {
+                        // Desselecionar
+                        checkbox.checked = false;
+                        this.classList.remove('selected');
+                        statusIcon.textContent = '❌';
+                        statusText.textContent = 'Não selecionada';
+                        
+                        // Animação de deseleção
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                    } else {
+                        // Selecionar
+                        checkbox.checked = true;
+                        this.classList.add('selected');
+                        statusIcon.textContent = '✅';
+                        statusText.textContent = 'Acertou!';
+                        
+                        // Animação de seleção
+                        this.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                        
+                        // Efeito de confete
+                        createConfetti(this);
+                    }
+                });
+            });
+        }
+
+        function createConfetti(element) {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'];
+            
+            for (let i = 0; i < 15; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.cssText = `
+                    position: absolute;
+                    width: 8px;
+                    height: 8px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 1000;
+                `;
+                
+                const rect = element.getBoundingClientRect();
+                confetti.style.left = (rect.left + rect.width / 2) + 'px';
+                confetti.style.top = (rect.top + rect.height / 2) + 'px';
+                
+                document.body.appendChild(confetti);
+                
+                // Animação do confete
+                const angle = (Math.PI * 2 * i) / 15;
+                const distance = 50 + Math.random() * 50;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                
+                confetti.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${x}px, ${y}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 800,
+                    easing: 'ease-out'
+                }).onfinish = () => confetti.remove();
+            }
+        }
+
+        document.getElementById('btnConfirmarVoltar').addEventListener('click', function() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const equipesAcertos = Array.from(checkboxes).map(cb => parseInt(cb.value));
 
@@ -92,21 +188,16 @@
             .then(response => response.json())
             .then(data => {
                 if (data.sucesso) {
-                    alert('Respostas registradas com sucesso!');
-                    // Habilitar botão de voltar
-                    document.getElementById('btnVoltarRoleta').disabled = false;
+                    // Voltar diretamente à roleta sem mensagem
+                    window.location.href = '/roleta';
                 } else {
-                    alert('Erro ao registrar respostas');
+                    alert('Erro ao registrar respostas: ' + (data.erro || 'Erro desconhecido'));
                 }
             })
             .catch(error => {
                 console.error('Erro:', error);
-                alert('Erro ao processar respostas');
+                alert('Erro ao processar respostas: ' + error.message);
             });
-        });
-
-        document.getElementById('btnVoltarRoleta').addEventListener('click', function() {
-            window.location.href = '/roleta';
         });
     </script>
 </body>

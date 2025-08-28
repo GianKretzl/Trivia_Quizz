@@ -146,6 +146,13 @@
                         }
                     });
                 }
+
+                // Verificar se a página foi carregada vinda de uma pergunta
+                // Se sim, recarregar o placar imediatamente
+                if (document.referrer.includes('/pergunta')) {
+                    console.log('Retornando da página de pergunta, atualizando placar...');
+                    setTimeout(carregarPlacar, 100); // Pequeno atraso para garantir que a página carregou
+                }
             });
 
             function stopOnClick() {
@@ -177,24 +184,34 @@
             }       
 
     // Carregar equipes reais do backend (GET)
-    fetch('/api/estado_jogo')
-        .then(response => response.json())
-        .then(data => {
-            if (data.equipes && data.equipes.length > 0) {
-                atualizarPlacar(data.equipes);
-            } else {
-                // fallback: mostra exemplo
+    function carregarPlacar() {
+        fetch('/api/estado_jogo')
+            .then(response => response.json())
+            .then(data => {
+                if (data.equipes && data.equipes.length > 0) {
+                    atualizarPlacar(data.equipes);
+                    console.log('Placar atualizado:', data.equipes);
+                } else {
+                    // fallback: mostra exemplo
+                    atualizarPlacar([
+                        {nome: 'Equipe Azul', cor: 'azul', pontos: 0},
+                        {nome: 'Equipe Laranja', cor: 'laranja', pontos: 0}
+                    ]);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao carregar placar:', error);
                 atualizarPlacar([
                     {nome: 'Equipe Azul', cor: 'azul', pontos: 0},
                     {nome: 'Equipe Laranja', cor: 'laranja', pontos: 0}
                 ]);
-            }
-        })
-        .catch(() => {
-            atualizarPlacar([
-                {nome: 'Equipe Azul', cor: 'azul', pontos: 0},
-                {nome: 'Equipe Laranja', cor: 'laranja', pontos: 0}
-            ]);
-        });
+            });
+    }
+
+    // Carregar placar ao inicializar a página
+    carregarPlacar();
+
+    // Recarregar placar a cada 5 segundos para manter atualizado
+    setInterval(carregarPlacar, 5000);
 
     </script>

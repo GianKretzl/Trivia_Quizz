@@ -126,37 +126,60 @@ def pergunta(tema=None):
 
 @app.route('/processar_respostas', methods=['POST'])
 def processar_respostas():
-    dados = request.get_json()
-    questao_id = dados.get('questao_id')
-    equipes_acertos = dados.get('equipes_acertos', [])
-    
-    questao = Questao.query.get(questao_id)
-    if not questao:
-        return jsonify({'erro': 'Questão não encontrada'}), 404
-    
-    # Pegar o último número de rodada
-    ultima_rodada = db.session.query(db.func.max(Rodada.numero)).scalar() or 0
-    novo_numero_rodada = ultima_rodada + 1
-    
-    # Registrar rodadas para todas as equipes
-    turma = Turma.query.order_by(Turma.id.desc()).first()
-    equipes = Equipe.query.filter_by(turma_id=turma.id).all()
-    
-    for equipe in equipes:
-        acertou = equipe.id in equipes_acertos
-        rodada = Rodada(
-            equipe_id=equipe.id,
-            questao_id=questao_id,
-            tema=questao.tema,
-            acertou=acertou,
-            resposta=questao.resposta_correta if acertou else "",
-            numero=novo_numero_rodada
-        )
-        db.session.add(rodada)
-    
-    db.session.commit()
-    
-    return jsonify({'sucesso': True, 'rodada': novo_numero_rodada})
+    try:
+        dados = request.get_json()
+        print(f"Dados recebidos: {dados}")
+        
+        questao_id = dados.get('questao_id')
+        equipes_acertos = dados.get('equipes_acertos', [])
+        
+        print(f"Processando questao_id: {questao_id}, equipes_acertos: {equipes_acertos}")
+        
+        questao = Questao.query.get(questao_id)
+        if not questao:
+            print(f"Questão {questao_id} não encontrada")
+            return jsonify({'erro': 'Questão não encontrada', 'sucesso': False}), 404
+        
+        # Pegar o último número de rodada
+        ultima_rodada = db.session.query(db.func.max(Rodada.numero)).scalar() or 0
+        novo_numero_rodada = ultima_rodada + 1
+        
+        print(f"Nova rodada número: {novo_numero_rodada}")
+        
+        # Registrar rodadas para todas as equipes
+        turma = Turma.query.order_by(Turma.id.desc()).first()
+        if not turma:
+            print("Nenhuma turma encontrada")
+            return jsonify({'erro': 'Nenhuma turma encontrada', 'sucesso': False}), 404
+            
+        equipes = Equipe.query.filter_by(turma_id=turma.id).all()
+        print(f"Equipes encontradas: {[(e.id, e.nome) for e in equipes]}")
+        
+        rodadas_criadas = 0
+        for equipe in equipes:
+            acertou = equipe.id in equipes_acertos
+            print(f"Equipe {equipe.nome} (ID: {equipe.id}): {'ACERTOU' if acertou else 'ERROU'}")
+            
+            rodada = Rodada(
+                equipe_id=equipe.id,
+                questao_id=questao_id,
+                tema=questao.tema,
+                acertou=acertou,
+                resposta=questao.resposta_correta if acertou else "",
+                numero=novo_numero_rodada
+            )
+            db.session.add(rodada)
+            rodadas_criadas += 1
+        
+        db.session.commit()
+        print(f"Sucesso! {rodadas_criadas} rodadas criadas")
+        
+        return jsonify({'sucesso': True, 'rodada': novo_numero_rodada, 'rodadas_criadas': rodadas_criadas})
+        
+    except Exception as e:
+        print(f"Erro ao processar respostas: {str(e)}")
+        db.session.rollback()
+        return jsonify({'erro': f'Erro interno: {str(e)}', 'sucesso': False}), 500
 
 @app.route('/api/estado_jogo', methods=['GET'])
 def estado_jogo():
@@ -166,11 +189,17 @@ def estado_jogo():
     if turma:
         equipes_db = Equipe.query.filter_by(turma_id=turma.id).all()
         for eq in equipes_db:
+            # Calcular pontuação total da equipe
+            pontos = db.session.query(db.func.count(Rodada.id)).filter_by(
+                equipe_id=eq.id, 
+                acertou=True
+            ).scalar() * 10
+            
             equipes.append({
                 'id': eq.id,
                 'nome': eq.nome,
                 'cor': eq.cor,
-                'pontos': 0
+                'pontos': pontos
             })
     return jsonify({
         'equipes': equipes,
