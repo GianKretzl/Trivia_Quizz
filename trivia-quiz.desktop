@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Trivia Quiz - Eureka do Padre
+Comment=Gincana do Conhecimento
+Exec=/home/$USER/Documents/Trivia_Quizz/start.sh
+Icon=/home/$USER/Documents/Trivia_Quizz/static/img/Eureka.jpeg
+Path=/home/$USER/Documents/Trivia_Quizz
+Terminal=true
+StartupNotify=false

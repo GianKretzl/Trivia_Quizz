@@ -1,17 +1,22 @@
 import json
-def importar_perguntas_6ano():
+
+def importar_perguntas(ano, arquivo):
+    """Importa perguntas de um arquivo específico para uma turma específica"""
     try:
-        with open('data/perguntas.json', encoding='utf-8') as f:
+        with open(arquivo, encoding='utf-8') as f:
             perguntas = json.load(f)
-        turma = Turma.query.filter_by(nome='6_ano').first()
+        
+        turma_nome = f'{ano}_ano'
+        turma = Turma.query.filter_by(nome=turma_nome).first()
         if not turma:
-            turma = Turma(nome='6_ano')
+            turma = Turma(nome=turma_nome)
             db.session.add(turma)
             db.session.commit()
+        
         # Só importa se não houver questões dessa turma
         existe = Questao.query.filter_by(turma_id=turma.id).first()
         if not existe:
-            for disciplina, lista in perguntas['6_ano'].items():
+            for disciplina, lista in perguntas[turma_nome].items():
                 for p in lista:
                     enunciado = p['pergunta']
                     alternativas = json.dumps(p['opcoes'], ensure_ascii=False)
@@ -26,9 +31,21 @@ def importar_perguntas_6ano():
                     )
                     db.session.add(questao)
             db.session.commit()
-            print('Perguntas do 6º ano importadas automaticamente.')
+            print(f'Perguntas do {ano}º ano importadas automaticamente.')
     except Exception as e:
-        print('Erro ao importar perguntas do 6º ano:', e)
+        print(f'Erro ao importar perguntas do {ano}º ano:', e)
+
+def importar_perguntas_6ano():
+    """Importa perguntas do 6º ano"""
+    importar_perguntas(6, 'data/perguntas_6_ano.json')
+
+def importar_perguntas_7ano():
+    """Importa perguntas do 7º ano"""
+    importar_perguntas(7, 'data/perguntas_7_ano.json')
+
+def importar_perguntas_8ano():
+    """Importa perguntas do 8º ano"""
+    importar_perguntas(8, 'data/perguntas_8_ano.json')
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 import os
 from models import db, Turma, Equipe, Questao, Rodada
@@ -45,6 +62,8 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     importar_perguntas_6ano()
+    importar_perguntas_7ano()
+    importar_perguntas_8ano()
 # Rotas extras para relatório, novo jogo e pergunta
 @app.route('/relatorio')
 def relatorio():
@@ -251,13 +270,19 @@ CORES_EQUIPES = [
     {'nome': 'ROSA BEBÊ', 'hex': '#FFB6C1'}
 ]
 
-def carregar_perguntas():
-    """Carrega as perguntas do arquivo JSON"""
+def carregar_perguntas(ano=None):
+    """Carrega as perguntas do arquivo JSON correspondente ao ano"""
+    if ano:
+        arquivo = f'data/perguntas_{ano}_ano.json'
+    else:
+        # Para manter compatibilidade
+        arquivo = 'data/perguntas_6_ano.json'
+    
     try:
-        with open('data/perguntas.json', 'r', encoding='utf-8') as file:
+        with open(arquivo, 'r', encoding='utf-8') as file:
             return json.load(file)
     except FileNotFoundError:
-        print("Arquivo de perguntas não encontrado!")
+        print(f"Arquivo de perguntas não encontrado: {arquivo}")
         return {}
 
 
@@ -424,4 +449,6 @@ def reset_jogo():
     return jsonify({'sucesso': True})
 
 if __name__ == '__main__':
+    # Para acesso apenas local: app.run(debug=True)
+    # Para acesso na rede local: app.run(host='0.0.0.0', port=5000, debug=True)
     app.run(debug=True)

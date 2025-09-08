@@ -1,0 +1,466 @@
+{
+  "7_ano": {
+    "portugues": [
+      {
+        "pergunta": "Leia o texto: A visita à biblioteca. Na última sexta-feira, os alunos do 7º ano fizeram uma visita à biblioteca municipal da cidade. Eles foram acompanhados pela professora de Língua Portuguesa, que os orientou sobre como encontrar livros por assunto e autor. Durante a visita, os alunos puderam escolher livros para empréstimo e participar de uma roda de leitura. Em que dia os alunos visitaram a biblioteca?",
+        "opcoes": [
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado",
+          "Segunda-feira"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Leia o texto: Uma surpresa no aniversário. No dia do seu aniversário, Ana recebeu uma festa surpresa organizada por seus amigos. Ela ficou muito emocionada ao chegar em casa e ver todos reunidos com bolo, balões e presentes. Foi um dia muito especial para ela. Quem organizou a festa surpresa?",
+        "opcoes": [
+          "A mãe de Ana",
+          "Os vizinhos",
+          "Os amigos de Ana",
+          "Os professores"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Leia o trecho a seguir: Cuidar do planeta. Mariana aprendeu na escola que pequenas atitudes fazem grande diferença. Agora, separa o lixo reciclável, evita desperdícios e fala para os amigos não jogarem lixo no chão. Ela acredita que, se cada um fizer a sua parte, o mundo será melhor. O tema central do texto é:",
+        "opcoes": [
+          "A amizade entre os colegas",
+          "A importância da escola",
+          "A preservação do meio ambiente",
+          "A responsabilidade de Mariana com seus amigos"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Leia o trecho: O livro esquecido. Ana encontrou um livro antigo na estante da avó. Curiosa, começou a ler e não conseguiu parar. A história era envolvente, e ela descobriu o quanto gostava de ler. Desde então, não passa um mês sem iniciar uma nova leitura. Qual é o tema desenvolvido no texto?",
+        "opcoes": [
+          "A organização da estante da avó",
+          "O prazer pela leitura descoberto por Ana",
+          "A dificuldade de entender livros antigos",
+          "A convivência entre avó e neta"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Frase: O aluno respondeu, calmamente: — Terminei a atividade, professora. O travessão (—) foi usado para:",
+        "opcoes": [
+          "Destacar uma expressão irônica",
+          "Separar uma oração explicativa",
+          "Indicar uma fala direta no discurso",
+          "Indicar dúvida ou interrupção"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Texto: Oi, Lucas! Blz? Tô te mandando essa msg só pra lembrar do jogo amanhã, 9h no campinho. Leva a bola! 👍 A linguagem usada no texto é:",
+        "opcoes": [
+          "Formal, usada em situações oficiais",
+          "Informal, usada entre amigos",
+          "Técnica, usada em manuais",
+          "Jornalística, usada em reportagens"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Leia o trecho: Era uma manhã chuvosa quando Clara saiu de casa com seu guarda-chuva amarelo. Caminhou até a praça, onde costumava encontrar os amigos. Mas, naquele dia, ela encontrou algo diferente: uma caixa misteriosa embaixo do banco. Nesse trecho, o elemento da narrativa que corresponde ao espaço é:",
+        "opcoes": [
+          "Clara",
+          "A caixa misteriosa",
+          "A praça",
+          "A manhã chuvosa"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Leia com atenção: Durante a tempestade, o vento uivava pelas janelas da casa. A palavra 'uivava' dá a ideia de:",
+        "opcoes": [
+          "Um som suave e calmo",
+          "Um barulho forte e assustador",
+          "O som de alguém cantando",
+          "O silêncio da noite"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Leia: A professora elogiou Lucas por seu comportamento exemplar na sala de aula. No contexto, a palavra 'exemplar' significa:",
+        "opcoes": [
+          "Que deve ser copiado como modelo",
+          "Que veio com um livro",
+          "Que tem muitos erros",
+          "Que é brincalhão"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Leia: Mais áreas verdes nas cidades! As cidades precisam de mais parques e áreas verdes. Além de deixar o ambiente mais bonito, esses espaços ajudam a melhorar a qualidade do ar, diminuem o calor e promovem o bem-estar da população. Qual é o argumento principal que o autor usa para defender sua opinião?",
+        "opcoes": [
+          "As árvores ocupam muito espaço",
+          "As áreas verdes são boas para a saúde e o ambiente",
+          "Os parques são lugares perigosos",
+          "As cidades já têm verde suficiente"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "lingua_inglesa": [
+      {
+        "pergunta": "Leia o texto abaixo: 'My name is Julia and I have two best friends. We like to go to the park on weekends. We play soccer and eat ice cream. It's always fun!' What do Julia and her friends do on weekends?",
+        "opcoes": [
+          "They study together",
+          "They go to school",
+          "They go to the park",
+          "They watch TV"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Complete the sentence with the correct form of the verb 'to be': My parents ___ at home now.",
+        "opcoes": [
+          "is",
+          "am",
+          "are",
+          "be"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Choose the correct pronoun for the sentence: This is my friend Lucas. ___ is 13 years old.",
+        "opcoes": [
+          "She",
+          "It",
+          "He",
+          "You"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "matematica": [
+      {
+        "pergunta": "Considere os quadriláteros apresentados na malha quadriculada. Os paralelogramos estão representados pelos quadriláteros:",
+        "opcoes": [
+          "I, II e III",
+          "II e III",
+          "II, III e IV",
+          "III e IV"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Gilberto é lutador. Ele luta na categoria Peso Médio, para adultos de até 82,30 quilogramas. Gilberto pesou após as férias e viu que sua massa era de 88,15 quilogramas. Quantos quilogramas, no mínimo, Gilberto precisa emagrecer para poder voltar a lutar na categoria Peso Médio?",
+        "opcoes": [
+          "5,85",
+          "6,25",
+          "6,85",
+          "6,95"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Rafael entrou com seu carro no estacionamento representado no desenho, virou no segundo corredor à direita e estacionou na segunda vaga à esquerda. Qual é o número da vaga em que Rafael estacionou seu carro?",
+        "opcoes": [
+          "11",
+          "19",
+          "27",
+          "30"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Patrícia fez uma viagem de carro de Belo Horizonte – MG até Petrópolis – RJ, percorrendo 378 km. Qual foi a distância, em metros, que Patrícia percorreu nessa viagem?",
+        "opcoes": [
+          "3.780",
+          "37.800",
+          "378.000",
+          "3.780.000"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Em uma loja de artigos esportivos foi anunciada uma promoção na qual todos os tênis estavam com 40% de desconto. Pedro foi a essa loja e comprou um tênis com o desconto anunciado. Sem a promoção, esse tênis custa R$ 150,00. Quanto Pedro teve de desconto na compra desse tênis?",
+        "opcoes": [
+          "R$ 110,00",
+          "R$ 90,00",
+          "R$ 60,00",
+          "R$ 40,00"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Observe a operação apresentada no quadro. Qual o resultado dessa operação?",
+        "opcoes": [
+          "916",
+          "68",
+          "64",
+          "94"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Observe o polígono desenhado no plano cartesiano. O vértice que possui as coordenadas (4,1) é o ponto:",
+        "opcoes": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Felipe realizou o controle financeiro mensal de sua loja de churros pelo período de seis meses e o registrou em um gráfico. Conforme os dados do gráfico de colunas, qual o saldo dos quatro primeiros meses do ano?",
+        "opcoes": [
+          "2240 reais",
+          "4390 reais",
+          "5740 reais",
+          "8040 reais"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Sônia lançou o seguinte desafio para seus alunos: 'Qual o resultado da expressão numérica a seguir?' (-9)² - (5) . (16)",
+        "opcoes": [
+          "-6",
+          "-1",
+          "+8",
+          "+1"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Na atmosfera, a temperatura diminui cerca de 1 grau a cada 200 m de afastamento da superfície terrestre. Se a temperatura na superfície é de +20 °C, qual será a temperatura na atmosfera a uma altura de 10 km?",
+        "opcoes": [
+          "40°C",
+          "20°C",
+          "-10°C",
+          "-30°C"
+        ],
+        "resposta_correta": 3
+      }
+    ],
+    "historia": [
+      {
+        "pergunta": "Movimento artístico, intelectual, científico e filosófico que surgiu na Itália no século XIV, e que se espalhou pelo resto da Europa nos séculos seguintes:",
+        "opcoes": [
+          "Revolução Francesa",
+          "Inconfidência Mineira",
+          "Renascimento",
+          "Expressionismo"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Foi um pintor, escultor e arquiteto italiano, considerado um dos maiores representantes do Renascimento Italiano. 'Pietá', 'O Juízo Final', 'Moisés', 'Davi' e 'A Abóbada da Capela Sistina' são algumas das obras que eternizaram o artista. O texto refere-se à:",
+        "opcoes": [
+          "Michelangelo",
+          "Leonardo da Vinci",
+          "Donatello",
+          "Rafael"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "O Renascimento expandiu para toda a Europa através de vários escritores. Um deles, foi um extraordinário escritor espanhol, e sua principal obra é Dom Quixote de La Mancha. Nesta obra ironiza os ideais da cavalaria medieval. Essas informações referem-se à:",
+        "opcoes": [
+          "Luís Vaz de Camões",
+          "Miguel de Cervantes",
+          "William Shakespeare",
+          "Thomas More"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Durante o século XVI, Martinho Lutero iniciou um movimento que questionava a autoridade da Igreja Católica, criticando práticas como a venda de indulgências. Esse movimento ficou conhecido como:",
+        "opcoes": [
+          "Iluminismo",
+          "Revolução Industrial",
+          "Contrarreforma",
+          "Reforma Protestante"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Em resposta à Reforma Protestante, a Igreja Católica iniciou um processo de mudanças internas para recuperar fiéis e reafirmar seus princípios. Esse movimento ficou conhecido como:",
+        "opcoes": [
+          "Humanismo",
+          "Absolutismo",
+          "Contrarreforma",
+          "Mercantilismo"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "No fim da Idade Média, os reis europeus começaram a concentrar mais poder em suas mãos, diminuindo o poder da nobreza e da Igreja, criando um novo tipo de estado. Esse processo é conhecido como:",
+        "opcoes": [
+          "Democracia, com o povo no poder",
+          "Feudalismo",
+          "República",
+          "Formação dos Estados Modernos"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Nos séculos XVI e XVII, reis europeus acumulavam poder absoluto e controlavam a economia por meio do mercantilismo, que buscava o acúmulo de riquezas para o Estado. Esse modelo político ficou conhecido como:",
+        "opcoes": [
+          "Capitalismo moderno",
+          "Socialismo europeu",
+          "Absolutismo",
+          "Democracia liberal"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Durante os séculos XV e XVI, os europeus realizaram expedições marítimas em busca de novas rotas comerciais e riquezas. Essas viagens ficaram conhecidas como:",
+        "opcoes": [
+          "Cruzadas religiosas",
+          "Revoluções industriais",
+          "Grandes Navegações",
+          "Descobrimento das Américas"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Portugal e Espanha foram os pioneiros nas explorações marítimas. Para evitar brigas pelas terras descobertas, os dois países fizeram um acordo com a ajuda do Papa. Esse acordo ficou conhecido como:",
+        "opcoes": [
+          "Tratado de Utrecht",
+          "Tratado de Madri",
+          "Tratado de Versalhes",
+          "Tratado de Tordesilhas"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "João Calvino acreditava que as pessoas nada podiam fazer para mudar seu destino, essa crença era chamada de:",
+        "opcoes": [
+          "Predestinação Absoluta",
+          "Eleição divina",
+          "Graça irresistível",
+          "Karma"
+        ],
+        "resposta_correta": 0
+      }
+    ],
+    "geografia": [
+      {
+        "pergunta": "As pirâmides etárias são representações gráficas fundamentais para o estudo da geografia das populações. Quais são as duas variáveis utilizadas nesses gráficos?",
+        "opcoes": [
+          "natalidade e gênero",
+          "renda e idade",
+          "sexo e mortalidade",
+          "idade e sexo"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "O Instituto Brasileiro de Geografia e Estatística (IBGE) é uma instituição governamental Federal que reúne aspectos de ordem natural e humana para dividir o território brasileiro em:",
+        "opcoes": [
+          "Cinco Grandes Regiões",
+          "Quatro Grandes Regiões",
+          "Três Grandes Regiões",
+          "Duas Grandes Regiões"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "No Brasil, a partir de 1950, intensificou-se o processo de êxodo rural. Quais fatores foram determinantes para esse movimento?",
+        "opcoes": [
+          "A mecanização da agricultura, a concentração de terras e a oferta de trabalho nas cidades",
+          "O aumento da oferta de empregos no setor rural e a valorização da agricultura familiar",
+          "A diminuição da industrialização, a inovação tecnológica rural e o incentivo à permanência no campo",
+          "A criação de políticas públicas que garantiram melhores condições de vida para os trabalhadores rurais e a distribuição de terras"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "São formas de relevo encontradas no Brasil:",
+        "opcoes": [
+          "Planaltos, depressões e vulcões ativos",
+          "Praias, depressões e planícies",
+          "Planícies, planaltos e depressões",
+          "Cordilheiras, planaltos e lagos"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O Brasil possui diferenças de horários em seu território, devido à grande extensão territorial. Quantos diferentes fusos horários podemos encontrar no Brasil?",
+        "opcoes": [
+          "1 fuso horário",
+          "2 fusos horários",
+          "3 fusos horários",
+          "4 fusos horários"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual domínio morfoclimático brasileiro é caracterizado por vegetação xerófila (adaptada a ambientes secos)?",
+        "opcoes": [
+          "Amazônia",
+          "Cerrado",
+          "Caatinga",
+          "Mata de Araucárias"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A latitude é um importante fator climático que auxilia na caracterização do clima de uma localidade. Em zonas de baixa latitude, predomina clima do tipo:",
+        "opcoes": [
+          "equatorial",
+          "frio de montanha",
+          "polar",
+          "subtropical"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Dentre as opções a seguir, qual delas apresenta a associação correta entre a sigla de um estado brasileiro e seu nome completo?",
+        "opcoes": [
+          "PB - Pernambuco",
+          "PA - Paraná",
+          "MA - Amazonas",
+          "BA - Bahia"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual das seguintes associações entre um estado brasileiro e sua região, de acordo com o Instituto Brasileiro de Geografia e Estatística (IBGE), está correta?",
+        "opcoes": [
+          "Minas Gerais - Região Sul",
+          "Santa Catarina - Região Sudeste",
+          "Maranhão - Região Norte",
+          "Mato Grosso do Sul - Região Centro-Oeste"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "A primeira atividade econômica desenvolvida no Brasil pelos colonizadores portugueses foi:",
+        "opcoes": [
+          "cana-de-açúcar",
+          "pau-brasil",
+          "borracha",
+          "ouro"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "educacao_fisica": [
+      {
+        "pergunta": "O que é importante fazer antes de começar uma prática corporal de aventura?",
+        "opcoes": [
+          "comer muito doce",
+          "correr sem parar e sem olhar para onde vai",
+          "esquecer a água e ir sem companhia",
+          "verificar se tudo está seguro e usar equipamentos certos"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Os jogos eletrônicos podem ter benefícios além do entretenimento. Qual das seguintes é um benefício associado ao ato de jogar videogame?",
+        "opcoes": [
+          "melhora a capacidade de resolução de problemas",
+          "diminuição da coordenação motora",
+          "aumenta o isolamento social",
+          "perda total da memória"
+        ],
+        "resposta_correta": 0
+      }
+    ]
+  }
+}

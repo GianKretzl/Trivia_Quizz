@@ -1,0 +1,808 @@
+{
+  "8_ano": {
+    "educacao_fisica": [
+      {
+        "pergunta": "Qual dos seguintes esportes é um esporte de rede?",
+        "opcoes": [
+          "natação",
+          "basquete",
+          "voleibol",
+          "atletismo"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "No voleibol, quantos toques no máximo uma equipe pode dar na bola antes de enviá-la para o lado adversário?",
+        "opcoes": [
+          "4 toques",
+          "3 toques",
+          "2 toques",
+          "1 toque"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "portugues": [
+      {
+        "pergunta": "Em qual das frases a palavra sublinhada é um advérbio de tempo? A) Nós sairemos amanhã para a excursão. B) Ela morava longe da cidade. C) Ele muito se esforçou para aprender. D) Os alunos estudam bem para a prova.",
+        "opcoes": [
+          "Nós sairemos amanhã para a excursão",
+          "Ela morava longe da cidade",
+          "Ele muito se esforçou para aprender",
+          "Os alunos estudam bem para a prova"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Em qual das frases a concordância verbal está incorreta?",
+        "opcoes": [
+          "Havia muitas pessoas na praça",
+          "Choveu muito ontem à noite",
+          "Os Estados Unidos é uma potência",
+          "Fazem dez anos que ele se mudou"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual opção apresenta o uso correto da crase?",
+        "opcoes": [
+          "Cheguei a tempo para a reunião",
+          "Refiro-me àquele assunto",
+          "Ele foi a pé para o trabalho",
+          "Vou à praia no feriado"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "No trecho 'O sol beijava as montanhas ao entardecer.', qual figura de linguagem está presente?",
+        "opcoes": [
+          "Comparação",
+          "Metáfora",
+          "Personificação",
+          "Hipérbole"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual alternativa apresenta a pontuação correta?",
+        "opcoes": [
+          "O menino, leu um livro",
+          "Ontem ele estudou, hoje, ele descansou",
+          "Ela comprou frutas, pão e leite",
+          "Maria, minha amiga, chegou cedo"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Assinale a frase em que o termo 'mas' poderia ser substituído por 'porém' sem alteração de sentido:",
+        "opcoes": [
+          "Chegou cedo, mas não encontrou ninguém",
+          "Não estudo, mas trabalho",
+          "Ele queria ir, mas o pai não deixou",
+          "Ela não só canta, mas também dança"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Em qual palavra o prefixo 'in-' indica negação?",
+        "opcoes": [
+          "Infeliz",
+          "Inibir",
+          "Injetar",
+          "Incluir"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Qual alternativa apresenta um par de palavras homônimas?",
+        "opcoes": [
+          "Fino - Grosso",
+          "Casa (moradia) - Casar (matrimônio)",
+          "Comprimento (extensão) - Cumprimento (saudação)",
+          "Cem (número) - Sem (preposição)"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "No trecho 'A cidade acordou cedo e pôs-se a trabalhar.', o verbo 'pôs-se' está em qual voz verbal?",
+        "opcoes": [
+          "Voz reflexiva",
+          "Voz passiva sintética",
+          "Voz ativa",
+          "Voz passiva analítica"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Leia o trecho: 'Apesar do dia chuvoso, o show foi um sucesso.' Qual é a relação de sentido entre as duas orações?",
+        "opcoes": [
+          "Consequência",
+          "Adição",
+          "Causa",
+          "Concessão"
+        ],
+        "resposta_correta": 3
+      }
+    ],
+    "lingua_inglesa": [
+      {
+        "pergunta": "Leia o trecho: 'Everybody was exhausted after the hike, but enjoying the view made it worthwhile.' Qual é o significado de 'made it worthwhile'?",
+        "opcoes": [
+          "tornou cansativo",
+          "tornou compensador",
+          "tornou impossível",
+          "tornou fácil"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Leia o diálogo: Teacher: 'Who finishes reading first?' John: 'I'll probably take longer—reading fast is not my strength.' O que se entende a partir da fala de John?",
+        "opcoes": [
+          "Ele lê rápido",
+          "Ele não gosta de ler",
+          "Ele terminará por último",
+          "Ele quer ajuda"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "matematica": [
+      {
+        "pergunta": "O ângulo formado em um canto de parede é:",
+        "opcoes": [
+          "Agudo",
+          "Obtuso",
+          "Reto",
+          "Raso"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual o número que está exatamente entre -3 e 1 na reta numérica?",
+        "opcoes": [
+          "-1",
+          "-2",
+          "0",
+          "2"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Um retângulo tem 4 m de largura e 6 m de comprimento. Qual sua área?",
+        "opcoes": [
+          "20 m²",
+          "24 m²",
+          "18 m²",
+          "26 m²"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual fração é equivalente a 3/6?",
+        "opcoes": [
+          "1/3",
+          "1/2",
+          "2/3",
+          "3/4"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Um triângulo tem lados medindo 6 cm, 6 cm e 4 cm. Com base nessas medidas, podemos afirmar que esse triângulo é:",
+        "opcoes": [
+          "Escaleno e retângulo",
+          "Equilátero",
+          "Isósceles",
+          "Retângulo e equilátero"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Um triângulo tem lados de 5 cm, 7 cm e 8 cm. Qual seu perímetro?",
+        "opcoes": [
+          "19 cm",
+          "20 cm",
+          "21 cm",
+          "22 cm"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "0,8 é equivalente a qual fração?",
+        "opcoes": [
+          "4/6",
+          "4/5",
+          "3/4",
+          "5/6"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Se x = 4, quanto vale 3x - 2?",
+        "opcoes": [
+          "10",
+          "12",
+          "14",
+          "16"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Qual o valor de 1,25 + 2,75?",
+        "opcoes": [
+          "3,50",
+          "4,25",
+          "4,00",
+          "4,50"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Se 20% de uma turma de 50 alunos faltaram, quantos alunos faltaram?",
+        "opcoes": [
+          "5",
+          "10",
+          "15",
+          "20"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Ao ampliar uma figura geométrica proporcionalmente, o que acontece com sua área?",
+        "opcoes": [
+          "Permanece",
+          "Diminui",
+          "Aumenta",
+          "Some"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual o volume de um cubo com arestas de 4 cm?",
+        "opcoes": [
+          "16 cm³",
+          "64 cm³",
+          "12 cm³",
+          "48 cm³"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Todo quadrado é:",
+        "opcoes": [
+          "Um retângulo",
+          "Um retângulo e um losango",
+          "Um trapézio",
+          "Um triângulo"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Se Pedro tem o triplo da idade de Lucas, e Lucas tem x anos, qual expressão representa a idade de Pedro?",
+        "opcoes": [
+          "x + x",
+          "x + 3",
+          "x²",
+          "3x"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Num cinema, há 12 fileiras com 16 poltronas e 15 fileiras com 18 poltronas. O número total de poltronas é:",
+        "opcoes": [
+          "192",
+          "270",
+          "462",
+          "480"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Em uma loja de informática, Paulo comprou: um computador no valor de 2200 reais, uma impressora por 800 reais e três cartuchos que custam 90 reais cada um. Os objetos foram pagos em 5 parcelas iguais. O valor de cada parcela, em reais, foi igual a:",
+        "opcoes": [
+          "414",
+          "494",
+          "600",
+          "654"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Uma caixa média contém 6 dúzias de lápis de cor. A caixa maior contém exatamente o triplo. A quantidade de lápis da caixa maior é:",
+        "opcoes": [
+          "18 lápis",
+          "72 lápis",
+          "216 lápis",
+          "180 lápis"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O preço de uma TV LCD 40\" custa à vista, é R$ 1699,00 e, a prazo, o mesmo aparelho custa R$ 1985,50. O juro que se paga na compra do aparelho a prazo é:",
+        "opcoes": [
+          "R$ 314,50",
+          "R$ 286,50",
+          "R$ 316,50",
+          "R$ 276,00"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Uma chácara vende a sua produção de uvas em caixas de 9 kg cada uma. Sabendo que a produção da chácara foi de 5913 kg, o número de caixas obtidas da produção foi:",
+        "opcoes": [
+          "657 caixas",
+          "525 caixas",
+          "661 caixas",
+          "784 caixas"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "A soma das idades de Sofia e Júlia é 16 anos. Sofia é 4 anos mais velha que Júlia. Qual a idade de Sofia?",
+        "opcoes": [
+          "10",
+          "12",
+          "16",
+          "20"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "A Rua Patos do Sul é muito movimentada. Em um minuto passam, aproximadamente, 16 carros. Como 1 hora tem 60 minutos, quantos carros, aproximadamente, passam pela Rua Patos do Sul durante 2 horas?",
+        "opcoes": [
+          "32 carros",
+          "96 carros",
+          "960 carros",
+          "1 920 carros"
+        ],
+        "resposta_correta": 3
+      }
+    ],
+    "ciencias": [
+      {
+        "pergunta": "Qual a principal função do sistema respiratório?",
+        "opcoes": [
+          "Regular os batimentos cardíacos",
+          "Promover a circulação sanguínea",
+          "Absorver o oxigênio e eliminar o gás carbônico",
+          "Produzir nutrientes"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Os alvéolos pulmonares são responsáveis por:",
+        "opcoes": [
+          "Bombear o sangue",
+          "Fazer a troca gasosa com o sangue",
+          "Produzir enzimas digestivas",
+          "Controlar a pressão arterial"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O coração faz parte do sistema:",
+        "opcoes": [
+          "Respiratório",
+          "Excretor",
+          "Circulatório",
+          "Reprodutor"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O principal órgão do sistema excretor (urinário) é:",
+        "opcoes": [
+          "Estômago",
+          "Pulmão",
+          "Coração",
+          "Rins"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "A menstruação ocorre quando:",
+        "opcoes": [
+          "A fecundação acontece",
+          "O óvulo não é fecundado",
+          "O bebê está pronto para nascer",
+          "O ovário deixa de funcionar"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "A gravidez ocorre quando:",
+        "opcoes": [
+          "A ovulação termina",
+          "O espermatozoide fecunda o óvulo",
+          "A menstruação começa",
+          "A mulher tem febre"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Os métodos contraceptivos servem para:",
+        "opcoes": [
+          "Evitar a gravidez e prevenir ISTs",
+          "Evitar doenças apenas",
+          "Aumentar a fertilidade",
+          "Facilitar a fecundação"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "O sangue é bombeado do coração para o corpo por:",
+        "opcoes": [
+          "Veias",
+          "Artérias",
+          "Linfonodos",
+          "Alvéolos"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "A urina é formada nos:",
+        "opcoes": [
+          "Intestinos",
+          "Fígado",
+          "Rins",
+          "Pulmões"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Uma alimentação equilibrada deve conter:",
+        "opcoes": [
+          "Apenas proteínas e açúcares",
+          "Vitaminas, minerais, proteínas, carboidratos e fibras",
+          "Fast food e refrigerante",
+          "Gordura e sal em excesso"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "geografia": [
+      {
+        "pergunta": "Área delimitada por fronteiras, onde uma determinada sociedade exerce controle e poder sobre seus recursos naturais, econômicos e culturais. O texto refere-se ao conceito de:",
+        "opcoes": [
+          "Território",
+          "Governo",
+          "Estado",
+          "Nação"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Uma das principais funções da ONU é:",
+        "opcoes": [
+          "estabelecer a paz na Europa",
+          "afastar os conflitos nas áreas populosas",
+          "manter a paz e a segurança internacional",
+          "regulamentar o uso de armamentos dos países em guerra"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A Índia caracteriza-se como um país populoso. O conceito de populoso refere-se à:",
+        "opcoes": [
+          "densidade demográfica de um determinado país",
+          "taxa de nascimentos ocorridos em um ano",
+          "diferença entre a taxa de natalidade e a taxa de mortalidade",
+          "um lugar onde há grande número de habitantes"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "O Muro de Berlim foi um símbolo da:",
+        "opcoes": [
+          "Guerra Fria",
+          "União Soviética",
+          "Capitalismo",
+          "Segunda Guerra Mundial"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Promover a diversidade cultural é um passo fundamental para:",
+        "opcoes": [
+          "enfatizar a segregação social",
+          "motivar a exclusão de grupos étnicos",
+          "respeitar as diferentes manifestações culturais",
+          "criar uma sociedade menos inclusiva e igualitária"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A grande extensão territorial no sentido norte-sul da América, a variação de temperatura e as diferenças de altitude fazem com que o continente americano:",
+        "opcoes": [
+          "apresente apenas um clima ao longo do seu território",
+          "tenha florestas tropicais em todo o seu território",
+          "apresente clima e vegetação idênticos em todo o seu território",
+          "tenha variedade de vegetação e clima ao longo de seu território"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "A industrialização na América Latina ocorreu de forma:",
+        "opcoes": [
+          "tardia",
+          "original",
+          "clássica",
+          "adiantada"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Uma forma de regionalizar o continente africano é a divisão a partir de suas características étnicas, históricas e culturais. Assim, esses países podem ser agrupados e divididos em duas grandes regiões, que são:",
+        "opcoes": [
+          "África do Norte e Subsaariana",
+          "África do Norte e Setentrional",
+          "África Subsaariana e Central",
+          "África Subsaariana e Meridional"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "A colonização europeia uniu à força diferentes povos africanos em um mesmo território. Mesmo depois que esses países se tornaram independentes, o que mais acontece é:",
+        "opcoes": [
+          "A África consegue guardar muitos recursos de energia, o que a torna bem rica",
+          "Só os colonizadores europeus ainda têm vantagens na África",
+          "Os europeus estão criando novas divisões de terra na África",
+          "Há muitas brigas entre os diferentes grupos étnicos e várias guerras civis"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual dos seguintes é um continente polar, coberto por uma vasta camada de gelo e lar de uma fauna única, como pinguins e focas?",
+        "opcoes": [
+          "África",
+          "Antártida",
+          "Austrália",
+          "Europa"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Nome da construção de uma barreira física na Alemanha durante a Guerra Fria, que dividia Berlim ao meio:",
+        "opcoes": [
+          "Torre Eiffel",
+          "Muro das Lamentações",
+          "Portão de Berlim",
+          "Muro de Berlim"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Criada para a defesa dos países capitalistas contra os países socialistas na Guerra Fria. Essa organização é:",
+        "opcoes": [
+          "Organização do Tratado do Atlântico Norte (OTAN)",
+          "Organização das Nações Unidas (ONU)",
+          "Fundo Monetário Internacional (FMI)",
+          "União Europeia (UE)"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Por volta de 1980, o êxodo rural mudou o perfil da população, pois as pessoas:",
+        "opcoes": [
+          "se mudaram das cidades para o campo",
+          "se mudaram do campo para as cidades",
+          "que viviam nas cidades passaram a ter mais filhos",
+          "que viviam no espaço rural passaram a ter mais filhos"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "As girafas, assim como outros mamíferos, habitam regiões da África de clima tropical, com a presença de gramíneas, arbustos e árvores baixas e espaçadas, chamadas de:",
+        "opcoes": [
+          "Vegetações Desérticas",
+          "Florestas Tropicais",
+          "Savanas",
+          "Taiga"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A população africana se caracteriza por:",
+        "opcoes": [
+          "pela grande diversidade cultural",
+          "pela prática de costumes europeus",
+          "pelos altos indicadores sociais",
+          "pelos baixos índices de natalidade"
+        ],
+        "resposta_correta": 0
+      }
+    ],
+    "historia": [
+      {
+        "pergunta": "O que foi o absolutismo?",
+        "opcoes": [
+          "Governo dos trabalhadores",
+          "Poder total concentrado no rei",
+          "Sistema comunista",
+          "República com eleições"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual era a principal atividade econômica do Brasil no século XVII?",
+        "opcoes": [
+          "Mineração",
+          "Produção de café",
+          "Pecuária",
+          "Cultivo de açúcar"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "O que foi o Iluminismo?",
+        "opcoes": [
+          "Movimento religioso",
+          "Movimento de ideias que defendia a razão e a liberdade",
+          "Ideologia militar",
+          "Nome de um tratado colonial"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual foi a principal causa da Independência dos EUA?",
+        "opcoes": [
+          "Fome e miséria",
+          "Desejo de mais escravos",
+          "Impostos e controle britânico",
+          "Ajuda da França"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual das ideias abaixo é iluminista?",
+        "opcoes": [
+          "O rei é o enviado de Deus",
+          "O povo deve obedecer sem pensar",
+          "A razão deve guiar as decisões",
+          "A escravidão é necessária"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual foi o lema da Revolução Francesa?",
+        "opcoes": [
+          "Ordem e progresso",
+          "Fé, coragem e luta",
+          "Liberdade, igualdade e fraternidade",
+          "Trabalho, família e religião"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que foi a Revolução Francesa?",
+        "opcoes": [
+          "Guerra entre França e Alemanha",
+          "Levante da nobreza contra o rei",
+          "Revolta do povo francês contra o rei e os privilégios",
+          "Invasão da França pelos EUA"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual foi a primeira capital do Brasil?",
+        "opcoes": [
+          "Brasília",
+          "Salvador",
+          "Rio de Janeiro",
+          "São Paulo"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O que foi a Inconfidência Mineira?",
+        "opcoes": [
+          "Revolta popular contra a escravidão",
+          "Movimento separatista contra os altos impostos",
+          "Invasão de portugueses em Minas",
+          "Greve de trabalhadores do ouro"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Por que os portugueses trouxeram africanos escravizados para o Brasil?",
+        "opcoes": [
+          "Porque queriam ensinar a religião",
+          "Porque eram aliados comerciais",
+          "Para explorar o trabalho nas lavouras e minas",
+          "Para formar escolas"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que era o quinto?",
+        "opcoes": [
+          "Imposto de 20% sobre o ouro extraído",
+          "Imposto pago pelos escravos",
+          "Parte da produção enviada à França",
+          "Lei que protegia os indígenas"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "O que foi o pacto colonial?",
+        "opcoes": [
+          "Aliança com os povos indígenas",
+          "Sistema em que a colônia só podia negociar com a metrópole",
+          "Regra religiosa sobre a escravidão",
+          "Tratado de paz entre colonos"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual a principal atividade da economia açucareira no Brasil colonial?",
+        "opcoes": [
+          "Mineração",
+          "Produção de algodão",
+          "Plantio de cana-de-açúcar com uso de mão de obra escrava",
+          "Comércio de madeira"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Onde começou a Revolução Industrial?",
+        "opcoes": [
+          "França",
+          "Alemanha",
+          "Inglaterra",
+          "Itália"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que foi a Revolução Industrial?",
+        "opcoes": [
+          "Conflito entre operários e patrões",
+          "Troca de reis na Inglaterra",
+          "Substituição do trabalho manual pelas máquinas",
+          "Guerra entre países europeus"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual classe social cresceu com a Revolução Industrial?",
+        "opcoes": [
+          "Nobreza",
+          "Clero",
+          "Burguesia",
+          "Monarquia"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que aconteceu com os trabalhadores nas fábricas?",
+        "opcoes": [
+          "Ficaram ricos",
+          "Receberam terras",
+          "Enfrentaram longas jornadas e baixos salários",
+          "Foram donos das máquinas"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Que classe social representava o Terceiro Estado?",
+        "opcoes": [
+          "O rei",
+          "Os nobres",
+          "O povo (camponeses, burgueses e trabalhadores)",
+          "O exército"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que foi o Bloqueio Continental de Napoleão?",
+        "opcoes": [
+          "Proibição de guerras",
+          "Acordo com a Inglaterra",
+          "Proibição de países europeus comercializarem com a Inglaterra",
+          "Controle das colônias americanas"
+        ],
+        "resposta_correta": 2
+      }
+    ]
+  }
+}
