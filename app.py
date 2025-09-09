@@ -49,6 +49,7 @@ def importar_perguntas_8ano():
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 import os
 from models import db, Turma, Equipe, Questao, Rodada
+from sqlalchemy import func, case
 import json
 import random
 import os
@@ -86,6 +87,104 @@ def relatorio():
         .all()
     )
     return render_template('relatorio.html', rodadas=rodadas)
+
+@app.route('/api/relatorio/dados')
+def api_relatorio_dados():
+    """API para obter dados do relatório em formato JSON"""
+    rodadas = (
+        db.session.query(
+            Rodada.numero,
+            Turma.nome.label('turma'),
+            Equipe.nome.label('equipe'),
+            Equipe.cor,
+            Questao.tema,
+            Questao.enunciado,
+            Rodada.resposta,
+            Rodada.acertou
+        )
+        .join(Equipe, Rodada.equipe_id == Equipe.id)
+        .join(Questao, Rodada.questao_id == Questao.id)
+        .join(Turma, Equipe.turma_id == Turma.id)
+        .order_by(Rodada.numero.asc())
+        .all()
+    )
+    
+    # Converter para formato JSON
+    dados = []
+    for r in rodadas:
+        dados.append({
+            'numero': r.numero,
+            'turma': r.turma,
+            'equipe': r.equipe,
+            'cor': r.cor,
+            'tema': r.tema,
+            'enunciado': r.enunciado,
+            'resposta': r.resposta,
+            'acertou': r.acertou
+        })
+    
+    return jsonify(dados)
+
+@app.route('/api/relatorio/estatisticas')
+def api_relatorio_estatisticas():
+    """API para obter estatísticas do relatório"""
+    total_rodadas = Rodada.query.count()
+    total_acertos = Rodada.query.filter_by(acertou=True).count()
+    total_erros = total_rodadas - total_acertos
+    taxa_acerto = (total_acertos / total_rodadas * 100) if total_rodadas > 0 else 0
+    
+    # Estatísticas por tema
+    stats_tema = (
+        db.session.query(
+            Questao.tema,
+            func.count(Rodada.id).label('total'),
+            func.sum(case((Rodada.acertou == True, 1), else_=0)).label('acertos')
+        )
+        .join(Questao, Rodada.questao_id == Questao.id)
+        .group_by(Questao.tema)
+        .all()
+    )
+    
+    # Estatísticas por equipe
+    stats_equipe = (
+        db.session.query(
+            Equipe.nome.label('equipe'),
+            Equipe.cor,
+            func.count(Rodada.id).label('total'),
+            func.sum(case((Rodada.acertou == True, 1), else_=0)).label('acertos')
+        )
+        .join(Equipe, Rodada.equipe_id == Equipe.id)
+        .group_by(Equipe.nome, Equipe.cor)
+        .all()
+    )
+    
+    return jsonify({
+        'geral': {
+            'total_rodadas': total_rodadas,
+            'total_acertos': total_acertos,
+            'total_erros': total_erros,
+            'taxa_acerto': round(taxa_acerto, 1)
+        },
+        'por_tema': [
+            {
+                'tema': s.tema,
+                'total': s.total,
+                'acertos': s.acertos or 0,
+                'taxa_acerto': round((s.acertos or 0) / s.total * 100, 1) if s.total > 0 else 0
+            }
+            for s in stats_tema
+        ],
+        'por_equipe': [
+            {
+                'equipe': s.equipe,
+                'cor': s.cor,
+                'total': s.total,
+                'acertos': s.acertos or 0,
+                'taxa_acerto': round((s.acertos or 0) / s.total * 100, 1) if s.total > 0 else 0
+            }
+            for s in stats_equipe
+        ]
+    })
 
 @app.route('/novo_jogo')
 def novo_jogo():

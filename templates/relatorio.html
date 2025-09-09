@@ -2,44 +2,184 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Relatório de Rodadas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Relatório - Eureka do Padre</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/relatorio.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
-<body>
-    <div class="container-relatorio">
-        <h1>Relatório de Rodadas</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Rodada</th>
-                    <th>Turma</th>
-                    <th>Equipe</th>
-                    <th>Cor</th>
-                    <th>Tema</th>
-                    <th>Pergunta</th>
-                    <th>Resposta</th>
-                    <th>Acertou?</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for r in rodadas %}
-                <tr>
-                    <td>{{ r['numero'] }}</td>
-                    <td>{{ r['turma'] }}</td>
-                    <td>{{ r['equipe'] }}</td>
-                    <td>
-                        {% set cor_nome = r['cor']|lower|replace(' ', '_') %}
-                        <span class="cor-circulo cor-{{ cor_nome }}"></span>
-                        <span style="font-weight:bold;">{{ r['cor']|default('Sem cor') }}</span>
-                    </td>
-                    <td>{{ r['tema'] }}</td>
-                    <td>{{ r['enunciado'] }}</td>
-                    <td>{{ r['resposta'] }}</td>
-                    <td>{{ 'Sim' if r['acertou'] else 'Não' }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<body class="relatorio-body">
+    <div class="relatorio-layout">
+        <!-- Header com título e navegação -->
+        <header class="relatorio-header">
+            <div class="header-content">
+                <div class="titulo-section">
+                    <h1>📊 Relatório de Rodadas</h1>
+                    <p>Análise completa das partidas do Eureka do Padre</p>
+                </div>
+                <div class="navegacao-section">
+                    <a href="/" class="btn-voltar">🏠 Início</a>
+                    <a href="/roleta" class="btn-voltar">🎲 Roleta</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Seção de Filtros -->
+        <section class="filtros-section">
+            <div class="filtros-container">
+                <h2>🔍 Filtros</h2>
+                <div class="filtros-grid">
+                    <div class="filtro-grupo">
+                        <label for="filtroTurma">Turma:</label>
+                        <select id="filtroTurma">
+                            <option value="">Todas as turmas</option>
+                        </select>
+                    </div>
+                    <div class="filtro-grupo">
+                        <label for="filtroEquipe">Equipe:</label>
+                        <select id="filtroEquipe">
+                            <option value="">Todas as equipes</option>
+                        </select>
+                    </div>
+                    <div class="filtro-grupo">
+                        <label for="filtroTema">Tema:</label>
+                        <select id="filtroTema">
+                            <option value="">Todos os temas</option>
+                        </select>
+                    </div>
+                    <div class="filtro-grupo">
+                        <label for="filtroAcerto">Resultado:</label>
+                        <select id="filtroAcerto">
+                            <option value="">Todos</option>
+                            <option value="true">Acertos</option>
+                            <option value="false">Erros</option>
+                        </select>
+                    </div>
+                    <div class="filtro-acoes">
+                        <button class="btn-filtrar" onclick="aplicarFiltros()">🔍 Filtrar</button>
+                        <button class="btn-limpar" onclick="limparFiltros()">🗑️ Limpar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Estatísticas -->
+        <section class="estatisticas-section">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-info">
+                        <span class="stat-numero" id="totalRodadas">{{ rodadas|length }}</span>
+                        <span class="stat-label">Total de Rodadas</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <span class="stat-numero" id="totalAcertos">
+                            {{ rodadas|selectattr('acertou')|list|length }}
+                        </span>
+                        <span class="stat-label">Acertos</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-info">
+                        <span class="stat-numero" id="totalErros">
+                            {{ (rodadas|length) - (rodadas|selectattr('acertou')|list|length) }}
+                        </span>
+                        <span class="stat-label">Erros</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <span class="stat-numero" id="taxaAcerto">
+                            {% if rodadas|length > 0 %}
+                                {{ "%.1f"|format((rodadas|selectattr('acertou')|list|length / rodadas|length) * 100) }}%
+                            {% else %}
+                                0%
+                            {% endif %}
+                        </span>
+                        <span class="stat-label">Taxa de Acerto</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Exportação -->
+        <section class="exportacao-section">
+            <div class="exportacao-container">
+                <h2>📤 Exportar Dados</h2>
+                <div class="export-buttons">
+                    <button class="btn-export btn-pdf" onclick="exportarPDF()">
+                        📄 Exportar PDF
+                    </button>
+                    <button class="btn-export btn-excel" onclick="exportarExcel()">
+                        📊 Exportar Planilha
+                    </button>
+                    <button class="btn-export btn-imprimir" onclick="window.print()">
+                        🖨️ Imprimir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabela de Dados -->
+        <section class="dados-section">
+            <div class="tabela-container">
+                <div class="tabela-header">
+                    <h2>📋 Dados das Rodadas</h2>
+                    <span class="contador-resultados" id="contadorResultados">
+                        Mostrando {{ rodadas|length }} de {{ rodadas|length }} rodadas
+                    </span>
+                </div>
+                <div class="tabela-scroll">
+                    <table id="tabelaRelatorio">
+                        <thead>
+                            <tr>
+                                <th onclick="ordenarTabela(0)">Rodada ↕️</th>
+                                <th onclick="ordenarTabela(1)">Turma ↕️</th>
+                                <th onclick="ordenarTabela(2)">Equipe ↕️</th>
+                                <th onclick="ordenarTabela(3)">Cor ↕️</th>
+                                <th onclick="ordenarTabela(4)">Tema ↕️</th>
+                                <th onclick="ordenarTabela(5)">Pergunta</th>
+                                <th onclick="ordenarTabela(6)">Resposta</th>
+                                <th onclick="ordenarTabela(7)">Resultado ↕️</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoTabela">
+                            {% for r in rodadas %}
+                            <tr data-turma="{{ r['turma'] }}" data-equipe="{{ r['equipe'] }}" data-tema="{{ r['tema'] }}" data-acerto="{{ r['acertou']|lower }}">
+                                <td>{{ r['numero'] }}</td>
+                                <td>{{ r['turma'] }}</td>
+                                <td>{{ r['equipe'] }}</td>
+                                <td>
+                                    {% set cor_nome = r['cor']|lower|replace(' ', '_') %}
+                                    <span class="cor-circulo cor-{{ cor_nome }}"></span>
+                                    <span class="cor-nome">{{ r['cor']|default('Sem cor') }}</span>
+                                </td>
+                                <td><span class="tema-badge">{{ r['tema'] }}</span></td>
+                                <td class="pergunta-cell">{{ r['enunciado'] }}</td>
+                                <td class="resposta-cell">{{ r['resposta'] }}</td>
+                                <td>
+                                    {% if r['acertou'] %}
+                                        <span class="resultado-acerto">✅ Acerto</span>
+                                    {% else %}
+                                        <span class="resultado-erro">❌ Erro</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
     </div>
+
+    <script src="{{ url_for('static', filename='js/relatorio.js') }}"></script>
 </body>
 </html>
