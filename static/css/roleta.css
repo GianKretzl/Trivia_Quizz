@@ -175,60 +175,6 @@ html, body {
     filter: brightness(1.1);
     transform: translateY(-2px);
 }
-.placar-col {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-.placar-header {
-    background: #fffbe7;
-    border-radius: 18px;
-    box-shadow: 0 4px 24px #0001;
-    padding: 24px 32px;
-    margin-bottom: 32px;
-    text-align: center;
-    min-width: 220px;
-    margin-left: 8px;
-
-}
-.placar-header h2 {
-    color: #ff8c42;
-    margin-bottom: 18px;
-}
-.placar-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-.equipe-placar {
-    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
-    border-radius: 10px;
-    padding: 12px 18px;
-    text-align: center;
-    border-left: 5px solid #FFD700;
-    font-weight: bold;
-    color: #333;
-    font-size: 1.1rem;
-    box-shadow: 0 2px 8px #0001;
-}
-.equipe-nome {
-    display: block;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 4px;
-}
-.equipe-pontos {
-    display: block;
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #118ab2;
-}
-.tema-col {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-self: start;
-}
 .tema-sorteado-box {
     background: #fffbe7;
     border-radius: 18px;
