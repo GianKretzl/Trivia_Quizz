@@ -21,10 +21,24 @@
         </aside>
         <!-- Sorteio central com padre -->
         <main class="roleta-col">
-            <div class="padre-container">   
-           
-                 
-                            
+            <div class="padre-container">
+                <!-- Balão de fala com sorteio -->
+                <div class="speech-bubble">
+                     <div class="slot-machine" id="slotMachine">
+                            <div class="slot-reel-unico" id="reel-materias">
+                                <div class="slot-content" id="slot-content">
+                                    <!-- Será preenchido dinamicamente pelo JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Resultado final -->
+                        <div class="resultado-sorteio" id="resultadoSorteio" style="display: none;">
+                            <div class="icone-resultado" id="iconeResultado">🎯</div>
+                            <div class="texto-resultado" id="textoResultado">Clique para sortear!</div>
+                        </div>
+                </div>
+                
                 <!-- Padre Eureka -->
                 <img src="{{ url_for('static', filename='img/sem fundo eureka-Photoroom.png') }}" alt="Padre Eureka" class="padre-img">
             </div>
@@ -79,11 +93,45 @@
                 { emoji: '⚽', nome: 'Educação Física' }
             ];
 
+            // Função para criar o slot com a disciplina sorteada no meio
+            function criarSlotComDisciplinaSorteada(disciplinaSorteada) {
+                const slotContent = document.getElementById('slot-content');
+                slotContent.innerHTML = '';
+                
+                // Encontrar o índice da disciplina sorteada nas 7 disciplinas disponíveis
+                const indiceSorteada = disciplinas.findIndex(d => d.nome === disciplinaSorteada);
+                
+                // Criar EXATAMENTE 3 disciplinas com a sorteada no meio
+                const disciplinasSlot = [];
+                
+                // Disciplina anterior (primeira posição)
+                const indiceAnterior = (indiceSorteada - 1 + disciplinas.length) % disciplinas.length;
+                disciplinasSlot.push(disciplinas[indiceAnterior]);
+                
+                // Disciplina sorteada (meio - segunda posição)
+                disciplinasSlot.push(disciplinas[indiceSorteada]);
+                
+                // Disciplina posterior (terceira posição)
+                const indicePosterior = (indiceSorteada + 1) % disciplinas.length;
+                disciplinasSlot.push(disciplinas[indicePosterior]);
+                
+                console.log('Criando slot com 3 disciplinas:', disciplinasSlot.map(d => d.nome));
+                
+                // Criar os elementos HTML
+                disciplinasSlot.forEach((disciplina, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'slot-item';
+                    div.textContent = disciplina.nome;
+                    slotContent.appendChild(div);
+                });
+            }
+
             function playOnClick() {
                 const btnPlay = document.getElementById("btnPlay");
                 const slotMachine = document.getElementById("slotMachine");
                 const resultadoSorteio = document.getElementById("resultadoSorteio");
                 const reelMaterias = document.getElementById("reel-materias");
+                const slotContent = document.getElementById("slot-content");
                 
                 // Desabilitar botão durante o sorteio
                 btnPlay.disabled = true;
@@ -93,56 +141,141 @@
                 resultadoSorteio.style.display = 'none';
                 slotMachine.style.display = 'flex';
                 
-                // Animar o reel único
-                reelMaterias.style.animation = 'spin 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                // Sortear disciplina ANTES da animação (entre todas as 7 disponíveis)
+                const indiceAleatorio = Math.floor(Math.random() * disciplinas.length);
+                const disciplinaSorteada = disciplinas[indiceAleatorio];
+                temaSorteadoRodada = disciplinaSorteada.nome;
                 
-                // Sortear disciplina após animação
+                console.log(`Sorteando entre ${disciplinas.length} disciplinas: ${disciplinaSorteada.nome}`);
+                
+                // Criar apenas 3 disciplinas para animação
+                slotContent.innerHTML = '';
+                for (let i = 0; i < 3; i++) {
+                    const indiceRandomico = Math.floor(Math.random() * disciplinas.length);
+                    const div = document.createElement('div');
+                    div.className = 'slot-item';
+                    div.textContent = disciplinas[indiceRandomico].nome;
+                    slotContent.appendChild(div);
+                }
+                
+                // Reset posição
+                slotContent.style.transition = 'none';
+                slotContent.style.transform = 'translateY(0)';
+                
+                // Pequeno delay para garantir que o reset foi aplicado
                 setTimeout(() => {
-                    // Sortear uma disciplina aleatória
-                    const indiceAleatorio = Math.floor(Math.random() * disciplinas.length);
-                    const disciplinaSorteada = disciplinas[indiceAleatorio];
+                    // Iniciar animação rápida do caça-níquel
+                    reelMaterias.classList.add('girando');
                     
-                    temaSorteadoRodada = disciplinaSorteada.nome;
+                    // Adicionar efeito de brilho durante a animação
+                    const slotItems = document.querySelectorAll('.slot-item');
+                    slotItems.forEach(item => item.classList.add('animando'));
                     
-                    // Mostrar resultado
-                    slotMachine.style.display = 'none';
+                    // Parar animação e mostrar resultado após 2.5 segundos
+                    setTimeout(() => {
+                        // Parar animação
+                        reelMaterias.classList.remove('girando');
+                        
+                        // Remover efeito de brilho
+                        slotItems.forEach(item => item.classList.remove('animando'));
+                        
+                        // Criar slot final com a disciplina sorteada no meio
+                        criarSlotComDisciplinaSorteada(disciplinaSorteada.nome);
+                        
+                        // Animar para mostrar resultado final (disciplina do meio)
+                        setTimeout(() => {
+                            // Destacar disciplina do meio (a sorteada)
+                            const itemDoMeio = document.querySelector('.slot-item:nth-child(2)'); // Segundo item (meio de 3)
+                            if (itemDoMeio) {
+                                itemDoMeio.classList.add('sorteado');
+                                
+                                // Criar efeito de confete
+                                criarConfete();
+                            }
+                            
+                            // Exibir no painel de tema sorteado
+                            const temaSorteadoDiv = document.getElementById("tema-sorteado");
+                            if (temaSorteadoDiv) {
+                                temaSorteadoDiv.textContent = temaSorteadoRodada;
+                                temaSorteadoDiv.classList.add("mostrar");
+                            }
+                            
+                            // Habilitar botão IR PARA PERGUNTA
+                            const btnIrPergunta = document.getElementById("btnIrPergunta");
+                            if (btnIrPergunta) {
+                                btnIrPergunta.disabled = false;
+                                btnIrPergunta.classList.remove("disabled");
+                            }
+                            
+                            // Reabilitar botão de sortear
+                            btnPlay.disabled = false;
+                            btnPlay.classList.remove('sorteando');
+                            btnPlay.classList.add('novamente');
+                            btnPlay.querySelector('.texto-btn').innerHTML = 'NOVO<br>SORTEIO';
+                            
+                        }, 500); // Pequeno delay para mostrar o resultado
+                        
+                    }, 2500);
                     
-                    const iconeResultado = document.getElementById("iconeResultado");
-                    const textoResultado = document.getElementById("textoResultado");
-                    
-                    iconeResultado.textContent = disciplinaSorteada.emoji;
-                    textoResultado.textContent = disciplinaSorteada.nome;
-                    
-                    resultadoSorteio.style.display = 'flex';
-                    resultadoSorteio.classList.add('resultado-aparecer');
-                    
-                    // Exibir no painel de tema sorteado
-                    const temaSorteadoDiv = document.getElementById("tema-sorteado");
-                    if (temaSorteadoDiv) {
-                        temaSorteadoDiv.textContent = temaSorteadoRodada;
-                        temaSorteadoDiv.classList.add("mostrar");
+                }, 50);
+            }
+
+            // Inicializar slot com disciplinas aleatórias
+            function inicializarSlot() {
+                const disciplinaAleatoria = disciplinas[Math.floor(Math.random() * disciplinas.length)];
+                criarSlotComDisciplinaSorteada(disciplinaAleatoria.nome);
+            }
+
+            // Função para criar efeito de confete
+            function criarConfete() {
+                const speechBubble = document.querySelector('.speech-bubble');
+                const container = document.createElement('div');
+                container.className = 'confete-container';
+                speechBubble.appendChild(container);
+
+                // Criar 15 partículas de confete
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const confete = document.createElement('div');
+                        confete.className = 'confete';
+                        
+                        // Posição inicial aleatória
+                        confete.style.left = Math.random() * 300 + 'px';
+                        confete.style.top = '-20px';
+                        
+                        // Cores aleatórias
+                        const cores = ['#FF6B35', '#FFD23F', '#06FFA5', '#118AB2', '#F7931E'];
+                        confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+                        
+                        // Animação aleatória
+                        const animacoes = ['confeteCair', 'confeteEsquerda', 'confeteDireita'];
+                        const animacao = animacoes[Math.floor(Math.random() * animacoes.length)];
+                        confete.style.animation = `${animacao} ${1.5 + Math.random()}s linear forwards`;
+                        
+                        container.appendChild(confete);
+                        
+                        // Remover confete após animação
+                        setTimeout(() => {
+                            if (confete.parentNode) {
+                                confete.parentNode.removeChild(confete);
+                            }
+                        }, 3000);
+                    }, i * 100); // Delay entre cada partícula
+                }
+                
+                // Remover container após 5 segundos
+                setTimeout(() => {
+                    if (container.parentNode) {
+                        container.parentNode.removeChild(container);
                     }
-                    
-                    // Habilitar botão IR PARA PERGUNTA
-                    const btnIrPergunta = document.getElementById("btnIrPergunta");
-                    if (btnIrPergunta) {
-                        btnIrPergunta.disabled = false;
-                        btnIrPergunta.classList.remove("disabled");
-                    }
-                    
-                    // Reabilitar botão de sortear
-                    btnPlay.disabled = false;
-                    btnPlay.classList.remove('sorteando');
-                    btnPlay.querySelector('.texto-btn').textContent = 'SORTEAR NOVAMENTE';
-                    
-                    // Reset animação
-                    reelMaterias.style.animation = '';
-                    
-                }, 2600); // Aguardar fim da animação
+                }, 5000);
             }
 
             // Adicionar evento de clique ao botão IR PARA PERGUNTA
             document.addEventListener('DOMContentLoaded', function() {
+                // Inicializar o slot com disciplinas
+                inicializarSlot();
+                
                 const btnIrPergunta = document.getElementById("btnIrPergunta");
                 if (btnIrPergunta) {
                     btnIrPergunta.addEventListener('click', function() {
