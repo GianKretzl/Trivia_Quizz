@@ -19,33 +19,36 @@
                 </div>
             </div>
         </aside>
-        <!-- Box cinza central -->
+        <!-- Sorteio central com padre -->
         <main class="roleta-col">
-            <div class="box-cinza-central">
-               <div class="folha">
-                    <div class="seta"></div>
-                    <div class="roleta" id="roleta">
-                        <div class="box1"></div>
-                        <div class="box2"></div>
-                        <div class="box3"></div>
-                        <div class="box4"></div>
-                        <div class="box5"></div>
-                        <div class="box6"></div>
-                        <div class="box7"></div>
-                        <div class="box8"></div>
-
-                        <div class="premio premio0" id="opt0">Português</div>
-                        <div class="premio premio1" id="opt1">Matemática</div>
-                        <div class="premio premio2" id="opt2">Geografia </div>
-                        <div class="premio premio3" id="opt3">Língua Inglesa </div>
-                        <div class="premio premio4" id="opt4">Ciências</div>
-                        <div class="premio premio5" id="opt5">História</div>
-                        <div class="premio premio6" id="opt6">Educação Física</div>
-                        <div class="premio premio7" id="opt7">Filosofia</div>
-                        <div id="btnPlay" class="btnRoleta play" onclick="playOnClick()">GIRAR</div>
-      
-                    </div>
+            <div class="padre-container">
+                <!-- Balão de fala com sorteio -->
+                <div class="speech-bubble">
+                     <div class="slot-machine" id="slotMachine">
+                            <div class="slot-reel-unico" id="reel-materias">
+                                <div class="slot-content" id="slot-content">
+                                    <!-- Será preenchido dinamicamente pelo JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Resultado final -->
+                        <div class="resultado-sorteio" id="resultadoSorteio" style="display: none;">
+                            <div class="icone-resultado" id="iconeResultado">🎯</div>
+                            <div class="texto-resultado" id="textoResultado">Clique para sortear!</div>
+                        </div>
                 </div>
+                
+                <!-- Padre Eureka -->
+                <img src="{{ url_for('static', filename='img/sem fundo eureka-Photoroom.png') }}" alt="Padre Eureka" class="padre-img">
+            </div>
+            
+            <!-- Botão de sorteio abaixo da imagem -->
+            <div class="botao-sorteio-container">
+                <button id="btnPlay" class="btn-sortear" onclick="playOnClick()">
+                    <span class="emoji-btn">🎲</span>
+                    <span class="texto-btn">SORTEAR</span>
+                </button>
             </div>
         </main>
         <!-- Tema sorteado à direita -->
@@ -78,65 +81,201 @@
 
             // Variável para guardar o tema sorteado da rodada
             let temaSorteadoRodada = null;
+            
+            // Disciplinas disponíveis
+            const disciplinas = [
+                { emoji: '📖', nome: 'Português' },
+                { emoji: '🔢', nome: 'Matemática' },
+                { emoji: '🌍', nome: 'Geografia' },
+                { emoji: '🇺🇸', nome: 'Língua Inglesa' },
+                { emoji: '🔬', nome: 'Ciências' },
+                { emoji: '🏛️', nome: 'História' },
+                { emoji: '⚽', nome: 'Educação Física' }
+            ];
+
+            // Função para criar o slot com a disciplina sorteada no meio
+            function criarSlotComDisciplinaSorteada(disciplinaSorteada) {
+                const slotContent = document.getElementById('slot-content');
+                slotContent.innerHTML = '';
+                
+                // Encontrar o índice da disciplina sorteada nas 7 disciplinas disponíveis
+                const indiceSorteada = disciplinas.findIndex(d => d.nome === disciplinaSorteada);
+                
+                // Criar EXATAMENTE 3 disciplinas com a sorteada no meio
+                const disciplinasSlot = [];
+                
+                // Disciplina anterior (primeira posição)
+                const indiceAnterior = (indiceSorteada - 1 + disciplinas.length) % disciplinas.length;
+                disciplinasSlot.push(disciplinas[indiceAnterior]);
+                
+                // Disciplina sorteada (meio - segunda posição)
+                disciplinasSlot.push(disciplinas[indiceSorteada]);
+                
+                // Disciplina posterior (terceira posição)
+                const indicePosterior = (indiceSorteada + 1) % disciplinas.length;
+                disciplinasSlot.push(disciplinas[indicePosterior]);
+                
+                console.log('Criando slot com 3 disciplinas:', disciplinasSlot.map(d => d.nome));
+                
+                // Criar os elementos HTML
+                disciplinasSlot.forEach((disciplina, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'slot-item';
+                    div.textContent = disciplina.nome;
+                    slotContent.appendChild(div);
+                });
+            }
 
             function playOnClick() {
-                globalObjects = {
-                    btnPlay: document.getElementById("btnPlay"),
-                    roleta: document.getElementById("roleta"),
-                };
-                globalObjects.timeInitial = new Date();
-                // Não esconder o botão GIRAR
-                const randomRotation = Math.floor(Math.random() * 3600) + 360; // Rotação aleatória entre 360 e 3960 graus
-                globalObjects.roleta.style.transition = "transform 4s cubic-bezier(0.23, 1, 0.32, 1)"; // Transição suave
-                globalObjects.roleta.style.transform = `rotate(${randomRotation}deg)`;
-
-                // Após o giro, identificar o tema sorteado
+                const btnPlay = document.getElementById("btnPlay");
+                const slotMachine = document.getElementById("slotMachine");
+                const resultadoSorteio = document.getElementById("resultadoSorteio");
+                const reelMaterias = document.getElementById("reel-materias");
+                const slotContent = document.getElementById("slot-content");
+                
+                // Desabilitar botão durante o sorteio
+                btnPlay.disabled = true;
+                btnPlay.classList.add('sorteando');
+                
+                // Esconder resultado anterior
+                resultadoSorteio.style.display = 'none';
+                slotMachine.style.display = 'flex';
+                
+                // Sortear disciplina ANTES da animação (entre todas as 7 disponíveis)
+                const indiceAleatorio = Math.floor(Math.random() * disciplinas.length);
+                const disciplinaSorteada = disciplinas[indiceAleatorio];
+                temaSorteadoRodada = disciplinaSorteada.nome;
+                
+                console.log(`Sorteando entre ${disciplinas.length} disciplinas: ${disciplinaSorteada.nome}`);
+                
+                // Criar apenas 3 disciplinas para animação
+                slotContent.innerHTML = '';
+                for (let i = 0; i < 3; i++) {
+                    const indiceRandomico = Math.floor(Math.random() * disciplinas.length);
+                    const div = document.createElement('div');
+                    div.className = 'slot-item';
+                    div.textContent = disciplinas[indiceRandomico].nome;
+                    slotContent.appendChild(div);
+                }
+                
+                // Reset posição
+                slotContent.style.transition = 'none';
+                slotContent.style.transform = 'translateY(0)';
+                
+                // Pequeno delay para garantir que o reset foi aplicado
                 setTimeout(() => {
-                    // Extrair o valor da rotação final da roleta
-                    const transformValue = globalObjects.roleta.style.transform;
-                    // Extrai o número do rotate
-                    const match = /rotate\(([-\d.]+)deg\)/.exec(transformValue);
-                    let rotationDegrees = 0;
-                    if (match) {
-                        rotationDegrees = parseFloat(match[1]) % 360;
-                        if (rotationDegrees < 0) rotationDegrees += 360;
+                    // Iniciar animação rápida do caça-níquel
+                    reelMaterias.classList.add('girando');
+                    
+                    // Adicionar efeito de brilho durante a animação
+                    const slotItems = document.querySelectorAll('.slot-item');
+                    slotItems.forEach(item => item.classList.add('animando'));
+                    
+                    // Parar animação e mostrar resultado após 2.5 segundos
+                    setTimeout(() => {
+                        // Parar animação
+                        reelMaterias.classList.remove('girando');
+                        
+                        // Remover efeito de brilho
+                        slotItems.forEach(item => item.classList.remove('animando'));
+                        
+                        // Criar slot final com a disciplina sorteada no meio
+                        criarSlotComDisciplinaSorteada(disciplinaSorteada.nome);
+                        
+                        // Animar para mostrar resultado final (disciplina do meio)
+                        setTimeout(() => {
+                            // Destacar disciplina do meio (a sorteada)
+                            const itemDoMeio = document.querySelector('.slot-item:nth-child(2)'); // Segundo item (meio de 3)
+                            if (itemDoMeio) {
+                                itemDoMeio.classList.add('sorteado');
+                                
+                                // Criar efeito de confete
+                                criarConfete();
+                            }
+                            
+                            // Exibir no painel de tema sorteado
+                            const temaSorteadoDiv = document.getElementById("tema-sorteado");
+                            if (temaSorteadoDiv) {
+                                temaSorteadoDiv.textContent = temaSorteadoRodada;
+                                temaSorteadoDiv.classList.add("mostrar");
+                            }
+                            
+                            // Habilitar botão IR PARA PERGUNTA
+                            const btnIrPergunta = document.getElementById("btnIrPergunta");
+                            if (btnIrPergunta) {
+                                btnIrPergunta.disabled = false;
+                                btnIrPergunta.classList.remove("disabled");
+                            }
+                            
+                            // Reabilitar botão de sortear
+                            btnPlay.disabled = false;
+                            btnPlay.classList.remove('sorteando');
+                            btnPlay.classList.add('novamente');
+                            btnPlay.querySelector('.texto-btn').innerHTML = 'NOVO<br>SORTEIO';
+                            
+                        }, 500); // Pequeno delay para mostrar o resultado
+                        
+                    }, 2500);
+                    
+                }, 50);
+            }
+
+            // Inicializar slot com disciplinas aleatórias
+            function inicializarSlot() {
+                const disciplinaAleatoria = disciplinas[Math.floor(Math.random() * disciplinas.length)];
+                criarSlotComDisciplinaSorteada(disciplinaAleatoria.nome);
+            }
+
+            // Função para criar efeito de confete
+            function criarConfete() {
+                const speechBubble = document.querySelector('.speech-bubble');
+                const container = document.createElement('div');
+                container.className = 'confete-container';
+                speechBubble.appendChild(container);
+
+                // Criar 15 partículas de confete
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const confete = document.createElement('div');
+                        confete.className = 'confete';
+                        
+                        // Posição inicial aleatória
+                        confete.style.left = Math.random() * 300 + 'px';
+                        confete.style.top = '-20px';
+                        
+                        // Cores aleatórias
+                        const cores = ['#FF6B35', '#FFD23F', '#06FFA5', '#118AB2', '#F7931E'];
+                        confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+                        
+                        // Animação aleatória
+                        const animacoes = ['confeteCair', 'confeteEsquerda', 'confeteDireita'];
+                        const animacao = animacoes[Math.floor(Math.random() * animacoes.length)];
+                        confete.style.animation = `${animacao} ${1.5 + Math.random()}s linear forwards`;
+                        
+                        container.appendChild(confete);
+                        
+                        // Remover confete após animação
+                        setTimeout(() => {
+                            if (confete.parentNode) {
+                                confete.parentNode.removeChild(confete);
+                            }
+                        }, 3000);
+                    }, i * 100); // Delay entre cada partícula
+                }
+                
+                // Remover container após 5 segundos
+                setTimeout(() => {
+                    if (container.parentNode) {
+                        container.parentNode.removeChild(container);
                     }
-                    
-                    // Calcular qual seção foi selecionada
-                    // A seta aponta para o topo (0°), então precisamos ajustar o cálculo
-                    // Cada seção tem 45° (360° / 8 seções)
-                    const sections = 8;
-                    const sectionDegree = 360 / sections; // 45°
-                    
-                    // Ajustar para a seta no topo - invertemos a rotação e adicionamos offset
-                    let adjustedRotation = (360 - rotationDegrees + (sectionDegree / 2)) % 360;
-                    let winningSection = Math.floor(adjustedRotation / sectionDegree) % sections;
-                    
-                    console.log(`Rotação: ${rotationDegrees}°, Seção vencedora: ${winningSection}`);
-                    
-                    // IDs dos temas: opt0, opt1, ..., opt7
-                    const boxGanhador = document.getElementById("opt" + winningSection);
-                    temaSorteadoRodada = boxGanhador ? boxGanhador.innerText : "";
-                    
-                    // Exibir no painel de tema sorteado
-                    const temaSorteadoDiv = document.getElementById("tema-sorteado");
-                    if (temaSorteadoDiv) {
-                        temaSorteadoDiv.textContent = temaSorteadoRodada;
-                        temaSorteadoDiv.classList.add("mostrar");
-                    }
-                    
-                    // Habilitar botão IR PARA PERGUNTA
-                    const btnIrPergunta = document.getElementById("btnIrPergunta");
-                    if (btnIrPergunta) {
-                        btnIrPergunta.disabled = false;
-                        btnIrPergunta.classList.remove("disabled");
-                    }
-                    // Aqui você pode salvar temaSorteadoRodada para o relatório
-                }, 4100); // tempo do giro + leve atraso
+                }, 5000);
             }
 
             // Adicionar evento de clique ao botão IR PARA PERGUNTA
             document.addEventListener('DOMContentLoaded', function() {
+                // Inicializar o slot com disciplinas
+                inicializarSlot();
+                
                 const btnIrPergunta = document.getElementById("btnIrPergunta");
                 if (btnIrPergunta) {
                     btnIrPergunta.addEventListener('click', function() {
