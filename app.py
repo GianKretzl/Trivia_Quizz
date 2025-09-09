@@ -222,7 +222,11 @@ def pergunta(tema=None):
         return "Erro: Tema não especificado", 400
     
     # Buscar uma pergunta aleatória do tema
-    turma = Turma.query.order_by(Turma.id.desc()).first()
+    # Priorizar turma que tem equipes cadastradas
+    turma = Turma.query.join(Equipe).first()
+    if not turma:
+        # Fallback para a primeira turma disponível
+        turma = Turma.query.first()
     if not turma:
         return "Erro: Nenhuma turma encontrada", 404
     
@@ -246,12 +250,12 @@ def pergunta(tema=None):
 def processar_respostas():
     try:
         dados = request.get_json()
-        print(f"Dados recebidos: {dados}")
+        print(f"[DEBUG] Dados recebidos: {dados}")
         
         questao_id = dados.get('questao_id')
         equipes_acertos = dados.get('equipes_acertos', [])
         
-        print(f"Processando questao_id: {questao_id}, equipes_acertos: {equipes_acertos}")
+        print(f"[DEBUG] Processando questao_id: {questao_id}, equipes_acertos: {equipes_acertos}")
         
         questao = Questao.query.get(questao_id)
         if not questao:
@@ -265,13 +269,15 @@ def processar_respostas():
         print(f"Nova rodada número: {novo_numero_rodada}")
         
         # Registrar rodadas para todas as equipes
-        turma = Turma.query.order_by(Turma.id.desc()).first()
+        # Buscar a turma que tem equipes cadastradas
+        turma = db.session.query(Turma).join(Equipe).first()
         if not turma:
-            print("Nenhuma turma encontrada")
-            return jsonify({'erro': 'Nenhuma turma encontrada', 'sucesso': False}), 404
+            print("Nenhuma turma com equipes encontrada")
+            return jsonify({'erro': 'Nenhuma turma com equipes encontrada', 'sucesso': False}), 404
             
+        print(f"[DEBUG] Turma selecionada: {turma.id} - {turma.nome}")
         equipes = Equipe.query.filter_by(turma_id=turma.id).all()
-        print(f"Equipes encontradas: {[(e.id, e.nome) for e in equipes]}")
+        print(f"[DEBUG] Equipes encontradas: {[(e.id, e.nome) for e in equipes]}")
         
         rodadas_criadas = 0
         for equipe in equipes:
@@ -290,7 +296,11 @@ def processar_respostas():
             rodadas_criadas += 1
         
         db.session.commit()
-        print(f"Sucesso! {rodadas_criadas} rodadas criadas")
+        print(f"[DEBUG] Sucesso! {rodadas_criadas} rodadas criadas, commit realizado")
+        
+        # Verificar se as rodadas foram salvas
+        total_rodadas = Rodada.query.count()
+        print(f"[DEBUG] Total de rodadas no banco agora: {total_rodadas}")
         
         return jsonify({'sucesso': True, 'rodada': novo_numero_rodada, 'rodadas_criadas': rodadas_criadas})
         
@@ -302,7 +312,8 @@ def processar_respostas():
 @app.route('/api/estado_jogo', methods=['GET'])
 def estado_jogo():
     """Retorna o estado atual do jogo (equipes, cores, pontuação, etc) do banco"""
-    turma = Turma.query.order_by(Turma.id.desc()).first()
+    # Buscar a turma que tem equipes cadastradas
+    turma = db.session.query(Turma).join(Equipe).first()
     equipes = []
     if turma:
         equipes_db = Equipe.query.filter_by(turma_id=turma.id).all()

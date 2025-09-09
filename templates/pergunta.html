@@ -37,30 +37,65 @@
         <!-- Seção de equipes (inicialmente oculta) -->
         <div id="secaoEquipes" class="secao-equipes" style="display: none;">
             <div class="equipes-header">
-                <h2>🎯 Quais equipes acertaram?</h2>
-                <p class="equipes-subtitle">Clique nas equipes que deram a resposta correta</p>
+                <div class="header-icon">🎯</div>
+                <h2>Quais equipes acertaram?</h2>
+                <div class="equipes-subtitle">
+                    <span class="subtitle-text">Clique nas equipes que deram a resposta correta</span>
+                    <div class="equipes-counter">
+                        <span id="equipesCounter">0</span> de {{ equipes|length }} equipes selecionadas
+                    </div>
+                </div>
             </div>
+            
+            <!-- Botões de seleção rápida -->
+            <div class="selecao-rapida">
+                <button id="btnSelecionarTodas" class="btn-selecao-rapida">
+                    <span class="btn-icon">☑️</span>
+                    <span>Selecionar Todas</span>
+                </button>
+                <button id="btnLimparSelecao" class="btn-selecao-rapida">
+                    <span class="btn-icon">❌</span>
+                    <span>Limpar Seleção</span>
+                </button>
+            </div>
+            
             <div class="equipes-grid">
                 {% for equipe in equipes %}
-                <div class="equipe-card" data-equipe-id="{{ equipe.id }}">
+                <div class="equipe-card" data-equipe-id="{{ equipe.id }}" data-equipe-nome="{{ equipe.nome }}">
                     <div class="equipe-card-inner">
-                        <div class="equipe-icon">🏆</div>
                         <div class="equipe-nome">{{ equipe.nome }}</div>
                         <div class="equipe-status">
                             <div class="status-icon">❌</div>
                             <div class="status-text">Não selecionada</div>
                         </div>
-                        <div class="equipe-points">+10 pontos</div>
+                        <div class="equipe-points">
+                            <span class="points-value">+10</span>
+                            <span class="points-label">pontos</span>
+                        </div>
                     </div>
                     <div class="equipe-glow"></div>
+                    <div class="selection-indicator"></div>
                     <input type="checkbox" id="equipe_{{ equipe.id }}" value="{{ equipe.id }}" style="display: none;">
                 </div>
                 {% endfor %}
             </div>
+            
             <div class="acoes-finais">
-                <button id="btnConfirmarVoltar" class="btn-confirmar-voltar">
+                <div class="resumo-selecao" id="resumoSelecao" style="display: none;">
+                    <div class="resumo-icon">📊</div>
+                    <div class="resumo-texto">
+                        <strong id="resumoEquipes"></strong> receberão pontos
+                    </div>
+                </div>
+                
+                <button id="btnConfirmarVoltar" class="btn-confirmar-voltar" disabled>
                     <span class="btn-icon">✅</span>
                     <span class="btn-text">CONFIRMAR E VOLTAR À ROLETA</span>
+                </button>
+                
+                <button id="btnVoltarSemConfirmar" class="btn-voltar-sem-confirmar">
+                    <span class="btn-icon">🔙</span>
+                    <span class="btn-text">TODOS NÃO ACERTARAM!</span>
                 </button>
             </div>
         </div>
@@ -95,42 +130,176 @@
             
             equipeCards.forEach(card => {
                 card.addEventListener('click', function() {
-                    const equipeId = this.getAttribute('data-equipe-id');
-                    const checkbox = document.getElementById(`equipe_${equipeId}`);
-                    const statusIcon = this.querySelector('.status-icon');
-                    const statusText = this.querySelector('.status-text');
-                    const isSelected = checkbox.checked;
-                    
-                    if (isSelected) {
-                        // Desselecionar
-                        checkbox.checked = false;
-                        this.classList.remove('selected');
-                        statusIcon.textContent = '❌';
-                        statusText.textContent = 'Não selecionada';
-                        
-                        // Animação de deseleção
-                        this.style.transform = 'scale(0.95)';
-                        setTimeout(() => {
-                            this.style.transform = '';
-                        }, 150);
-                    } else {
-                        // Selecionar
-                        checkbox.checked = true;
-                        this.classList.add('selected');
-                        statusIcon.textContent = '✅';
-                        statusText.textContent = 'Acertou!';
-                        
-                        // Animação de seleção
-                        this.style.transform = 'scale(1.05)';
-                        setTimeout(() => {
-                            this.style.transform = '';
-                        }, 150);
-                        
-                        // Efeito de confete
-                        createConfetti(this);
+                    toggleEquipe(this);
+                });
+            });
+            
+            // Configurar botões de seleção rápida
+            document.getElementById('btnSelecionarTodas').addEventListener('click', function() {
+                const equipeCards = document.querySelectorAll('.equipe-card');
+                equipeCards.forEach(card => {
+                    if (!card.classList.contains('selected')) {
+                        toggleEquipe(card, true);
                     }
                 });
             });
+            
+            document.getElementById('btnLimparSelecao').addEventListener('click', function() {
+                const equipeCards = document.querySelectorAll('.equipe-card.selected');
+                equipeCards.forEach(card => {
+                    toggleEquipe(card, false);
+                });
+            });
+            
+            // Configurar botão de voltar sem confirmar (todas erraram)
+            document.getElementById('btnVoltarSemConfirmar').addEventListener('click', function() {
+                if (confirm('Tem certeza que todas as equipes erraram a pergunta?')) {
+                    console.log('DEBUG: Registrando rodada onde todas as equipes erraram');
+                    
+                    // Enviar dados indicando que nenhuma equipe acertou (array vazio)
+                    fetch('/processar_respostas', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            questao_id: questaoId,
+                            equipes_acertos: [] // Array vazio = ninguém acertou
+                        })
+                    })
+                    .then(response => {
+                        console.log('DEBUG: Response status:', response.status);
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('DEBUG: Response data:', data);
+                        if (data.sucesso) {
+                            // Voltar à roleta após registrar todas como erro
+                            window.location.href = '/roleta';
+                        } else {
+                            alert('Erro ao registrar respostas: ' + (data.erro || 'Erro desconhecido'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('ERRO no fetch:', error);
+                        alert('Erro ao processar respostas: ' + error.message);
+                    });
+                }
+            });
+        }
+        
+        function toggleEquipe(card, forceState = null) {
+            const equipeId = card.getAttribute('data-equipe-id');
+            const equipeNome = card.getAttribute('data-equipe-nome');
+            const checkbox = document.getElementById(`equipe_${equipeId}`);
+            const statusIcon = card.querySelector('.status-icon');
+            const statusText = card.querySelector('.status-text');
+            const isSelected = forceState !== null ? !forceState : checkbox.checked;
+            
+            if (isSelected) {
+                // Desselecionar
+                checkbox.checked = false;
+                card.classList.remove('selected');
+                statusIcon.textContent = '❌';
+                statusText.textContent = 'Não selecionada';
+                
+                // Animação de deseleção
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+            } else {
+                // Selecionar
+                checkbox.checked = true;
+                card.classList.add('selected');
+                statusIcon.textContent = '✅';
+                statusText.textContent = 'Acertou!';
+                
+                // Animação de seleção
+                card.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+                
+                // Efeito de confete
+                createConfetti(card);
+                
+                // Som de sucesso (se disponível)
+                playSuccessSound();
+            }
+            
+            updateCounter();
+            updateConfirmButton();
+            updateResumo();
+        }
+        
+        function updateCounter() {
+            const selectedCount = document.querySelectorAll('.equipe-card.selected').length;
+            const totalCount = document.querySelectorAll('.equipe-card').length;
+            document.getElementById('equipesCounter').textContent = selectedCount;
+        }
+        
+        function updateConfirmButton() {
+            const selectedCount = document.querySelectorAll('.equipe-card.selected').length;
+            const btnConfirmar = document.getElementById('btnConfirmarVoltar');
+            
+            if (selectedCount > 0) {
+                btnConfirmar.disabled = false;
+                btnConfirmar.classList.remove('disabled');
+                btnConfirmar.querySelector('.btn-text').textContent = `CONFIRMAR E VOLTAR À ROLETA`;
+            } else {
+                btnConfirmar.disabled = true;
+                btnConfirmar.classList.add('disabled');
+                btnConfirmar.querySelector('.btn-text').textContent = 'SELECIONE PELO MENOS UMA EQUIPE';
+            }
+        }
+        
+        function updateResumo() {
+            const selectedCards = document.querySelectorAll('.equipe-card.selected');
+            const resumoDiv = document.getElementById('resumoSelecao');
+            const resumoText = document.getElementById('resumoEquipes');
+            
+            if (selectedCards.length > 0) {
+                const nomes = Array.from(selectedCards).map(card => 
+                    card.getAttribute('data-equipe-nome')
+                );
+                
+                if (nomes.length === 1) {
+                    resumoText.textContent = nomes[0];
+                } else if (nomes.length === 2) {
+                    resumoText.textContent = `${nomes[0]} e ${nomes[1]}`;
+                } else {
+                    resumoText.textContent = `${nomes.length} equipes`;
+                }
+                
+                resumoDiv.style.display = 'flex';
+            } else {
+                resumoDiv.style.display = 'none';
+            }
+        }
+        
+        function playSuccessSound() {
+            // Criar um som de sucesso usando Web Audio API
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } catch (e) {
+                console.log('Audio not supported');
+            }
         }
 
         function createConfetti(element) {
@@ -174,6 +343,10 @@
         document.getElementById('btnConfirmarVoltar').addEventListener('click', function() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const equipesAcertos = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            
+            console.log('DEBUG: questaoId =', questaoId);
+            console.log('DEBUG: equipesAcertos =', equipesAcertos);
+            console.log('DEBUG: Enviando dados:', { questao_id: questaoId, equipes_acertos: equipesAcertos });
 
             fetch('/processar_respostas', {
                 method: 'POST',
@@ -185,8 +358,12 @@
                     equipes_acertos: equipesAcertos
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('DEBUG: Response status:', response.status);
+                return response.json();
+            })
             .then(data => {
+                console.log('DEBUG: Response data:', data);
                 if (data.sucesso) {
                     // Voltar diretamente à roleta sem mensagem
                     window.location.href = '/roleta';
@@ -195,7 +372,7 @@
                 }
             })
             .catch(error => {
-                console.error('Erro:', error);
+                console.error('ERRO no fetch:', error);
                 alert('Erro ao processar respostas: ' + error.message);
             });
         });

@@ -65,6 +65,17 @@
     function atualizarPlacar(equipes) {
         const placarDiv = document.getElementById('placar');
         placarDiv.innerHTML = '';
+        
+        // Remover todas as classes primeiro
+        placarDiv.classList.remove('muitas-equipes', 'super-compacto');
+        
+        // Adicionar classes baseadas no número de equipes
+        if (equipes.length >= 6) {
+            placarDiv.classList.add('muitas-equipes', 'super-compacto');
+        } else if (equipes.length >= 4) {
+            placarDiv.classList.add('muitas-equipes');
+        }
+        
         equipes.forEach(eq => {
             // Corrige nome da cor para classe CSS: minúsculo e espaços/acentos para underline
             let corClasse = eq.cor.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').replace(/\s+/g, '_');

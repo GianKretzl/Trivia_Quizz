@@ -2449,3 +2449,117 @@ body {
         width: 200px;
     }
 }
+
+/* Media Query específica para TV 43 polegadas (1920x1080) em full screen */
+@media (min-width: 1800px) and (min-height: 1000px) {
+    .logo-eureka {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .ultra-big-logo {
+        width: 350px;
+        height: 350px;
+        min-width: 250px;
+        min-height: 250px;
+    }
+    
+    .container {
+        max-width: 1600px;
+        padding: 40px 60px;
+    }
+    
+    .main-content {
+        padding: 30px 40px;
+    }
+    
+    h1 {
+        font-size: 3rem;
+    }
+    
+    h2 {
+        font-size: 2.2rem;
+    }
+    
+    h3 {
+        font-size: 1.8rem;
+    }
+    
+    p, li, span {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+    
+    .btn, button {
+        font-size: 1.3rem;
+        padding: 15px 30px;
+        min-height: 60px;
+    }
+    
+    .modal-content {
+        max-width: 800px;
+        padding: 40px;
+    }
+    
+    .modal-header h2 {
+        font-size: 2rem;
+    }
+    
+    .form-group label {
+        font-size: 1.2rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 1.1rem;
+        padding: 12px 15px;
+        min-height: 50px;
+    }
+    
+    .card {
+        padding: 30px;
+        margin: 20px 0;
+    }
+    
+    .card-header {
+        font-size: 1.6rem;
+        padding: 20px 30px;
+    }
+    
+    .card-body {
+        font-size: 1.2rem;
+        padding: 25px 30px;
+    }
+}
+
+/* Media Query para TVs ultra-wide */
+@media (min-width: 2000px) {
+    .logo-eureka {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .container {
+        max-width: 1800px;
+        padding: 50px 80px;
+    }
+    
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+    h2 {
+        font-size: 2.5rem;
+    }
+    
+    p, li, span {
+        font-size: 1.4rem;
+    }
+    
+    .btn, button {
+        font-size: 1.5rem;
+        padding: 18px 35px;
+        min-height: 70px;
+    }
+}
