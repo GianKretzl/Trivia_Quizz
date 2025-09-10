@@ -579,6 +579,159 @@
     }
 }
 
+/* Estilos para elementos expansíveis */
+.pergunta-preview, .resultado-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-expandir-pergunta, .btn-expandir-resultado {
+    background: #e2e8f0;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    color: #4a5568;
+}
+
+.btn-expandir-pergunta:hover, .btn-expandir-resultado:hover {
+    background: #cbd5e0;
+    transform: scale(1.1);
+}
+
+.seta-down {
+    transition: transform 0.3s ease;
+}
+
+.seta-down.rotated {
+    transform: rotate(180deg);
+}
+
+.pergunta-completa, .resultado-completo {
+    margin-top: 12px;
+    padding: 16px;
+    background: #f7fafc;
+    border-radius: 8px;
+    border-left: 4px solid #4299e1;
+    animation: slideDown 0.3s ease;
+}
+
+.pergunta-expandida {
+    color: #2d3748;
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+.pergunta-expandida strong {
+    color: #1a202c;
+}
+
+.resultado-expandido {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.resultado-bolinha {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.acerto-bolinha {
+    background: #48bb78;
+    box-shadow: 0 0 8px rgba(72, 187, 120, 0.4);
+}
+
+.erro-bolinha {
+    background: #f56565;
+    box-shadow: 0 0 8px rgba(245, 101, 101, 0.4);
+}
+
+.resultado-expandido.acerto {
+    color: #22543d;
+}
+
+.resultado-expandido.erro {
+    color: #742a2a;
+}
+
+/* Estilos para múltiplas equipes */
+.equipes-resultados {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.equipe-resultado {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    border-left: 3px solid #e2e8f0;
+}
+
+.equipe-resultado.acerto {
+    border-left-color: #48bb78;
+}
+
+.equipe-resultado.erro {
+    border-left-color: #f56565;
+}
+
+.equipe-nome {
+    font-weight: 600;
+    color: #2d3748;
+    min-width: 120px;
+}
+
+.resultado-texto {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.resultado-texto.acerto {
+    color: #22543d;
+}
+
+.resultado-texto.erro {
+    color: #742a2a;
+}
+
+/* Animação para elementos que aparecem */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ajustes na tabela para as novas colunas */
+.pergunta-cell, .resultado-cell {
+    max-width: 300px;
+    min-width: 200px;
+}
+
+.pergunta-cell {
+    position: relative;
+}
+
 /* Media Query para TVs ultra-wide */
 @media (min-width: 2000px) {
     .relatorio-layout {

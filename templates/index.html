@@ -8,56 +8,137 @@
 </head>
 <body>
     <div class="container">
-         <div class="header header-no-border">
-                <div class="logo-container modern-header no-border-header" style="flex-direction: column; gap: 18px; box-shadow: 0 8px 40px 0 #0002; background: rgba(255,255,255,0.10); border: none; padding: 38px 0 28px 0;">
-                    <img src="{{ url_for('static', filename='img/Eureka.jpeg') }}" 
-                         alt="Eureka Logo" 
-                         class="logo-eureka ultra-big-logo" 
-                         onclick="playEurekaSound()">
-                    <div class="title-container modern-title" style="margin-top: 10px;">
-                        <h1 class="main-title clean-title">1º EUREKA DO PADRE</h1>
-                        <p class="subtitle">Gincana do conhecimento</p>
+        <!-- Background com efeito de partículas -->
+        <div class="background-effects">
+            <div class="particle-system">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+        
+        <div class="header header-modern">
+            <div class="hero-section">
+                <div class="logo-container-enhanced">
+                    <div class="logo-wrapper">
+                        <img src="{{ url_for('static', filename='img/sem_fundo_eureka-Photoroom.png') }}" 
+                             alt="Eureka Logo" 
+                             class="logo-eureka enhanced-logo" 
+                             onclick="playEurekaSound()">
+                        <div class="logo-glow"></div>
                     </div>
-                    <div class="game-type-buttons modern-game-type">
-                        <div class="game-type-badge active glass">🧩 Desafio Mental</div>
-                        <div class="game-type-badge glass">🥇 Competição</div>
-                        <div class="game-type-badge glass">🎓 Educativo</div>
+                    <div class="title-section">
+                        <h1 class="main-title-enhanced">1º EUREKA DO PADRE</h1>
+                        <p class="subtitle-enhanced">🎓 Gincana do Conhecimento 🏆</p>
+                        <div class="description-text">
+                            Teste seus conhecimentos em uma competição educativa e divertida!
+                        </div>
+                    </div>
+                </div>              
+               
+            </div>
+        </div>
+
+        <!-- Menu Principal Aprimorado -->
+        <div id="config-menu" class="config-menu-enhanced">
+            <div class="setup-header">
+                <h2 class="setup-title">⚙️ Configuração do Jogo</h2>
+                <p class="setup-subtitle">Configure as opções para começar sua aventura do conhecimento</p>
+            </div>
+            
+            <div class="setup-steps">
+                <div class="step-indicator">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Turma</div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Equipes</div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Cores</div>
                     </div>
                 </div>
             </div>
+            
+            <div class="menu-panel-enhanced">
+                <div class="menu-options-grid">
+                    <div class="option-card" id="turma-card">
+                        <button id="turma-btn" class="menu-option-btn-enhanced">
+                            <div class="card-header">
+                                <div class="button-icon-enhanced">🎓</div>
+                                <div class="card-status" id="turma-status">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">Pendente</span>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title">SELECIONAR TURMA</div>
+                                <div class="card-description">Escolha o nível de ensino</div>
+                                <div class="card-selection" id="turma-selection">Nenhuma selecionada</div>
+                            </div>
+                            <div class="card-arrow">→</div>
+                        </button>
+                    </div>
 
-        <!-- Menu Principal -->
-        <div id="config-menu" class="config-menu">
-            <div class="menu-panel">
-                <div class="menu-options">
-                    <button id="turma-btn" class="menu-option-btn">
-                        <div class="button-icon">🎓</div>
-                        <div class="button-content">
-                            <div class="button-title">TURMA</div>
-                            <div class="button-subtitle">Escolher</div>
-                        </div>
-                    </button>
+                    <div class="option-card disabled" id="equipes-card">
+                        <button id="equipes-btn" class="menu-option-btn-enhanced" disabled>
+                            <div class="card-header">
+                                <div class="button-icon-enhanced">🏆</div>
+                                <div class="card-status" id="equipes-status">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">Aguardando</span>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title">NÚMERO DE EQUIPES</div>
+                                <div class="card-description">Quantas equipes vão competir?</div>
+                                <div class="card-selection" id="equipes-selection">Não definido</div>
+                            </div>
+                            <div class="card-arrow">→</div>
+                        </button>
+                    </div>
 
-                    <button id="equipes-btn" class="menu-option-btn" disabled>
-                        <div class="button-icon">🏆</div>
-                        <div class="button-content">
-                            <div class="button-title">EQUIPES</div>
-                            <div class="button-subtitle">Escolher</div>
-                        </div>
-                    </button>
-
-                    <button id="cores-btn" class="menu-option-btn" disabled>
-                        <div class="button-icon">�</div>
-                        <div class="button-content">
-                            <div class="button-title">CORES DAS EQUIPES</div>
-                            <div class="button-subtitle">Escolher</div>
-                        </div>
-                    </button>
+                    <div class="option-card disabled" id="cores-card">
+                        <button id="cores-btn" class="menu-option-btn-enhanced" disabled>
+                            <div class="card-header">
+                                <div class="button-icon-enhanced">🎨</div>
+                                <div class="card-status" id="cores-status">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">Aguardando</span>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title">CORES DAS EQUIPES</div>
+                                <div class="card-description">Personalize as equipes</div>
+                                <div class="card-selection" id="cores-selection">Não definidas</div>
+                            </div>
+                            <div class="card-arrow">→</div>
+                        </button>
+                    </div>
                 </div>
                 
-                <button id="iniciar-jogo" class="start-game-btn" disabled>
-                    <span>🎮 BORA COMEÇAR! </span>
-                </button>
+                <div class="action-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="setup-progress" style="width: 0%"></div>
+                    </div>
+                    <button id="iniciar-jogo" class="start-game-btn-enhanced" disabled>
+                        <div class="btn-content">
+                            <div class="btn-icon">🚀</div>
+                            <div class="btn-text">
+                                <span class="btn-main">INICIAR AVENTURA</span>
+                                <span class="btn-sub">Que comece a diversão!</span>
+                            </div>
+                        </div>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -70,11 +151,11 @@
                     <button class="close-modal" data-modal="turma-modal">✕</button>
                 </div>
                 <div class="modal-options">
-                    <button class="option-btn" data-value="6_ano">6º ANO</button>
-                    <button class="option-btn" data-value="7_ano">7º ANO</button>
-                    <button class="option-btn" data-value="8_ano">8º ANO</button>
-                    <button class="option-btn" data-value="9_ano">9º ANO</button>
-                    <button class="option-btn" data-value="ensino_medio">ENSINO MÉDIO</button>
+                    <button class="option-btn" onclick="selecionarTurma('6_ano')">6º ANO</button>
+                    <button class="option-btn" onclick="selecionarTurma('7_ano')">7º ANO</button>
+                    <button class="option-btn" onclick="selecionarTurma('8_ano')">8º ANO</button>
+                    <button class="option-btn" onclick="selecionarTurma('9_ano')">9º ANO</button>
+                    <button class="option-btn" onclick="selecionarTurma('ensino_medio')">ENSINO MÉDIO</button>
                 </div>
             </div>
         </div>
@@ -87,11 +168,11 @@
                     <button class="close-modal" data-modal="equipes-modal">✕</button>
                 </div>
                 <div class="modal-options">
-                    <button class="option-btn" data-value="2">2 EQUIPES</button>
-                    <button class="option-btn" data-value="3">3 EQUIPES</button>
-                    <button class="option-btn" data-value="4">4 EQUIPES</button>
-                    <button class="option-btn" data-value="5">5 EQUIPES</button>
-                    <button class="option-btn" data-value="6">6 EQUIPES</button>
+                    <button class="option-btn" onclick="selecionarNumEquipes(2)">2 EQUIPES</button>
+                    <button class="option-btn" onclick="selecionarNumEquipes(3)">3 EQUIPES</button>
+                    <button class="option-btn" onclick="selecionarNumEquipes(4)">4 EQUIPES</button>
+                    <button class="option-btn" onclick="selecionarNumEquipes(5)">5 EQUIPES</button>
+                    <button class="option-btn" onclick="selecionarNumEquipes(6)">6 EQUIPES</button>
                 </div>
             </div>
         </div>

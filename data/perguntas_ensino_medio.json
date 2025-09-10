@@ -1,0 +1,1046 @@
+{
+  "ensino_medio": {
+    "portugues": [
+      {
+        "pergunta": "Nas redes sociais, muitos jovens encontram espaços para se expressar, mas também enfrentam julgamentos que podem afetar sua autoestima. Qual é o tema central do trecho?",
+        "opcoes": [
+          "O uso excessivo de tecnologia pelos adultos",
+          "O impacto das redes sociais na autoestima dos jovens",
+          "A importância da poesia entre os adolescentes",
+          "Os efeitos da leitura digital em escolas"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Joana criou um perfil anônimo para compartilhar suas poesias, pois tinha medo das críticas. Por que Joana criou um perfil anônimo?",
+        "opcoes": [
+          "Para publicar receitas culinárias",
+          "Para fugir da responsabilidade",
+          "Porque tinha medo das críticas",
+          "Porque queria excluir seu perfil antigo"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Henrique desinstalou seus aplicativos por alguns dias. Quando voltou, percebeu que sua ansiedade tinha diminuído. O que se pode inferir do trecho?",
+        "opcoes": [
+          "O uso de redes sociais estava contribuindo para a ansiedade de Henrique",
+          "Henrique ficou entediado sem o celular",
+          "Henrique deixou de estudar durante o tempo offline",
+          "Henrique instalou novos aplicativos"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "'É claro que passar muitas horas online é prejudicial. Nenhum adolescente deveria trocar a vida real pelas telas.' Qual frase representa uma opinião?",
+        "opcoes": [
+          "Nenhum adolescente deveria trocar a vida real pelas telas",
+          "Os adolescentes acessam redes sociais",
+          "O número de usuários aumentou",
+          "O celular tem diversas funções"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "'Ela digitou a mensagem... mas nunca teve coragem de enviar.' Qual o efeito das reticências?",
+        "opcoes": [
+          "Indicam que a personagem estava confiante",
+          "Expressam hesitação ou pensamento incompleto",
+          "Mostram surpresa com a mensagem",
+          "Sinalizam ironia no texto"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "'Faça parte da campanha #Desconecta. Reserve um tempo para você longe do celular!' Qual é a finalidade principal do texto?",
+        "opcoes": [
+          "Vender celulares modernos",
+          "Incentivar o leitor a se desconectar das redes sociais",
+          "Promover aulas online",
+          "Divulgar um novo aplicativo"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "'Ontem, estava sentada no parque quando vi um menino tentando conversar com um robô. Fiquei pensando sobre como lidamos com a tecnologia...' Que tipo de texto é esse?",
+        "opcoes": [
+          "Narrativo",
+          "Opinativo",
+          "Publicitário",
+          "Informativo"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "'Muitos adolescentes passam horas navegando, esquecem de estudar e deixam de dormir cedo.' Qual é o tempo verbal predominante?",
+        "opcoes": [
+          "Pretérito perfeito",
+          "Futuro do presente",
+          "Presente do indicativo",
+          "Pretérito imperfeito"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "'Ela queria se concentrar nos estudos, porém não conseguia ficar longe das notificações.' O conectivo 'porém' indica:",
+        "opcoes": [
+          "Adição",
+          "Causa",
+          "Oposição",
+          "Conclusão"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "'A mensagem motivacional enviada pelo aplicativo animou os alunos.' A expressão 'pelo aplicativo' exerce qual função sintática?",
+        "opcoes": [
+          "Sujeito",
+          "Predicativo",
+          "Adjunto adverbial de meio",
+          "Complemento nominal"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "'O uso excessivo de tecnologia entre jovens não é apenas uma questão individual, mas revela padrões sociais que exigem reflexão e intervenção.' O trecho relaciona o comportamento juvenil à sociedade ao:",
+        "opcoes": [
+          "Culpabilizar os adolescentes",
+          "Sugerir que o problema é apenas tecnológico",
+          "Mostrar que o comportamento reflete padrões sociais e exige ação coletiva",
+          "Incentivar o uso irrestrito da tecnologia"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "'É preciso incentivar hábitos saudáveis, pois a dependência digital compromete a saúde mental, a rotina e os relacionamentos familiares.' Quais argumentos são usados?",
+        "opcoes": [
+          "A tecnologia melhora a comunicação",
+          "A dependência digital afeta a saúde, a rotina e os relacionamentos",
+          "Os jovens deveriam ficar mais tempo conectados",
+          "O texto não apresenta argumentos"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "matematica": [
+      {
+        "pergunta": "Marlene tem 7 pares de brincos e 5 colares diferentes para usar em uma festa. De quantas maneiras diferentes Marlene pode se arrumar para essa festa usando um par de brincos e um colar?",
+        "opcoes": [
+          "2",
+          "7",
+          "12",
+          "35"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual expressão representa o teorema de Pitágoras?",
+        "opcoes": [
+          "c = 2a + b",
+          "c² = a - 2b",
+          "a² = b² + c²",
+          "c² = a² + b²"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Calcule o valor de f(2) para f(x) = -3x + 4",
+        "opcoes": [
+          "f(2) = -1",
+          "f(2) = +1",
+          "f(2) = +2",
+          "f(2) = -2"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Em uma exposição de artes, 88% dos 200 quadros foram vendidos. Um colecionador comprou 25% desses quadros que foram vendidos. Quantos quadros esse colecionador comprou nessa exposição?",
+        "opcoes": [
+          "22",
+          "44",
+          "52",
+          "60"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "A distância média entre a Terra e a Lua é de aproximadamente 384.400km. Assinalar a alternativa que corresponde a essa distância escrita em notação científica.",
+        "opcoes": [
+          "3,844 x 10⁴",
+          "3,844 x 10⁵",
+          "3,844 x 10⁶",
+          "3,844 x 10⁷"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Observe a expressão algébrica Y(x+2). Qual o valor numérico dessa expressão quando y é igual a 6 e x é igual a 4?",
+        "opcoes": [
+          "26",
+          "32",
+          "36",
+          "48"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "biologia": [
+      {
+        "pergunta": "Muitas pessoas não sabem diferenciar corretamente o que é um ser vivo de um ser não vivo, entretanto, os organismos vivos apresentam características marcantes que permitem essa diferenciação. Uma dessas características é a capacidade de responder a estímulos, uma capacidade denominada de:",
+        "opcoes": [
+          "irritabilidade",
+          "flexibilidade",
+          "complexidade",
+          "reação"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Para um organismo ser considerado vivo, algumas características devem estar presentes. Analise as alternativas a seguir e marque o único atributo que não é encontrado em todos os seres vivos.",
+        "opcoes": [
+          "Hereditariedade",
+          "Capacidade de responder a estímulos",
+          "Corpo formado por várias células",
+          "Capacidade de evoluir"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Os vírus são minúsculos 'piratas' biológicos porque invadem as células, saqueiam seus nutrientes e utilizam as reações químicas das mesmas para se reproduzir. De acordo com o texto, é correto afirmar:",
+        "opcoes": [
+          "Os vírus utilizam o seu próprio metabolismo para destruir células, causando viroses",
+          "Os vírus utilizam o DNA da célula hospedeira para produzir outros vírus",
+          "Os vírus não têm metabolismo próprio",
+          "As viroses resultam sempre das modificações genéticas da célula hospedeira"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O reino Monera é composto dos seres mais abundantes do planeta, também conhecidos como microrganismos, pois todos são unicelulares e microscópicos. Os grupos que compõem o reino Monera são:",
+        "opcoes": [
+          "Protozoários e Bactérias",
+          "Algas e Bactérias",
+          "Fungos e Bactérias",
+          "Arqueas e Bactérias"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Os protozoários são organismos que em sua maioria habitam o ambiente aquático, entretanto, não apresentam parede celular. Eles apresentam como mecanismo para eliminar o excesso de água absorvido, em ambiente dulcícola, uma estrutura que permite a osmorregulação. Essa estrutura é conhecida como:",
+        "opcoes": [
+          "Vacúolos contráteis",
+          "Pseudópodes",
+          "Membrana Plasmática",
+          "Flagelos"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Muitas pessoas pensam que os lipídios trazem apenas malefícios à saúde e que podem ser facilmente excluídos da nossa alimentação. Entretanto, essa substância orgânica é essencial para o organismo. Nas células, os lipídios:",
+        "opcoes": [
+          "fazem parte da composição das membranas celulares",
+          "são a única fonte de energia",
+          "estão relacionados principalmente com a função estrutural",
+          "atuam na formação da parede celular"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "O corpo humano é constituído basicamente de água, sais minerais e macromoléculas como carboidratos, proteínas e lipídios. Entre as afirmativas abaixo, assinale a que não está relacionada com as propriedades das proteínas:",
+        "opcoes": [
+          "Colágeno, queratina e actina são exemplos de proteínas com função de constituição e estruturação da matéria viva",
+          "São constituídas por vários aminoácidos unidos por ligações peptídicas",
+          "Quando submetidas a elevadas temperaturas, sofrem o processo de desnaturação",
+          "Fornecem energia para as células e constituem os hormônios esteroides"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Se considerarmos um organismo que passou pela metamorfose e compararmos as duas fases (lagarta e borboleta) é correto afirmar que:",
+        "opcoes": [
+          "os genótipos e os fenótipos são idênticos",
+          "os genótipos são idênticos e os fenótipos diferentes",
+          "os genótipos e fenótipos são diferentes",
+          "os genótipos são diferentes e o fenótipo é idêntico"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "historia": [
+      {
+        "pergunta": "O encontro entre os povos indígenas e os europeus foi marcado por uma visão etnocêntrica. Assinale a alternativa correta:",
+        "opcoes": [
+          "Não podemos definir o etnocentrismo como uma teorização que define crenças, hábitos e costumes",
+          "Etnocentrismo é uma ciência dentro da geografia utilizada para determinar povos e culturas ameríndias",
+          "O encontro dos portugueses com os povos originários ocorreu de forma tranquila, tanto um, quanto o outro aceitaram e assimilaram os traços culturais do outro",
+          "Etnocentrismo é quando observamos e julgamos a vida, as crenças, os hábitos e os costumes de outros povos a partir da perspectiva particular do povo e cultura ao qual pertencemos"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Com base no texto sobre a conquista espanhola, é possível afirmar que os espanhóis tentaram impor sua cultura e religião aos povos da América pois:",
+        "opcoes": [
+          "os indígenas facilitaram o processo de conquista ao não impor resistência",
+          "o colonizador buscou transformar o espaço americano em um espaço semelhante ao europeu",
+          "os espanhóis reproduziram conflitos na América típicos da Europa como com os muçulmanos",
+          "a separação entre Igreja e Estado facilitou o processo de conquista da América"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O excerto permite afirmar corretamente que a Igreja cristã:",
+        "opcoes": [
+          "manteve-se fiel aos ensinamentos bíblicos e proibiu representações de imagens religiosas na Idade Média",
+          "limitou suas atividades à esfera cultural e evitou participar das lutas políticas durante o Feudalismo",
+          "tornou-se uma instituição do Império Romano e sobreviveu à sua derrocada quando da invasão dos bárbaros germânicos",
+          "reconheceu a importância da liberdade religiosa na Europa Ocidental e combateu a teocracia imperial"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Considerando as diferentes formas de organização das sociedades indígenas, assinale a alternativa correta:",
+        "opcoes": [
+          "Os povos indígenas possuem uma única cultura, isto é, todos falam a mesma língua, com as mesmas crenças e um único jeito de trabalhar",
+          "Os povos indígenas possuem líderes, xamãs ou pajés; dividem-se em várias aldeias; e organizam-se em clãs, grupos de pessoas que acreditavam descender de um ancestral comum",
+          "As histórias e as culturas indígenas não marcaram profundamente nosso jeito de ser, nossos hábitos, nossa língua não são influenciadas pelas suas contribuições",
+          "O conhecimento acumulado sobre os indígenas do Brasil é muito disseminado entre nós, o que leva muitas pessoas a observar as suas diferenças"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O empenho em se tornar tão presente quanto o Sol levou o rei da França a demonstrar hábitos que confundiam o campo do público e régio com a intimidade particular do monarca. Isso deu espaço para o fortalecimento do sistema político que chamamos de:",
+        "opcoes": [
+          "Mercantilismo",
+          "Capitalismo",
+          "Absolutismo",
+          "Nacionalismo"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Sobre a Guerra do Contestado, assinale a alternativa correta:",
+        "opcoes": [
+          "O governo brasileiro lutou para impedir o conflito e preservar os sertanejos",
+          "O catolicismo não interferia nas ações dos camponeses daquela região",
+          "O abandono da população pobre foi fenômeno marcante no início da República",
+          "O governo brasileiro impediu a intervenção econômica de países estrangeiros na região"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Sobre o movimento operário na primeira República podemos afirmar que:",
+        "opcoes": [
+          "se desenvolveu graças ao trabalho dos ex-escravizados",
+          "teve grande influência das ideias desenvolvidas no Brasil",
+          "foi organizado pela experiência dos imigrantes",
+          "sempre houve diálogo entre os operários e os patrões"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "'Pai dos Pobres' e 'Mãe dos Ricos': não é por qualquer razão que ele ficou conhecido assim. De caráter populista, Getúlio Vargas governou:",
+        "opcoes": [
+          "sempre de maneira democrática",
+          "fortalecendo sua imagem como líder",
+          "permitindo total liberdade de expressão",
+          "sem interferir nos meios de comunicação"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Em 16 de setembro de 1931, nasce em São Paulo a maior entidade negra do século XX: a Frente Negra Brasileira. Analise as afirmações e assinale as corretas:",
+        "opcoes": [
+          "I e II",
+          "III e V",
+          "II e IV",
+          "I e V"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual o motivo da censura aos artistas argentinos durante a ditadura militar?",
+        "opcoes": [
+          "Devido à desvalorização da cultura",
+          "Por divergências quanto à qualidade da letra das músicas",
+          "Pela inexperiência política desses cantores",
+          "As suas canções manifestavam oposição ao governo"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual dos seguintes eventos recentes destaca a importância da proteção dos direitos humanos no contexto global?",
+        "opcoes": [
+          "A realização de uma feira internacional de tecnologia",
+          "O lançamento bem-sucedido de uma missão espacial",
+          "O aumento das vendas de produtos de luxo em países desenvolvidos",
+          "O deslocamento em massa de pessoas devido a desastres naturais e conflitos armados"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Representante do Renascimento Cultural, podemos afirmar que as obras de William Shakespeare:",
+        "opcoes": [
+          "demonstram uma religiosidade muito profunda",
+          "se relacionam com os interesses da monarquia inglesa",
+          "se baseiam na valorização do humanismo",
+          "são identificadas com a ignorância e o preconceito da época"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "geografia": [
+      {
+        "pergunta": "A urbanização no Brasil ocorreu por causa de fatores ATRATIVOS, como:",
+        "opcoes": [
+          "o fortalecimento da comunidade rural por meio de cooperativas",
+          "a oferta de empregos gerada pela industrialização",
+          "a migração forçada devido à insegurança e à violência nas áreas rurais",
+          "o desemprego e o aumento da violência no campo"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Dentre as consequências do movimento de translação, pode-se mencionar:",
+        "opcoes": [
+          "o equinócio e o solstício, pois a luz solar ilumina de forma gradual diferentes áreas e isso resulta na sucessão de dias e noites",
+          "a maneira e a intensidade com que os raios solares atingem a Terra, no sentido anti-horário, com duração aproximada de 24 horas",
+          "o início e fim das estações do ano por conta do movimento que o planeta realiza ao redor do seu próprio eixo",
+          "a variação climática, as paisagens naturais distribuídas pelo planeta Terra e as estações do ano"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Os deslizamentos de terra podem acontecer devido a atividades humanas ou naturais. Dentre as possíveis causas de deslizamentos de terra temos:",
+        "opcoes": [
+          "compactação do solo pela erosão",
+          "aumento da vegetação nas áreas de solo exposto",
+          "ocupação indevida das encostas, a remoção da vegetação e as chuvas intensas",
+          "mineração, com a retirada do solo para a exploração de minérios"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O excesso de calçamento e de impermeabilização do solo, bem como a falta de cobertura vegetal, em áreas urbanas, contribuem para formação do fenômeno climático denominado:",
+        "opcoes": [
+          "ilhas de lixo",
+          "inversão térmica",
+          "ilhas de calor",
+          "desertificação"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A água é um recurso fundamental para o desenvolvimento da vida no planeta. Uma ação adequada para o uso sustentável da água é:",
+        "opcoes": [
+          "investir na captação de águas dos rios em regiões com longos períodos de seca",
+          "aumentar o valor da energia elétrica em épocas de escassez de água",
+          "disponibilizar maior quantidade de água para a agricultura",
+          "desenvolver medidas de reutilização da água"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "No Ártico, as temperaturas estão aumentando mais rápido do que em outras regiões do planeta. O aquecimento acelerado do Ártico tem como consequência o:",
+        "opcoes": [
+          "desaparecimento das banquisas",
+          "aumento na produção pesqueira",
+          "resfriamento das águas oceânicas",
+          "recuo do mar sobre ilhas e cidades litorâneas"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Os países menos democráticos do mundo caracterizam-se por apresentarem:",
+        "opcoes": [
+          "fraudes eleitorais e democracia",
+          "eleições justas e liberdades civis",
+          "voto universal e direitos políticos",
+          "regimes autoritários e violações das liberdades civis"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Dentre os motivos para os deslocamentos de pessoas refugiadas, estão:",
+        "opcoes": [
+          "crises socioeconômicas e conflitos armados",
+          "crises socioeconômicas e incentivo às migrações",
+          "conflitos armados e oferecimento de bolsas de estudo aos imigrantes",
+          "convocação para o trabalho nos países desenvolvidos e busca por estabilidade financeira"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "O agronegócio brasileiro teve um crescimento significativo nos últimos anos. Para isso, fatores favoráveis para o desenvolvimento das atividades agrícolas são:",
+        "opcoes": [
+          "a vasta extensão territorial e o investimento em novas tecnologias",
+          "a prática da rotação de culturas e a escassez de água para irrigação",
+          "o equilíbrio adequado de nutrientes no solo e a compactação do solo",
+          "o combate às pragas e doenças e as técnicas de manejo rudimentares"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Além de afetar a saúde humana, a falta de saneamento básico também provoca impactos ambientais no espaço geográfico, pois:",
+        "opcoes": [
+          "coletar o lixo próximo a áreas de mananciais reduz as nascentes",
+          "despejar esgoto não tratado pode poluir o solo e os recursos hídricos",
+          "retirar a mata ciliar da margem dos rios pode ampliar as reservas de água",
+          "aplicar produtos químicos na água contamina as estações de tratamento de esgoto"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Para ler e interpretar um mapa, a legenda cumpre um papel fundamental, pois:",
+        "opcoes": [
+          "apresenta o nome do tipo de mapa em questão",
+          "identifica os pontos cardeais representados no mapa",
+          "representa o tamanho do mapa em comparação ao mundo real",
+          "identifica o significado dos elementos representados no mapa"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Sobre os movimentos da Terra é correto afirmar:",
+        "opcoes": [
+          "o movimento de rotação é responsável pelas estações do ano",
+          "o movimento de translação é responsável pelas estações do ano",
+          "o movimento de translação é responsável pela deriva continental",
+          "o movimento de rotação é responsável pela ocorrência de chuvas"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O processo de modernização da agricultura foi responsável por qual transformação do espaço geográfico?",
+        "opcoes": [
+          "Aumento das vagas de emprego no setor primário",
+          "Controle das desigualdades sociais na área rural",
+          "Redução da população morando na zona rural",
+          "Consolidação de uma reforma agrária popular"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A Cordilheira dos Andes é resultado:",
+        "opcoes": [
+          "do movimento convergente, responsável pela formação de tempestades",
+          "do movimento divergente, responsável pela formação de planaltos",
+          "do movimento divergente, responsável pelo assoalho oceânico",
+          "do movimento convergente, formador de relevo"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Uma das características da globalização é a expansão de transnacionais que buscam instalar filiais em países que ofertam:",
+        "opcoes": [
+          "mão de obra cara e mercado consumidor limitado",
+          "escassez de matéria-prima e isenção de impostos",
+          "mão de obra barata e legislação ambiental flexível",
+          "legislação ambiental rígida e aplicação de impostos"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "fisica": [
+      {
+        "pergunta": "A velocidade da luz no vácuo é aproximadamente:",
+        "opcoes": [
+          "300.000 km/s",
+          "150.000 km/s",
+          "450.000 km/s",
+          "200.000 km/s"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "A força gravitacional entre dois corpos é:",
+        "opcoes": [
+          "Diretamente proporcional ao quadrado da distância",
+          "Inversamente proporcional ao quadrado da distância",
+          "Independente da massa dos corpos",
+          "Sempre constante"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "quimica": [
+      {
+        "pergunta": "A ligação iônica é caracterizada pela transferência de elétrons entre átomos com grande diferença de eletronegatividade, resultando na formação de íons que se atraem mutuamente. Qual dos compostos forma uma ligação iônica?",
+        "opcoes": [
+          "H2O",
+          "TiO2",
+          "C2H2",
+          "C12H22O11"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Uma solução de água e cloreto de sódio (NaCl) possui a propriedade de conduzir eletricidade, em razão da presença de átomos ou grupos de átomos com carga elétrica. Nessa situação, o composto em solução aquosa é formado por:",
+        "opcoes": [
+          "força dipolo-dipolo",
+          "ligação covalente",
+          "ligação iônica",
+          "ligação metálica"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Willian Crookes, por volta do século XIX, descobriu os raios catódicos utilizando um aparelho que ficou conhecido como tubo de Crookes. O raio mencionado contribuiu para:",
+        "opcoes": [
+          "verificar a indivisibilidade do átomo",
+          "propor a existência do núcleo do átomo",
+          "determinar a existência da partícula elétron",
+          "identificar os estados físicos da matéria"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O processo de fissão e fusão nuclear ocorre no núcleo do átomo. A principal característica que distingue os fenômenos nucleares é que:",
+        "opcoes": [
+          "fissão nuclear ocorre quando um núcleo pesado é divido em dois ou mais núcleos menores, enquanto na fusão, dois núcleos leves se unem formando um núcleo mais pesado",
+          "fissão nuclear é a união de dois núcleos leves, enquanto a fusão é a divisão de um núcleo pesado",
+          "fusão nuclear ocorre em usinas nucleares, enquanto a fissão ocorre no sol",
+          "fissão nuclear libera menos energia que a fusão nuclear, e ambas são processos controlados em reatores nucleares"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "O número de nêutrons é calculado subtraindo o número atômico do número de massa, utilizando a fórmula (N = A – Z). Para o elemento químico ⁵⁶X₂₆, os números de nêutrons e elétrons serão, respectivamente:",
+        "opcoes": [
+          "26 e 56",
+          "30 e 24",
+          "26 e 30",
+          "30 e 26"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Os fogos de artifício liberam cores brilhantes no céu devido à queima de diferentes elementos químicos. Essa constatação culminou em um modelo atômico que tem como característica a existência de órbitas circulares. Esse modelo atômico ficou conhecido como:",
+        "opcoes": [
+          "modelo de Bohr",
+          "modelo de Dalton",
+          "modelo de Rutherford",
+          "modelo de Thomson"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Como os elementos são listados sequencialmente na Tabela Periódica?",
+        "opcoes": [
+          "por ordem crescente de massa atômica",
+          "por ordem crescente de raio atômico",
+          "por ordem crescente de número atômico",
+          "por ordem crescente de eletronegatividade"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Na configuração eletrônica do elemento químico 1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d², há dois elétrons no subnível 3d. Qual seu número atômico?",
+        "opcoes": [
+          "19",
+          "22",
+          "21",
+          "20"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Quais os fatores que alteram a velocidade das reações químicas?",
+        "opcoes": [
+          "Pressão, superfície de contato, solidificação, ebulição e condensação",
+          "Catação, filtração, ressublimação, ventilação e temperatura",
+          "Concentração, temperatura, pressão, superfície de contato e catalisador",
+          "Fusão, catalisador, sublimação, concentração e peneiração"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual a ddp padrão de uma pilha, substituindo os valores de potencial de redução das semireações na fórmula ∆E⁰ = E⁰cátodo – E⁰ânodo? Semirreação do ânodo (-): Fe²⁺(aq) + 2e⁻ → Fe⁰(s) Ered = - 0,44 V; Semirreação do cátodo (+): Pb²⁺(aq) + 2e⁻ → Pb⁰(s) Ered = - 0,13 V",
+        "opcoes": [
+          "– 0,85 V",
+          "+ 0,31 V",
+          "+ 0,85 V",
+          "- 0,25 V"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "São denominadas reações de oxirredução aquelas que ocorrem mediante:",
+        "opcoes": [
+          "compartilhamento de elétrons",
+          "transferência de elétrons",
+          "somente com a perda de elétrons",
+          "somente quando ganha elétrons de outra espécie química"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "A pilha de Daniel consiste em:",
+        "opcoes": [
+          "Uma semicela de ouro ligada em uma semicela de cobre",
+          "Uma semicela de zinco ligada a uma semicela de cobre",
+          "Uma semicela de zinco ligada a uma semicela de prata",
+          "Nenhuma das alternativas"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O vazamento de uma pilha pode ser perigoso, pois o líquido ou pó liberado é corrosivo. Sendo assim, evite contato direto e, se ocorrer, lave imediatamente a área com:",
+        "opcoes": [
+          "ácido clorídrico",
+          "base alcalina",
+          "água abundante",
+          "sal penta hidratado"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Em uma reação de oxirredução temos o agente redutor e o agente oxidante. Quem são eles, respectivamente?",
+        "opcoes": [
+          "É a espécie que perde elétrons (sofre oxidação) e ganha elétrons (sofre redução)",
+          "É a espécie que ganha elétrons (sofre redução) e perde elétrons (sofre oxidação)",
+          "É a espécie que perde elétrons (sofre redução) e ganha elétrons (sofre redução)",
+          "É a espécie que perde elétrons (sofre oxidação) e ganha elétrons (sofre oxidação)"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Qual a diferença entre pilha e bateria?",
+        "opcoes": [
+          "As pilhas são ligadas em série eletricamente. Enquanto que a bateria é ligada somente a uma única célula",
+          "As pilhas são formadas por uma única célula eletroquímica. Enquanto que a bateria é um conjunto de pilhas ligadas em série",
+          "As pilhas são formadas pela passagem de elétrons que partem do ânodo chegam ao cátodo, onde a bateria, recebe esses elétrons, aumentando sua massa",
+          "Nenhuma associação de células eletroquímicas existe entre elas"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Identificar a importância da Química na preservação do Meio Ambiente:",
+        "opcoes": [
+          "Consumo exagerado de água, energia e separar o lixo",
+          "Adotar a prática do consumo consciente, desprotegendo áreas naturais",
+          "Preservar todos os componentes do meio ambiente, jogando lixo na rua",
+          "Reciclagem do alumínio"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Sabendo que o sódio (Na) apresenta NOX +1 e o oxigênio apresenta a NOX -2, pode-se dizer que o enxofre no composto Na₂SO₄ apresenta NOX:",
+        "opcoes": [
+          "+4",
+          "+5",
+          "+6",
+          "+7"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "filosofia": [
+      {
+        "pergunta": "Na Filosofia, os conceitos de ética e moral são frequentemente associados, mas possuem significados distintos. A moral refere-se a um conjunto de valores, normas e costumes que orientam a conduta de um grupo social, enquanto a ética é:",
+        "opcoes": [
+          "A aplicação prática e obrigatória das leis civis para garantir a convivência social",
+          "Um conjunto fixo de regras imutáveis definidas por tradições religiosas ou culturais",
+          "A reflexão crítica sobre os princípios que orientam as ações humanas, questionando e avaliando valores morais",
+          "O hábito de agir conforme os costumes estabelecidos, sem necessidade de reflexão"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Sobre ética e moral, assinale a alternativa FALSA:",
+        "opcoes": [
+          "A ética busca compreender e justificar racionalmente as ações humanas, questionando valores e princípios",
+          "A moral varia de acordo com o contexto histórico e cultural, influenciando o que é considerado certo ou errado",
+          "A ética e a moral são sinônimos e não apresentam diferenças conceituais relevantes",
+          "A moral está ligada a regras e normas que orientam comportamentos dentro de um grupo social"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Tanto Platão quanto Aristóteles refletiram sobre a virtude, mas de maneiras distintas. Para Platão, a virtude está ligada ao conhecimento do Bem e à harmonia da alma; para Aristóteles, ela se relaciona:",
+        "opcoes": [
+          "À contemplação das ideias perfeitas, que existem em um mundo separado do sensível",
+          "Ao cumprimento irrestrito das leis da cidade, independentemente das circunstâncias",
+          "Ao hábito de agir de acordo com a razão, buscando o equilíbrio entre os extremos (justo meio)",
+          "Ao abandono dos prazeres e das atividades políticas, dedicando-se apenas à vida contemplativa"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Assinale a alternativa FALSA sobre as concepções de virtude em Platão e Aristóteles:",
+        "opcoes": [
+          "Para Platão, a virtude resulta do conhecimento do Bem e da harmonia entre as partes da alma",
+          "Platão e Aristóteles concordam que a virtude é inata e independente da educação ou da experiência",
+          "Para Aristóteles, a virtude moral é adquirida pela prática e pelo hábito, visando o justo meio",
+          "Aristóteles entende que a virtude intelectual se desenvolve principalmente por meio do ensino e da reflexão"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "As escolas helenísticas desenvolveram diferentes concepções éticas. Sobre elas, assinale a alternativa CORRETA:",
+        "opcoes": [
+          "O epicurismo defendia a busca desenfreada pelos prazeres físicos como caminho único para a felicidade",
+          "O estoicismo pregava a aceitação racional do destino e a vida em conformidade com a natureza",
+          "O cinismo valorizava a acumulação de bens materiais como expressão de virtude",
+          "O estoicismo rejeitava o uso da razão na vida moral, priorizando apenas as emoções"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O cinismo, fundado por Antístenes e representado por pensadores como Diógenes de Sinope, propunha um modo de vida radicalmente simples e independente. Sobre essa escola filosófica, assinale a alternativa FALSA:",
+        "opcoes": [
+          "Defendia a autossuficiência (autarkeia) e a liberdade em relação às convenções sociais e bens materiais",
+          "Buscava viver de acordo com a natureza, rejeitando as ambições e vaidades da vida em sociedade",
+          "Valorizava a franqueza e a liberdade de expressão, mesmo que de forma provocadora e desconfortável",
+          "Considerava o acúmulo de riquezas e o luxo como indispensáveis para a conquista da virtude"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "O surgimento da política na Grécia Antiga está ligado a mudanças históricas e sociais que transformaram a organização das cidades-estado. Entre os fatores que possibilitaram esse nascimento, destaca-se:",
+        "opcoes": [
+          "A substituição das leis escritas por tradições orais transmitidas apenas pela aristocracia",
+          "O fortalecimento do poder dos reis e a concentração absoluta das decisões nas mãos de monarcas",
+          "A valorização do debate público e da participação dos cidadãos nas decisões coletivas",
+          "A completa ausência de comércio e de relações com outros povos, preservando o isolamento cultural"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A pólis, na Grécia Antiga, não era apenas um espaço físico, mas uma comunidade política e cultural. Sobre esse conceito, assinale a alternativa FALSA:",
+        "opcoes": [
+          "A pólis reunia cidadãos que compartilhavam leis, costumes e instituições comuns",
+          "A vida política na pólis estava ligada ao ideal de participação ativa e debate público",
+          "Na pólis, todos os habitantes, incluindo escravos e estrangeiros, tinham plenos direitos de cidadania",
+          "A pólis era vista como o espaço no qual o indivíduo realizava sua natureza humana por meio da vida em comunidade"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Maquiavel é conhecido por sua análise pragmática da política, destacando a relação entre poder e moral. Em sua obra 'O Príncipe', ele afirma que:",
+        "opcoes": [
+          "Um governante deve sempre agir de acordo com os princípios éticos tradicionais, mesmo que isso comprometa seu poder",
+          "A manutenção do poder justifica meios que, em outras circunstâncias, seriam considerados imorais",
+          "A virtude do governante está em seguir rigorosamente a religião e as tradições",
+          "O governo ideal é aquele baseado na democracia direta e na participação popular constante"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "No 'Leviatã', Hobbes apresenta uma visão sobre a natureza humana e o contrato social. Segundo ele, o estado de natureza é caracterizado por:",
+        "opcoes": [
+          "Cooperação espontânea e harmonia entre os indivíduos",
+          "Um estado de guerra de todos contra todos, devido à competição e desconfiança",
+          "Igualdade absoluta de poder entre os indivíduos, sem conflitos",
+          "A prevalência da bondade natural do ser humano, que dispensa o governo centralizado"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Rousseau, em seu conceito de contrato social, afirma que a vontade geral:",
+        "opcoes": [
+          "Representa a soma dos interesses individuais sem possibilidade de conflito",
+          "É a vontade coletiva que busca o bem comum, mesmo que contrarie interesses particulares",
+          "Deve ser ignorada em favor da vontade dos governantes para garantir a ordem",
+          "Refere-se à imposição da lei natural sobre as vontades humanas, independente do povo"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Hobbes e Rousseau apresentam visões distintas sobre o estado de natureza e o contrato social. Com base nos conceitos dos autores, assinale a alternativa que melhor problematiza suas concepções:",
+        "opcoes": [
+          "Tanto Hobbes quanto Rousseau defendem um soberano absoluto que detém todo o poder para garantir a paz social",
+          "Hobbes vê o estado de natureza como um conflito permanente que só pode ser superado pela autoridade central, enquanto Rousseau acredita que a liberdade é inata e pode ser preservada pela vontade geral",
+          "Rousseau rejeita a ideia de contrato social, enquanto Hobbes defende a democracia direta como forma ideal de governo",
+          "Para Hobbes, a vontade geral é o princípio da soberania, e para Rousseau, o contrato social é a submissão irrestrita ao poder do rei"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "educacao_financeira": [
+      {
+        "pergunta": "Existe um método para gerenciar as despesas familiares que divide a sua renda líquida em três categorias. Qual das assertivas condiz com a porcentagem aplicada ao método, respectivamente? I - ___% das receitas devem ser usadas para despesas essenciais. II - ___% para lazer e despesas pessoais. III - ___% devem ser utilizados para investimentos.",
+        "opcoes": [
+          "30%, 45%, 60%",
+          "50%, 30%, 20%",
+          "30%, 40%, 50%",
+          "50%, 35%, 40%"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Assinale a alternativa que contém as palavras que completam as frases: I. Receita são os ganhos. As receitas que se repetem são as receitas _______, as que mudam são as receitas _______. II. Despesas fixas são gastos que se _______ todos os meses e as despesas variáveis são _______ que podem se repetir todos os meses, porém com valores variáveis.",
+        "opcoes": [
+          "variáveis, fixas, valorizam, repetem",
+          "fixas, variáveis, repetem, gastos",
+          "fixas, sazonais, acumulam, despesas",
+          "variáveis, sazonais, fixam, valores"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Dos tipos de contratos de trabalho existentes, qual desses não condiz com as diferentes fontes de renda?",
+        "opcoes": [
+          "Acadêmico",
+          "Estágio Remunerado",
+          "Freelancer",
+          "Profissional Autônomo"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Não é atribuição da gestão municipal:",
+        "opcoes": [
+          "Pavimentação e manutenção de ruas da cidade",
+          "Cobrar e administrar o IPTU",
+          "Reforma em escolas estaduais",
+          "Contratar médico para o posto de saúde"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual a importância da Educação Financeira?",
+        "opcoes": [
+          "Saber lidar com o dinheiro para gastar conscientemente",
+          "Aprender de maneira rápida como gastar em promoções",
+          "Para gastar conscientemente e investir perigosamente",
+          "Gastar tudo possível e evitar endividamentos"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Receitas e Despesas são termos que fazem parte da base da Educação Financeira. Assinale a alternativa que representa uma Despesa e uma Receita, respectivamente:",
+        "opcoes": [
+          "Recebimento de Salário e pagamento da conta de energia",
+          "Pagamento da conta de energia e pagamento do aluguel",
+          "Pagamento da conta de água e recebimento de aluguel",
+          "Recebimento de aluguel e recebimento de salário"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Como chamamos o salário que o trabalhador recebe em sua conta bancária já com os descontos?",
+        "opcoes": [
+          "salário líquido",
+          "salário final",
+          "salário bruto",
+          "salário família"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Os descontos obrigatórios em folha de pagamento pelo regime CLT são:",
+        "opcoes": [
+          "vale transporte, INSS, imposto de renda",
+          "INSS, FGTS e imposto de renda",
+          "vale alimentação e vale transporte",
+          "vale transporte, INSS e FGTS"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O que caracteriza uma 'armadilha de consumo'?",
+        "opcoes": [
+          "Promoções e descontos em produtos de qualidade",
+          "Ofertas exclusivas para membros de programas de fidelidade",
+          "Estratégias de marketing que incentivam compras impulsivas e desnecessárias",
+          "Produtos de alta qualidade a preços acessíveis"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Participar do processo legislativo, debatendo, apresentando e votando projetos de lei no âmbito federal, representar e ser responsável por discutir e decidir sobre questões de interesse nacional. São atribuições dos:",
+        "opcoes": [
+          "Vereadores",
+          "Senadores",
+          "Deputados federais",
+          "Deputados estaduais"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "lingua_inglesa": [
+      {
+        "pergunta": "Read the text: 'People should recycle more to help the environment. When we recycle paper, glass, and plastic, we reduce the amount of waste and save natural resources.' What is the purpose of the text?",
+        "opcoes": [
+          "To explain how plastic is made",
+          "To encourage people to recycle",
+          "To advertise a new recycling company",
+          "To describe the history of recycling"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Complete the sentence: She has never ______ sushi in her life.",
+        "opcoes": [
+          "eat",
+          "ate",
+          "eaten",
+          "eats"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Read the sentence: 'John was exhausted after the marathon.' What does the word 'exhausted' mean?",
+        "opcoes": [
+          "Happy",
+          "Tired",
+          "Excited",
+          "Angry"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Read the text: 'The internet has revolutionized communication, allowing people to connect instantly from anywhere in the world. However, excessive use of digital devices can affect sleep and concentration.' What is the meaning of the word 'excessive' in the text?",
+        "opcoes": [
+          "Balanced",
+          "Normal",
+          "Too much",
+          "Unnecessary"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Choose the correct option to complete the sentence: Look at those dark clouds! It ______ rain soon.",
+        "opcoes": [
+          "going",
+          "is going to",
+          "goes to",
+          "will going"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Read the text below: 'Don't forget to bring your student ID. You'll need it to enter the exam room. Good luck!' What is the purpose of the message?",
+        "opcoes": [
+          "To advertise a product",
+          "To invite students to a party",
+          "To give an instruction",
+          "To describe a classroom"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "educacao_fisica": [
+      {
+        "pergunta": "Qual é o benefício principal da atividade física regular?",
+        "opcoes": [
+          "Aumentar o peso corporal",
+          "Melhorar a saúde cardiovascular",
+          "Reduzir a flexibilidade",
+          "Diminuir a resistência"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O aquecimento antes do exercício serve para:",
+        "opcoes": [
+          "Cansar os músculos",
+          "Preparar o corpo para a atividade",
+          "Reduzir a performance",
+          "Aumentar o risco de lesões"
+        ],
+        "resposta_correta": 1
+      }
+    ]
+  }
+}

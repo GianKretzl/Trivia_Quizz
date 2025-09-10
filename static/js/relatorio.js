@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarRelatorio();
     carregarDadosTabela();
     popularFiltros();
+    configurarEventListeners();
 });
 
 // Inicializar relatório
@@ -23,16 +24,22 @@ function carregarDadosTabela() {
     
     dadosOriginais = Array.from(linhas).map(linha => {
         const celulas = linha.querySelectorAll('td');
+        const perguntaCompleta = linha.querySelector('.pergunta-expandida');
+        const perguntaTexto = perguntaCompleta ? perguntaCompleta.textContent : '';
+        
+        // Verificar se alguma equipe acertou
+        const equipesResultados = linha.querySelectorAll('.equipe-resultado');
+        const temAcerto = Array.from(equipesResultados).some(eq => 
+            eq.querySelector('.resultado-texto').textContent.includes('Acertou')
+        );
+        
         return {
             elemento: linha,
             rodada: parseInt(celulas[0].textContent.trim()),
             turma: celulas[1].textContent.trim(),
-            equipe: celulas[2].textContent.trim(),
-            cor: celulas[3].querySelector('.cor-nome').textContent.trim(),
-            tema: celulas[4].textContent.trim(),
-            pergunta: celulas[5].textContent.trim(),
-            resposta: celulas[6].textContent.trim(),
-            acertou: celulas[7].textContent.includes('Acerto')
+            tema: celulas[2].textContent.trim(),
+            pergunta: perguntaTexto,
+            acertou: temAcerto
         };
     });
     
@@ -42,11 +49,9 @@ function carregarDadosTabela() {
 // Popular dropdowns dos filtros
 function popularFiltros() {
     const turmas = [...new Set(dadosOriginais.map(d => d.turma))].sort();
-    const equipes = [...new Set(dadosOriginais.map(d => d.equipe))].sort();
     const temas = [...new Set(dadosOriginais.map(d => d.tema))].sort();
     
     popularSelect('filtroTurma', turmas);
-    popularSelect('filtroEquipe', equipes);
     popularSelect('filtroTema', temas);
 }
 
@@ -64,13 +69,11 @@ function popularSelect(id, opcoes) {
 // Aplicar filtros
 function aplicarFiltros() {
     const filtroTurma = document.getElementById('filtroTurma').value;
-    const filtroEquipe = document.getElementById('filtroEquipe').value;
     const filtroTema = document.getElementById('filtroTema').value;
     const filtroAcerto = document.getElementById('filtroAcerto').value;
     
     dadosFiltrados = dadosOriginais.filter(item => {
         return (!filtroTurma || item.turma === filtroTurma) &&
-               (!filtroEquipe || item.equipe === filtroEquipe) &&
                (!filtroTema || item.tema === filtroTema) &&
                (!filtroAcerto || item.acertou.toString() === filtroAcerto);
     });
@@ -93,7 +96,6 @@ function aplicarFiltros() {
 // Limpar filtros
 function limparFiltros() {
     document.getElementById('filtroTurma').value = '';
-    document.getElementById('filtroEquipe').value = '';
     document.getElementById('filtroTema').value = '';
     document.getElementById('filtroAcerto').value = '';
     
@@ -132,14 +134,30 @@ function atualizarTabela() {
 
 // Atualizar estatísticas
 function atualizarEstatisticas() {
-    const total = dadosFiltrados.length;
-    const acertos = dadosFiltrados.filter(d => d.acertou).length;
-    const erros = total - acertos;
-    const taxa = total > 0 ? ((acertos / total) * 100).toFixed(1) : 0;
+    const totalRodadas = dadosFiltrados.length;
     
-    document.getElementById('totalRodadas').textContent = total;
-    document.getElementById('totalAcertos').textContent = acertos;
-    document.getElementById('totalErros').textContent = erros;
+    // Calcular total de participações e acertos baseado nas equipes
+    let totalParticipacoes = 0;
+    let totalAcertos = 0;
+    
+    dadosFiltrados.forEach(rodada => {
+        const equipesResultados = rodada.elemento.querySelectorAll('.equipe-resultado');
+        totalParticipacoes += equipesResultados.length;
+        
+        equipesResultados.forEach(equipeEl => {
+            const resultado = equipeEl.querySelector('.resultado-texto').textContent.trim();
+            if (resultado.includes('Acertou')) {
+                totalAcertos++;
+            }
+        });
+    });
+    
+    const totalErros = totalParticipacoes - totalAcertos;
+    const taxa = totalParticipacoes > 0 ? ((totalAcertos / totalParticipacoes) * 100).toFixed(1) : 0;
+    
+    document.getElementById('totalRodadas').textContent = totalRodadas;
+    document.getElementById('totalAcertos').textContent = totalAcertos;
+    document.getElementById('totalErros').textContent = totalErros;
     document.getElementById('taxaAcerto').textContent = taxa + '%';
 }
 
@@ -147,7 +165,7 @@ function atualizarEstatisticas() {
 let ordemCrescente = {};
 
 function ordenarTabela(coluna) {
-    const propriedades = ['rodada', 'turma', 'equipe', 'cor', 'tema', 'pergunta', 'resposta', 'acertou'];
+    const propriedades = ['rodada', 'turma', 'tema', 'pergunta', 'acertou'];
     const prop = propriedades[coluna];
     
     if (!ordemCrescente.hasOwnProperty(coluna)) {
@@ -221,17 +239,46 @@ function exportarPDF() {
     doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 20, 30);
     doc.text(`Total de registros: ${dadosFiltrados.length}`, 20, 37);
     
-    // Preparar dados da tabela
-    const cabecalhos = ['Rodada', 'Turma', 'Equipe', 'Cor', 'Tema', 'Resposta', 'Resultado'];
-    const dados = dadosFiltrados.map(item => [
-        item.rodada,
-        item.turma,
-        item.equipe,
-        item.cor,
-        item.tema,
-        item.resposta,
-        item.acertou ? 'Acerto' : 'Erro'
-    ]);
+    // Preparar dados da tabela - versão completa para PDF
+    const cabecalhos = ['Rodada', 'Turma', 'Tema', 'Equipe', 'Pergunta', 'Resposta', 'Resultado'];
+    const dados = [];
+    
+    dadosFiltrados.forEach(item => {
+        // Extrair pergunta e resposta do texto completo
+        const perguntaTexto = item.pergunta.replace(/Pergunta:\s*/, '').replace(/\s*Resposta:.*/, '').trim();
+        const respostaTexto = item.pergunta.replace(/.*Resposta:\s*/, '').trim();
+        
+        // Buscar resultados de todas as equipes para esta rodada
+        const equipesResultados = item.elemento.querySelectorAll('.equipe-resultado');
+        
+        if (equipesResultados.length > 0) {
+            equipesResultados.forEach(equipeEl => {
+                const nomeEquipe = equipeEl.querySelector('.equipe-nome').textContent.trim();
+                const resultado = equipeEl.querySelector('.resultado-texto').textContent.trim();
+                
+                dados.push([
+                    item.rodada,
+                    item.turma,
+                    item.tema,
+                    nomeEquipe,
+                    perguntaTexto,
+                    respostaTexto,
+                    resultado
+                ]);
+            });
+        } else {
+            // Fallback caso não encontre equipes
+            dados.push([
+                item.rodada,
+                item.turma,
+                item.tema,
+                'N/A',
+                perguntaTexto,
+                respostaTexto,
+                item.acertou ? 'Acerto' : 'Erro'
+            ]);
+        }
+    });
     
     // Gerar tabela
     doc.autoTable({
@@ -271,17 +318,45 @@ function exportarPDF() {
 
 // Exportar para Excel
 function exportarExcel() {
-    // Preparar dados
-    const dados = dadosFiltrados.map(item => ({
-        'Rodada': item.rodada,
-        'Turma': item.turma,
-        'Equipe': item.equipe,
-        'Cor': item.cor,
-        'Tema': item.tema,
-        'Pergunta': item.pergunta,
-        'Resposta': item.resposta,
-        'Resultado': item.acertou ? 'Acerto' : 'Erro'
-    }));
+    // Preparar dados - versão completa para Excel
+    const dados = [];
+    
+    dadosFiltrados.forEach(item => {
+        // Extrair pergunta e resposta do texto completo
+        const perguntaTexto = item.pergunta.replace(/Pergunta:\s*/, '').replace(/\s*Resposta:.*/, '').trim();
+        const respostaTexto = item.pergunta.replace(/.*Resposta:\s*/, '').trim();
+        
+        // Buscar resultados de todas as equipes para esta rodada
+        const equipesResultados = item.elemento.querySelectorAll('.equipe-resultado');
+        
+        if (equipesResultados.length > 0) {
+            equipesResultados.forEach(equipeEl => {
+                const nomeEquipe = equipeEl.querySelector('.equipe-nome').textContent.trim();
+                const resultado = equipeEl.querySelector('.resultado-texto').textContent.trim();
+                
+                dados.push({
+                    'Rodada': item.rodada,
+                    'Turma': item.turma,
+                    'Tema': item.tema,
+                    'Equipe': nomeEquipe,
+                    'Pergunta': perguntaTexto,
+                    'Resposta': respostaTexto,
+                    'Resultado': resultado
+                });
+            });
+        } else {
+            // Fallback caso não encontre equipes
+            dados.push({
+                'Rodada': item.rodada,
+                'Turma': item.turma,
+                'Tema': item.tema,
+                'Equipe': 'N/A',
+                'Pergunta': perguntaTexto,
+                'Resposta': respostaTexto,
+                'Resultado': item.acertou ? 'Acerto' : 'Erro'
+            });
+        }
+    });
     
     // Criar workbook
     const wb = XLSX.utils.book_new();
@@ -291,9 +366,8 @@ function exportarExcel() {
     const colWidths = [
         { wch: 10 }, // Rodada
         { wch: 15 }, // Turma
-        { wch: 20 }, // Equipe
-        { wch: 15 }, // Cor
         { wch: 20 }, // Tema
+        { wch: 20 }, // Equipe
         { wch: 50 }, // Pergunta
         { wch: 30 }, // Resposta
         { wch: 12 }  // Resultado
@@ -366,12 +440,62 @@ function buscarRapida(termo) {
     termo = termo.toLowerCase();
     dadosFiltrados = dadosOriginais.filter(item =>
         item.turma.toLowerCase().includes(termo) ||
-        item.equipe.toLowerCase().includes(termo) ||
         item.tema.toLowerCase().includes(termo) ||
-        item.pergunta.toLowerCase().includes(termo) ||
-        item.resposta.toLowerCase().includes(termo)
+        item.pergunta.toLowerCase().includes(termo)
     );
     
     atualizarTabela();
     atualizarEstatisticas();
+}
+
+// Configurar event listeners
+function configurarEventListeners() {
+    // Event listeners para botões de expansão
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.btn-expandir-pergunta')) {
+            const botao = e.target.closest('.btn-expandir-pergunta');
+            const indice = botao.dataset.rodada;
+            togglePergunta(indice);
+        }
+        
+        if (e.target.closest('.btn-expandir-resultado')) {
+            const botao = e.target.closest('.btn-expandir-resultado');
+            const indice = botao.dataset.rodada;
+            toggleResultado(indice);
+        }
+    });
+}
+
+// Função para expandir/contrair pergunta
+function togglePergunta(indice) {
+    const perguntaCompleta = document.getElementById(`pergunta-${indice}`);
+    const botao = document.querySelector(`[data-rodada="${indice}"][data-tipo="pergunta"]`);
+    const seta = botao.querySelector('.seta-down');
+    
+    if (perguntaCompleta.style.display === 'none') {
+        perguntaCompleta.style.display = 'block';
+        seta.classList.add('rotated');
+        botao.title = 'Ocultar pergunta';
+    } else {
+        perguntaCompleta.style.display = 'none';
+        seta.classList.remove('rotated');
+        botao.title = 'Ver pergunta completa';
+    }
+}
+
+// Função para expandir/contrair resultado
+function toggleResultado(indice) {
+    const resultadoCompleto = document.getElementById(`resultado-${indice}`);
+    const botao = document.querySelector(`[data-rodada="${indice}"][data-tipo="resultado"]`);
+    const seta = botao.querySelector('.seta-down');
+    
+    if (resultadoCompleto.style.display === 'none') {
+        resultadoCompleto.style.display = 'block';
+        seta.classList.add('rotated');
+        botao.title = 'Ocultar resultado';
+    } else {
+        resultadoCompleto.style.display = 'none';
+        seta.classList.remove('rotated');
+        botao.title = 'Ver resultado';
+    }
 }

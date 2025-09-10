@@ -10,6 +10,30 @@ let configState = {
     cores: []
 };
 
+// Funções de seleção para os modais
+function selecionarTurma(turma) {
+    configState.turma = turma;
+    closeModal('turma-modal');
+    atualizarProgresso();
+    atualizarNivel();
+}
+
+function selecionarNumEquipes(num) {
+    configState.numEquipes = num;
+    configState.cores = []; // Reset cores quando mudar número de equipes
+    closeModal('equipes-modal');
+    atualizarProgresso();
+}
+
+function confirmarCores() {
+    if (configState.cores.length === configState.numEquipes) {
+        closeModal('cores-modal');
+        atualizarProgresso();
+    } else {
+        alert(`Por favor, selecione ${configState.numEquipes} cores para as equipes.`);
+    }
+}
+
 // Elementos DOM
 const configMenu = document.getElementById('config-menu');
 const gameArea = document.getElementById('game-area');
@@ -108,12 +132,13 @@ function closeModal(modalId) {
 }
 
 function updateButtonState(button, text, enabled = false) {
-    const subtitle = button.querySelector('.button-subtitle');
-    subtitle.textContent = text;
-    button.disabled = !enabled;
-    
-    if (enabled) {
-        button.classList.add('configured');
+    // A nova estrutura não usa button-subtitle, então vamos apenas atualizar o estado do botão
+    if (button) {
+        button.disabled = !enabled;
+        
+        if (enabled) {
+            button.classList.add('configured');
+        }
     }
 }
 
@@ -142,21 +167,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Configurar event listeners
 function configurarEventListeners() {
-    // Botões do menu principal
-    turmaBtn.addEventListener('click', () => openModal('turma-modal'));
-    equipesBtn.addEventListener('click', () => {
-        if (configState.turma) openModal('equipes-modal');
-    });
-    coresBtn.addEventListener('click', () => {
-        if (configState.numEquipes && configState.numEquipes > 0) {
-            setupCoresModal();
-            openModal('cores-modal');
-            console.log('Botão de cores clicado, abrindo modal...');
-        } else {
-            // Mostrar mensagem de aviso se as equipes não foram definidas
-            alert('⚠️ Primeiro você precisa definir o número de equipes!');
-        }
-    });
+    // Botões do menu principal - verificar se existem
+    if (turmaBtn) {
+        turmaBtn.addEventListener('click', () => openModal('turma-modal'));
+    }
+    
+    if (equipesBtn) {
+        equipesBtn.addEventListener('click', () => {
+            if (configState.turma) {
+                openModal('equipes-modal');
+            } else {
+                alert('Por favor, selecione uma turma primeiro!');
+            }
+        });
+    }
+    
+    if (coresBtn) {
+        coresBtn.addEventListener('click', () => {
+            if (configState.numEquipes && configState.numEquipes > 0) {
+                setupCoresModal();
+                openModal('cores-modal');
+                console.log('Botão de cores clicado, abrindo modal...');
+            } else {
+                // Mostrar mensagem de aviso se as equipes não foram definidas
+                alert('⚠️ Primeiro você precisa definir o número de equipes!');
+            }
+        });
+    }
     
     // Botões de fechar modal
     document.querySelectorAll('.close-modal').forEach(btn => {
@@ -175,53 +212,20 @@ function configurarEventListeners() {
         });
     });
     
-    // Seleção de turma
-    document.querySelectorAll('#turma-modal .option-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const value = e.target.getAttribute('data-value');
-            const turmaNames = {
-                '6_ano': '6º ANO',
-                '7_ano': '7º ANO', 
-                '8_ano': '8º ANO',
-                '9_ano': '9º ANO',
-                'ensino_medio': 'ENSINO MÉDIO'
-            };
-            
-            configState.turma = value;
-            updateButtonState(turmaBtn, turmaNames[value], true);
-            updateButtonState(equipesBtn, 'Escolher', true);
-            closeModal('turma-modal');
-            checkAllConfigured();
-        });
-    });
+    // Event listeners para seleção de turma (usando onclick no HTML)
     
-    // Seleção de equipes
-    document.querySelectorAll('#equipes-modal .option-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const value = parseInt(e.target.getAttribute('data-value'));
-            
-            configState.numEquipes = value;
-            updateButtonState(equipesBtn, `${value} EQUIPES`, true);
-            // Agora que as equipes foram definidas, habilitar o botão de cores
-            updateButtonState(coresBtn, 'Escolher', true);
-            
-            // Resetar cores quando mudar o número de equipes
-            configState.cores = [];
-            
-            closeModal('equipes-modal');
-            checkAllConfigured();
-        });
-    });
+    // Event listeners para seleção de equipes (usando onclick no HTML)
     
     // Configuração do jogo
     iniciarJogoBtn.addEventListener('click', iniciarJogo);
     
     // Confirmar cores
-    confirmarCoresBtn.addEventListener('click', () => {
-        updateButtonState(coresBtn, 'CONFIGURADO', true);
-        closeModal('cores-modal');
-        checkAllConfigured();
-    });
+    if (confirmarCoresBtn) {
+        confirmarCoresBtn.addEventListener('click', () => {
+            confirmarCores();
+            checkAllConfigured();
+        });
+    }
     
     // Jogo
     girarRoletaBtn.addEventListener('click', girarRoleta);
@@ -798,3 +802,147 @@ function getCssColor(corNome) {
     
     return cores[corNome] || '#333';
 }
+
+// ===== FUNÇÕES PARA A INTERFACE APRIMORADA =====
+
+// Atualizar indicadores de progresso
+function atualizarProgresso() {
+    const steps = document.querySelectorAll('.step');
+    const progressBar = document.getElementById('setup-progress');
+    let completedSteps = 0;
+    
+    // Reset todos os steps
+    steps.forEach(step => {
+        step.classList.remove('active', 'completed');
+    });
+    
+    // Verificar e atualizar cada step
+    if (configState.turma) {
+        steps[0].classList.add('completed');
+        completedSteps++;
+        
+        if (configState.numEquipes) {
+            steps[1].classList.add('completed');
+            completedSteps++;
+            
+            if (configState.cores.length > 0) {
+                steps[2].classList.add('completed');
+                completedSteps++;
+            } else {
+                steps[2].classList.add('active');
+            }
+        } else {
+            steps[1].classList.add('active');
+        }
+    } else {
+        steps[0].classList.add('active');
+    }
+    
+    // Atualizar barra de progresso
+    const progressPercent = (completedSteps / 3) * 100;
+    if (progressBar) {
+        progressBar.style.width = progressPercent + '%';
+    }
+    
+    // Atualizar texto de progresso no header
+    const progressText = document.getElementById('progress-text');
+    if (progressText) {
+        progressText.textContent = Math.round(progressPercent) + '% Completo';
+    }
+    
+    // Atualizar cards
+    atualizarStatusCards();
+}
+
+// Atualizar status dos cards
+function atualizarStatusCards() {
+    // Card Turma
+    const turmaCard = document.getElementById('turma-card');
+    const turmaStatus = document.getElementById('turma-status');
+    const turmaSelection = document.getElementById('turma-selection');
+    
+    if (configState.turma) {
+        turmaCard.classList.remove('disabled');
+        turmaStatus.innerHTML = '<span class="status-dot"></span><span class="status-text">Concluído</span>';
+        turmaSelection.textContent = formatarNomeTurma(configState.turma);
+        turmaStatus.querySelector('.status-dot').style.background = '#4CAF50';
+    }
+    
+    // Card Equipes
+    const equipesCard = document.getElementById('equipes-card');
+    const equipesStatus = document.getElementById('equipes-status');
+    const equipesSelection = document.getElementById('equipes-selection');
+    
+    if (configState.turma) {
+        equipesCard.classList.remove('disabled');
+        document.getElementById('equipes-btn').disabled = false;
+        
+        if (configState.numEquipes) {
+            equipesStatus.innerHTML = '<span class="status-dot"></span><span class="status-text">Concluído</span>';
+            equipesSelection.textContent = `${configState.numEquipes} equipes`;
+            equipesStatus.querySelector('.status-dot').style.background = '#4CAF50';
+        } else {
+            equipesStatus.innerHTML = '<span class="status-dot"></span><span class="status-text">Pendente</span>';
+        }
+    }
+    
+    // Card Cores
+    const coresCard = document.getElementById('cores-card');
+    const coresStatus = document.getElementById('cores-status');
+    const coresSelection = document.getElementById('cores-selection');
+    
+    if (configState.numEquipes) {
+        coresCard.classList.remove('disabled');
+        document.getElementById('cores-btn').disabled = false;
+        
+        if (configState.cores.length > 0) {
+            coresStatus.innerHTML = '<span class="status-dot"></span><span class="status-text">Concluído</span>';
+            coresSelection.textContent = `${configState.cores.length} cores selecionadas`;
+            coresStatus.querySelector('.status-dot').style.background = '#4CAF50';
+        } else {
+            coresStatus.innerHTML = '<span class="status-dot"></span><span class="status-text">Pendente</span>';
+        }
+    }
+}
+
+// Formatar nome da turma para exibição
+function formatarNomeTurma(turma) {
+    const nomes = {
+        '6_ano': '6º Ano',
+        '7_ano': '7º Ano', 
+        '8_ano': '8º Ano',
+        '9_ano': '9º Ano',
+        'ensino_medio': 'Ensino Médio'
+    };
+    return nomes[turma] || turma;
+}
+
+// Atualizar nível baseado na turma
+function atualizarNivel() {
+    const levelElement = document.getElementById('current-level');
+    if (!levelElement) return;
+    
+    const niveis = {
+        '6_ano': 'Explorador',
+        '7_ano': 'Aventureiro', 
+        '8_ano': 'Conhecedor',
+        '9_ano': 'Especialista',
+        'ensino_medio': 'Mestre'
+    };
+    
+    levelElement.textContent = niveis[configState.turma] || 'Iniciante';
+}
+
+// Garantir que as funções estejam disponíveis globalmente
+window.selecionarTurma = selecionarTurma;
+window.selecionarNumEquipes = selecionarNumEquipes;
+window.confirmarCores = confirmarCores;
+
+// Inicializar interface aprimorada
+document.addEventListener('DOMContentLoaded', function() {
+    // Aguardar um pouco para garantir que outras inicializações ocorreram
+    setTimeout(() => {
+        atualizarProgresso();
+        atualizarNivel();
+    }, 100);
+});

@@ -1,0 +1,618 @@
+{
+  "9_ano": {
+    "portugues": [
+      {
+        "pergunta": "Leia o texto: 'O bullying nas escolas é um problema sério que pode causar traumas psicológicos duradouros. É fundamental que alunos, professores e pais estejam atentos e atuem juntos para combater essa prática.' O tema central do texto é:",
+        "opcoes": [
+          "A importância da psicologia na escola",
+          "A união entre pais e professores",
+          "O bullying escolar e a necessidade de combatê-lo",
+          "O papel dos professores no ensino"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Leia a receita: 'Bolo de Caneca - Ingredientes: 1 ovo, 4 colheres de sopa de leite, 2 colheres de sopa de açúcar, 2 colheres de sopa de chocolate em pó, 4 colheres de sopa de farinha de trigo, 1 colher de chá de fermento. Modo de preparo: Misture tudo em uma caneca e leve ao micro-ondas por 3 minutos.' Qual é a finalidade do texto?",
+        "opcoes": [
+          "Informar sobre os benefícios do chocolate",
+          "Instruir o leitor sobre como preparar um bolo de caneca",
+          "Contar a história do bolo de caneca",
+          "Fazer propaganda de chocolate em pó"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Leia o texto: 'Para manter uma alimentação saudável, é importante consumir frutas, verduras, legumes, cereais integrais e beber bastante água.' A forma de organização das ideias no texto é:",
+        "opcoes": [
+          "Enumeração",
+          "Causa e consequência",
+          "Problema e solução",
+          "Comparação"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "No trecho 'Ela sempre foi muito organizada — com tudo! — e não gostava de bagunça.' O uso dos travessões serve para:",
+        "opcoes": [
+          "Substituir aspas",
+          "Separar uma explicação ou comentário",
+          "Indicar um pensamento do personagem",
+          "Apontar um erro de escrita"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "No texto 'A multidão aplaudiu o cantor com entusiasmo. Ele foi ovacionado do início ao fim do show.' A palavra 'ovacionado' significa:",
+        "opcoes": [
+          "Ignorado",
+          "Criticado",
+          "Vaiado",
+          "Muito aplaudido"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Leia a propaganda: 'Compre 1, leve 2! Nesta semana, na Loja SuperEletrônicos, você compra um fone de ouvido e leva outro grátis. Aproveite a promoção válida até domingo!' Qual é a finalidade principal do texto?",
+        "opcoes": [
+          "Informar sobre os tipos de fones de ouvido",
+          "Instruir como usar um fone de ouvido",
+          "Convencer o leitor a comprar o produto",
+          "Explicar a história da eletrônica"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "No texto 'A fumaça das queimadas prejudica a saúde da população, causando doenças respiratórias, principalmente em crianças e idosos.' A relação entre as ideias do texto é de:",
+        "opcoes": [
+          "Comparação",
+          "Causa e consequência",
+          "Enumeração",
+          "Oposição"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "No texto 'Os smartphones são mais leves e práticos do que os computadores, além de oferecerem diversas funções em um único aparelho.' O texto estabelece uma relação de:",
+        "opcoes": [
+          "Sequência",
+          "Causa e consequência",
+          "Comparação",
+          "Explicação"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "No trecho 'Apesar do calor intenso, o público compareceu em peso ao evento realizado ao ar livre.' Qual relação de sentido está presente?",
+        "opcoes": [
+          "Adição",
+          "Oposição",
+          "Causa e consequência",
+          "Enumeração"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Na frase '— Você vai sair agora?! — perguntou a mãe, surpresa.' O ponto de interrogação e exclamação indicam:",
+        "opcoes": [
+          "Dúvida e surpresa",
+          "Ironia e humor",
+          "Raiva e agressividade",
+          "Tristeza e medo"
+        ],
+        "resposta_correta": 0
+      }
+    ],
+    "lingua_inglesa": [
+      {
+        "pergunta": "Read the text: 'Teenagers today use their phones not only to talk or send messages, but also to access social media, take photos, listen to music and watch videos. Cell phones have become essential in their daily lives.' What is the main idea of the text?",
+        "opcoes": [
+          "Teenagers only use phones to talk",
+          "Cell phones are no longer important",
+          "Teenagers use cell phones for many daily activities",
+          "Phones are used only by adults"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Choose the correct form of the verb to complete the sentence: Yesterday, my sister ______ a beautiful dress at the mall.",
+        "opcoes": [
+          "buy",
+          "buys",
+          "bought",
+          "buying"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Complete the sentence with the correct pronoun: My parents are very kind. Everybody likes ______.",
+        "opcoes": [
+          "me",
+          "them",
+          "we",
+          "us"
+        ],
+        "resposta_correta": 1
+      }
+    ],
+    "matematica": [
+      {
+        "pergunta": "Identifique os coeficientes da equação do segundo grau 2x² - 4x + 6 = 0:",
+        "opcoes": [
+          "2, -4, 6",
+          "2, 4, -6",
+          "-2, 4, 6",
+          "2, -6, 4"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Na equação do segundo grau -3x² + 7 = 0, qual o valor do coeficiente 'b'?",
+        "opcoes": [
+          "3",
+          "-3",
+          "0",
+          "7"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Durante a resolução de um problema de Matemática, o professor realizou a seguinte fatoração: x² – 4 = (x + 2)(x – 2). Esse caso de fatoração é conhecido como:",
+        "opcoes": [
+          "trinômio quadrado perfeito",
+          "diferença de dois cubos",
+          "diferença de dois quadrados",
+          "fatoração por agrupamento"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Sabendo que a + b = 8 e que a² – b² = 16, qual o valor de b?",
+        "opcoes": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "A forma fatorada da expressão 27y³ – 8 é:",
+        "opcoes": [
+          "(3y – 2)³",
+          "(3y – 2)(3y + 2)",
+          "(3y + 2)(9y² – 4)",
+          "(3y – 2)(9y² + 6y + 4)"
+        ],
+        "resposta_correta": 3
+      }
+    ],
+    "ciencias": [
+      {
+        "pergunta": "Uma transformação física ocorre quando:",
+        "opcoes": [
+          "A matéria muda de estado, mas mantém sua composição",
+          "Um novo produto é formado",
+          "Ocorre combustão",
+          "Ocorre liberação de gás"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Um exemplo de transformação química é:",
+        "opcoes": [
+          "Gelo derretendo",
+          "Papel sendo rasgado",
+          "Ferro enferrujando",
+          "Água evaporando"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A água é uma substância:",
+        "opcoes": [
+          "Simples",
+          "Composta",
+          "Iônica",
+          "Metálica"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "As misturas homogêneas são aquelas que:",
+        "opcoes": [
+          "Apresentam duas fases visíveis",
+          "São sempre sólidas",
+          "Possuem apenas uma fase visível",
+          "Não podem ser separadas"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A separação de sal e areia pode ser feita por:",
+        "opcoes": [
+          "Filtração e evaporação",
+          "Destilação",
+          "Peneiração",
+          "Decantação"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "A energia elétrica é transformada em luz em:",
+        "opcoes": [
+          "Lâmpadas",
+          "Panelas",
+          "Televisores",
+          "Geladeiras"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "A força que a Terra exerce sobre os corpos é chamada de:",
+        "opcoes": [
+          "Pressão",
+          "Empuxo",
+          "Aceleração",
+          "Gravidade"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "O uso de placas solares é uma alternativa sustentável porque:",
+        "opcoes": [
+          "Usa combustíveis fósseis",
+          "Gera energia limpa e renovável",
+          "Aumenta a poluição",
+          "Diminui o uso da energia elétrica"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O Sol é classificado como:",
+        "opcoes": [
+          "Um planeta",
+          "Um cometa",
+          "Um satélite natural",
+          "Uma estrela"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "A Lua é considerada um satélite natural porque:",
+        "opcoes": [
+          "Emite luz própria",
+          "Orbita o Sol",
+          "Reflete a luz do Sol e orbita a Terra",
+          "Gira ao redor de Júpiter"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "historia": [
+      {
+        "pergunta": "O que foi o Estado Novo (1937–1945)?",
+        "opcoes": [
+          "Uma guerra civil",
+          "Período democrático",
+          "Ditadura de Vargas",
+          "Fim da escravidão"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual foi o motivo principal da 1ª Guerra Mundial?",
+        "opcoes": [
+          "Fome na Europa",
+          "Criação da ONU",
+          "Assassinato do arquiduque Francisco Ferdinando",
+          "Queda da Bolsa de Valores"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual desses países participou da 2ª Guerra Mundial como aliado?",
+        "opcoes": [
+          "Alemanha",
+          "Japão",
+          "Itália",
+          "Estados Unidos"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual movimento lutou pelo fim da escravidão no Brasil?",
+        "opcoes": [
+          "Diretas Já",
+          "Abolicionista",
+          "Iluminismo",
+          "Tenentismo"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual foi o estopim da Segunda Guerra Mundial?",
+        "opcoes": [
+          "Ataque a Pearl Harbor",
+          "Invasão da França",
+          "Invasão da Polônia pela Alemanha",
+          "Fim da Primeira Guerra"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que foi o Holocausto?",
+        "opcoes": [
+          "Uma batalha importante",
+          "O bombardeio do Japão",
+          "O plano de reconstrução da Europa",
+          "O extermínio de judeus pelos nazistas"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "O Brasil participou da Segunda Guerra ao lado de qual grupo?",
+        "opcoes": [
+          "Eixo",
+          "Otomanos",
+          "Aliados",
+          "Neutros"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual foi o país atacado com bombas atômicas pelos EUA?",
+        "opcoes": [
+          "Alemanha",
+          "China",
+          "Japão",
+          "Itália"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que foi a 'política do café com leite'?",
+        "opcoes": [
+          "Acordo entre trabalhadores",
+          "Aliança entre SP e MG no poder",
+          "Tratado com a França",
+          "Campanha abolicionista"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual era a principal base econômica da República Velha?",
+        "opcoes": [
+          "Mineração",
+          "Indústria têxtil",
+          "Café",
+          "Cana-de-açúcar"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Quem governava o Brasil durante a chamada Primeira República?",
+        "opcoes": [
+          "Getúlio Vargas",
+          "Dom Pedro II",
+          "Civis e militares da elite agrária",
+          "Sindicatos operários"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que foram as oligarquias na República Velha?",
+        "opcoes": [
+          "Grupos religiosos",
+          "Minorias indígenas",
+          "Elites políticas e econômicas regionais",
+          "Movimentos operários"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual direito foi conquistado pelos trabalhadores durante a Era Vargas?",
+        "opcoes": [
+          "Férias",
+          "Voto feminino",
+          "Liberdade de imprensa",
+          "Escolha de governadores"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "O que foi o Imperialismo?",
+        "opcoes": [
+          "Expansão de ideias religiosas",
+          "Controle de territórios por países industrializados",
+          "Separação de colônias",
+          "Aliança entre países da África"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual foi o principal motivo do Imperialismo?",
+        "opcoes": [
+          "Disputas religiosas",
+          "Busca por matérias-primas e mercados consumidores",
+          "Interesse em alianças culturais",
+          "Controle do clima"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Como a Europa justificava o domínio sobre outros povos?",
+        "opcoes": [
+          "Liberdade comercial",
+          "Missão civilizatória e superioridade racial",
+          "Fuga de guerras internas",
+          "Igualdade entre as culturas"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O que foi a Conferência de Berlim (1884-1885)?",
+        "opcoes": [
+          "Um encontro sobre direitos humanos",
+          "Reunião que dividiu a África entre potências europeias",
+          "Início da Segunda Guerra",
+          "Conferência para o fim do trabalho escravo"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual foi a relação entre o Imperialismo e a Revolução Industrial?",
+        "opcoes": [
+          "Não houve nenhuma relação",
+          "O Imperialismo enfraqueceu a indústria",
+          "A indústria precisava de colônias para recursos e mercados",
+          "A Revolução Industrial foi criada pelos povos colonizados"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Uma consequência do Imperialismo foi:",
+        "opcoes": [
+          "Igualdade entre povos",
+          "Crescimento das tradições africanas na Europa",
+          "Exploração e destruição de culturas locais",
+          "Fortalecimento da agricultura indígena"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O que foi o 'fardo do homem branco'?",
+        "opcoes": [
+          "Obrigações religiosas dos europeus",
+          "Nome de uma guerra",
+          "Ideia de que os europeus tinham que 'civilizar' outros povos",
+          "Protesto contra o racismo"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "geografia": [
+      {
+        "pergunta": "Qual das características abaixo NÃO faz parte do capitalismo?",
+        "opcoes": [
+          "Lucro",
+          "Defesa da propriedade privada",
+          "Trabalho assalariado",
+          "Distribuição igualitária da riqueza produzida"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Sobre o relevo da Europa, assinale a alternativa que corresponde à principal forma de relevo do continente europeu:",
+        "opcoes": [
+          "Planalto",
+          "Depressões",
+          "Planícies",
+          "Serras"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual a moeda dos países da União Europeia?",
+        "opcoes": [
+          "Dólar",
+          "Real",
+          "Euro",
+          "Pesos"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Indique um país que faz parte da Europa Setentrional:",
+        "opcoes": [
+          "Noruega",
+          "Itália",
+          "Grécia",
+          "Alemanha"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Qual destes países NÃO faz parte da União Europeia?",
+        "opcoes": [
+          "Alemanha",
+          "França",
+          "Bélgica",
+          "Reino Unido"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "Qual mar divide o continente europeu e o continente africano?",
+        "opcoes": [
+          "Mar Morto",
+          "Mar Vermelho",
+          "Mar Mediterrâneo",
+          "Mar do Caribe"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A capital da Alemanha é:",
+        "opcoes": [
+          "Paris",
+          "Berlim",
+          "Roma",
+          "Londres"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual desses países faz parte da Europa Mediterrânea?",
+        "opcoes": [
+          "Mônaco",
+          "Alemanha",
+          "Noruega",
+          "Letônia"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Qual o nome das montanhas que separam a Rússia europeia da Rússia asiática?",
+        "opcoes": [
+          "Cordilheira do Himalaia",
+          "Cordilheira dos Andes",
+          "Montes Urais",
+          "Serra do Mar"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Que tipo de clima NÃO é encontrado na Europa?",
+        "opcoes": [
+          "Frio de montanha",
+          "Temperado continental",
+          "Equatorial",
+          "Mediterrâneo"
+        ],
+        "resposta_correta": 2
+      }
+    ],
+    "educacao_fisica": [
+      {
+        "pergunta": "Qual das atividades a seguir é uma prática corporal de aventura na natureza?",
+        "opcoes": [
+          "Jogar futebol no campo",
+          "Fazer trilha em uma floresta",
+          "Andar de bicicleta no asfalto da cidade",
+          "Brincar de pega-pega no quintal de casa"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual é um dos benefícios de praticar atividade de aventura na natureza para a sua saúde?",
+        "opcoes": [
+          "Fortalecer os músculos e o coração",
+          "Aumentar a obesidade",
+          "Ficar depressivo",
+          "Ficar mais tempo no celular"
+        ],
+        "resposta_correta": 0
+      }
+    ]
+  }
+}

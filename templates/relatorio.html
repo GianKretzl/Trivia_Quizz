@@ -38,12 +38,6 @@
                         </select>
                     </div>
                     <div class="filtro-grupo">
-                        <label for="filtroEquipe">Equipe:</label>
-                        <select id="filtroEquipe">
-                            <option value="">Todas as equipes</option>
-                        </select>
-                    </div>
-                    <div class="filtro-grupo">
                         <label for="filtroTema">Tema:</label>
                         <select id="filtroTema">
                             <option value="">Todos os temas</option>
@@ -71,38 +65,28 @@
                 <div class="stat-card">
                     <div class="stat-icon">🎯</div>
                     <div class="stat-info">
-                        <span class="stat-numero" id="totalRodadas">{{ rodadas|length }}</span>
+                        <span class="stat-numero" id="totalRodadas">{{ stats.total_rodadas }}</span>
                         <span class="stat-label">Total de Rodadas</span>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">✅</div>
                     <div class="stat-info">
-                        <span class="stat-numero" id="totalAcertos">
-                            {{ rodadas|selectattr('acertou')|list|length }}
-                        </span>
+                        <span class="stat-numero" id="totalAcertos">{{ stats.total_acertos }}</span>
                         <span class="stat-label">Acertos</span>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">❌</div>
                     <div class="stat-info">
-                        <span class="stat-numero" id="totalErros">
-                            {{ (rodadas|length) - (rodadas|selectattr('acertou')|list|length) }}
-                        </span>
+                        <span class="stat-numero" id="totalErros">{{ stats.total_erros }}</span>
                         <span class="stat-label">Erros</span>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">📈</div>
                     <div class="stat-info">
-                        <span class="stat-numero" id="taxaAcerto">
-                            {% if rodadas|length > 0 %}
-                                {{ "%.1f"|format((rodadas|selectattr('acertou')|list|length / rodadas|length) * 100) }}%
-                            {% else %}
-                                0%
-                            {% endif %}
-                        </span>
+                        <span class="stat-numero" id="taxaAcerto">{{ "%.1f"|format(stats.taxa_acerto) }}%</span>
                         <span class="stat-label">Taxa de Acerto</span>
                     </div>
                 </div>
@@ -140,36 +124,55 @@
                     <table id="tabelaRelatorio">
                         <thead>
                             <tr>
-                                <th onclick="ordenarTabela(0)">Rodada ↕️</th>
-                                <th onclick="ordenarTabela(1)">Turma ↕️</th>
-                                <th onclick="ordenarTabela(2)">Equipe ↕️</th>
-                                <th onclick="ordenarTabela(3)">Cor ↕️</th>
-                                <th onclick="ordenarTabela(4)">Tema ↕️</th>
-                                <th onclick="ordenarTabela(5)">Pergunta</th>
-                                <th onclick="ordenarTabela(6)">Resposta</th>
-                                <th onclick="ordenarTabela(7)">Resultado ↕️</th>
+                                <th onclick="ordenarTabela(0)">Rodada </th>
+                                <th onclick="ordenarTabela(1)">Turma </th>
+                                <th onclick="ordenarTabela(2)">Tema </th>
+                                <th onclick="ordenarTabela(3)">Pergunta</th>
+                                <th onclick="ordenarTabela(4)">Resultado </th>
                             </tr>
                         </thead>
                         <tbody id="corpoTabela">
                             {% for r in rodadas %}
-                            <tr data-turma="{{ r['turma'] }}" data-equipe="{{ r['equipe'] }}" data-tema="{{ r['tema'] }}" data-acerto="{{ r['acertou']|lower }}">
+                            <tr data-turma="{{ r['turma'] }}" data-tema="{{ r['tema'] }}" data-rodada="{{ loop.index0 }}">
                                 <td>{{ r['numero'] }}</td>
                                 <td>{{ r['turma'] }}</td>
-                                <td>{{ r['equipe'] }}</td>
-                                <td>
-                                    {% set cor_nome = r['cor']|lower|replace(' ', '_') %}
-                                    <span class="cor-circulo cor-{{ cor_nome }}"></span>
-                                    <span class="cor-nome">{{ r['cor']|default('Sem cor') }}</span>
-                                </td>
                                 <td><span class="tema-badge">{{ r['tema'] }}</span></td>
-                                <td class="pergunta-cell">{{ r['enunciado'] }}</td>
-                                <td class="resposta-cell">{{ r['resposta'] }}</td>
-                                <td>
-                                    {% if r['acertou'] %}
-                                        <span class="resultado-acerto">✅ Acerto</span>
-                                    {% else %}
-                                        <span class="resultado-erro">❌ Erro</span>
-                                    {% endif %}
+                                <td class="pergunta-cell">
+                                    <div class="pergunta-preview">
+                                        {{ r['enunciado'][:50] }}{% if r['enunciado']|length > 50 %}...{% endif %}
+                                        <button class="btn-expandir-pergunta" data-rodada="{{ loop.index0 }}" data-tipo="pergunta" title="Ver pergunta completa">
+                                            <span class="seta-down">▼</span>
+                                        </button>
+                                    </div>
+                                    <div class="pergunta-completa" id="pergunta-{{ loop.index0 }}" style="display: none;">
+                                        <div class="pergunta-expandida">
+                                            <strong>Pergunta:</strong><br>
+                                            {{ r['enunciado'] }}
+                                            <br><br>
+                                            <strong>Resposta:</strong><br>
+                                            {{ r['resposta'] }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="resultado-cell">
+                                    <div class="resultado-preview">
+                                        <button class="btn-expandir-resultado" data-rodada="{{ loop.index0 }}" data-tipo="resultado" title="Ver resultados das equipes">
+                                            <span class="seta-down">▼</span>
+                                        </button>
+                                    </div>
+                                    <div class="resultado-completo" id="resultado-{{ loop.index0 }}" style="display: none;">
+                                        <div class="equipes-resultados">
+                                            {% for equipe in r['equipes'] %}
+                                            <div class="equipe-resultado">
+                                                <span class="equipe-nome">{{ equipe['nome'] }}</span>
+                                                <div class="resultado-bolinha {{ 'acerto-bolinha' if equipe['acertou'] else 'erro-bolinha' }}"></div>
+                                                <span class="resultado-texto {{ 'acerto' if equipe['acertou'] else 'erro' }}">
+                                                    {{ 'Acertou' if equipe['acertou'] else 'Errou' }}
+                                                </span>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}

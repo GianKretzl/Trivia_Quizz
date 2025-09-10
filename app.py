@@ -46,6 +46,46 @@ def importar_perguntas_7ano():
 def importar_perguntas_8ano():
     """Importa perguntas do 8º ano"""
     importar_perguntas(8, 'data/perguntas_8_ano.json')
+
+def importar_perguntas_9ano():
+    """Importa perguntas do 9º ano"""
+    importar_perguntas(9, 'data/perguntas_9_ano.json')
+
+def importar_perguntas_ensino_medio():
+    """Importa perguntas do ensino médio"""
+    try:
+        with open('data/perguntas_ensino_medio.json', encoding='utf-8') as f:
+            perguntas = json.load(f)
+        
+        turma_nome = 'ensino_medio'
+        turma = Turma.query.filter_by(nome=turma_nome).first()
+        if not turma:
+            turma = Turma(nome=turma_nome)
+            db.session.add(turma)
+            db.session.commit()
+        
+        # Só importa se não houver questões dessa turma
+        existe = Questao.query.filter_by(turma_id=turma.id).first()
+        if not existe:
+            for disciplina, lista in perguntas[turma_nome].items():
+                for p in lista:
+                    enunciado = p['pergunta']
+                    alternativas = json.dumps(p['opcoes'], ensure_ascii=False)
+                    resposta_correta = str(p['resposta_correta'])
+                    tema = disciplina
+                    questao = Questao(
+                        turma_id=turma.id,
+                        enunciado=enunciado,
+                        resposta_correta=resposta_correta,
+                        alternativas=alternativas,
+                        tema=tema
+                    )
+                    db.session.add(questao)
+            db.session.commit()
+            print('Perguntas do ensino médio importadas automaticamente.')
+    except Exception as e:
+        print(f'Erro ao importar perguntas do ensino médio:', e)
+
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 import os
 from models import db, Turma, Equipe, Questao, Rodada
@@ -65,62 +105,173 @@ with app.app_context():
     importar_perguntas_6ano()
     importar_perguntas_7ano()
     importar_perguntas_8ano()
+    importar_perguntas_9ano()
+    importar_perguntas_ensino_medio()
+
+def obter_disciplinas_por_turma(turma_nome):
+    """Retorna as disciplinas disponíveis para uma turma específica."""
+    if turma_nome == 'ensino_medio':
+        # No ensino médio, Ciências vira Biologia e adiciona as novas disciplinas
+        return ['portugues', 'matematica', 'biologia', 'historia', 'geografia', 
+                'lingua_inglesa', 'educacao_fisica', 'educacao_financeira', 
+                'filosofia', 'quimica', 'fisica']
+    else:
+        # Fundamental mantém Ciências
+        return ['portugues', 'matematica', 'ciencias', 'historia', 'geografia', 
+                'lingua_inglesa', 'educacao_fisica']
+
 # Rotas extras para relatório, novo jogo e pergunta
 @app.route('/relatorio')
 def relatorio():
-    # Busca rodadas, equipes, temas, perguntas e acertos usando SQLAlchemy
-    rodadas = (
+    # Busca rodadas com informações básicas agrupadas por número
+    from sqlalchemy import func
+    import json
+    
+    # Primeiro, busca informações básicas das rodadas (uma por número de rodada)
+    rodadas_base = (
         db.session.query(
             Rodada.numero,
-            Turma.nome.label('turma'),
-            Equipe.nome.label('equipe'),
-            Equipe.cor,
-            Questao.tema,
-            Questao.enunciado,
-            Rodada.resposta,
-            Rodada.acertou
+            func.min(Turma.nome).label('turma'),
+            func.min(Questao.tema).label('tema'),
+            func.min(Questao.enunciado).label('enunciado'),
+            func.min(Questao.resposta_correta).label('resposta_pos'),
+            func.min(Questao.alternativas).label('alternativas')
         )
         .join(Equipe, Rodada.equipe_id == Equipe.id)
         .join(Questao, Rodada.questao_id == Questao.id)
         .join(Turma, Equipe.turma_id == Turma.id)
+        .group_by(Rodada.numero)
         .order_by(Rodada.numero.asc())
         .all()
     )
-    return render_template('relatorio.html', rodadas=rodadas)
+    
+    # Depois, busca os resultados de todas as equipes para cada rodada
+    rodadas_equipes = (
+        db.session.query(
+            Rodada.numero,
+            Equipe.nome.label('equipe_nome'),
+            Equipe.cor.label('equipe_cor'),
+            Rodada.acertou
+        )
+        .join(Equipe, Rodada.equipe_id == Equipe.id)
+        .order_by(Rodada.numero.asc(), Equipe.nome.asc())
+        .all()
+    )
+    
+    # Combina os dados
+    rodadas = []
+    for rodada_base in rodadas_base:
+        # Busca as equipes desta rodada
+        equipes_da_rodada = [
+            {
+                'nome': eq.equipe_nome,
+                'cor': eq.equipe_cor,
+                'acertou': eq.acertou
+            }
+            for eq in rodadas_equipes if eq.numero == rodada_base.numero
+        ]
+        
+        # Converte a posição da resposta para o texto da alternativa
+        resposta_texto = rodada_base.resposta_pos
+        try:
+            alternativas = json.loads(rodada_base.alternativas)
+            posicao = int(rodada_base.resposta_pos)
+            if 0 <= posicao < len(alternativas):
+                resposta_texto = alternativas[posicao]
+        except (json.JSONDecodeError, ValueError, IndexError):
+            resposta_texto = rodada_base.resposta_pos
+        
+        rodadas.append({
+            'numero': rodada_base.numero,
+            'turma': rodada_base.turma,
+            'tema': rodada_base.tema,
+            'enunciado': rodada_base.enunciado,
+            'resposta': resposta_texto,
+            'equipes': equipes_da_rodada
+        })
+    
+    # Calcular estatísticas
+    total_participacoes = sum(len(r['equipes']) for r in rodadas)
+    total_acertos = sum(len([eq for eq in r['equipes'] if eq['acertou']]) for r in rodadas)
+    total_erros = total_participacoes - total_acertos
+    taxa_acerto = (total_acertos / total_participacoes * 100) if total_participacoes > 0 else 0
+    
+    estatisticas = {
+        'total_rodadas': len(rodadas),
+        'total_participacoes': total_participacoes,
+        'total_acertos': total_acertos,
+        'total_erros': total_erros,
+        'taxa_acerto': taxa_acerto
+    }
+    
+    return render_template('relatorio.html', rodadas=rodadas, stats=estatisticas)
 
 @app.route('/api/relatorio/dados')
 def api_relatorio_dados():
     """API para obter dados do relatório em formato JSON"""
-    rodadas = (
+    from sqlalchemy import func
+    import json
+    
+    # Busca informações básicas das rodadas
+    rodadas_base = (
         db.session.query(
             Rodada.numero,
-            Turma.nome.label('turma'),
-            Equipe.nome.label('equipe'),
-            Equipe.cor,
-            Questao.tema,
-            Questao.enunciado,
-            Rodada.resposta,
-            Rodada.acertou
+            func.min(Turma.nome).label('turma'),
+            func.min(Questao.tema).label('tema'),
+            func.min(Questao.enunciado).label('enunciado'),
+            func.min(Questao.resposta_correta).label('resposta_pos'),
+            func.min(Questao.alternativas).label('alternativas')
         )
         .join(Equipe, Rodada.equipe_id == Equipe.id)
         .join(Questao, Rodada.questao_id == Questao.id)
         .join(Turma, Equipe.turma_id == Turma.id)
+        .group_by(Rodada.numero)
         .order_by(Rodada.numero.asc())
+        .all()
+    )
+    
+    # Busca os resultados de todas as equipes
+    rodadas_equipes = (
+        db.session.query(
+            Rodada.numero,
+            Equipe.nome.label('equipe_nome'),
+            Equipe.cor.label('equipe_cor'),
+            Rodada.acertou
+        )
+        .join(Equipe, Rodada.equipe_id == Equipe.id)
+        .order_by(Rodada.numero.asc(), Equipe.nome.asc())
         .all()
     )
     
     # Converter para formato JSON
     dados = []
-    for r in rodadas:
+    for rodada_base in rodadas_base:
+        equipes_da_rodada = [
+            {
+                'nome': eq.equipe_nome,
+                'cor': eq.equipe_cor,
+                'acertou': eq.acertou
+            }
+            for eq in rodadas_equipes if eq.numero == rodada_base.numero
+        ]
+        
+        # Converte a posição da resposta para o texto da alternativa
+        resposta_texto = rodada_base.resposta_pos
+        try:
+            alternativas = json.loads(rodada_base.alternativas)
+            posicao = int(rodada_base.resposta_pos)
+            if 0 <= posicao < len(alternativas):
+                resposta_texto = alternativas[posicao]
+        except (json.JSONDecodeError, ValueError, IndexError):
+            resposta_texto = rodada_base.resposta_pos
+        
         dados.append({
-            'numero': r.numero,
-            'turma': r.turma,
-            'equipe': r.equipe,
-            'cor': r.cor,
-            'tema': r.tema,
-            'enunciado': r.enunciado,
-            'resposta': r.resposta,
-            'acertou': r.acertou
+            'numero': rodada_base.numero,
+            'turma': rodada_base.turma,
+            'tema': rodada_base.tema,
+            'enunciado': rodada_base.enunciado,
+            'resposta': resposta_texto,
+            'equipes': equipes_da_rodada
         })
     
     return jsonify(dados)
@@ -205,22 +356,6 @@ def pergunta(tema=None):
     if not tema:
         tema = request.args.get('tema')
     
-    # Mapeamento de nomes de disciplinas
-    mapeamento_temas = {
-        'Português': 'portugues',
-        'Matemática': 'matematica',
-        'Ciências': 'ciencias',
-        'História': 'historia',
-        'Geografia': 'geografia',
-        'Língua Inglesa': 'lingua_inglesa',
-        'Educação Física': 'educacao_fisica'
-    }
-    
-    tema_db = mapeamento_temas.get(tema, tema.lower() if tema else None)
-    
-    if not tema_db:
-        return "Erro: Tema não especificado", 400
-    
     # Buscar uma pergunta aleatória do tema
     # Priorizar turma que tem equipes cadastradas
     turma = Turma.query.join(Equipe).first()
@@ -229,6 +364,43 @@ def pergunta(tema=None):
         turma = Turma.query.first()
     if not turma:
         return "Erro: Nenhuma turma encontrada", 404
+    
+    # Mapeamento de nomes de disciplinas baseado na turma
+    if turma.nome == 'ensino_medio':
+        mapeamento_temas = {
+            'Português': 'portugues',
+            'Matemática': 'matematica',
+            'Biologia': 'biologia',  # Ciências vira Biologia no ensino médio
+            'História': 'historia',
+            'Geografia': 'geografia',
+            'Língua Inglesa': 'lingua_inglesa',
+            'Educação Física': 'educacao_fisica',
+            'Educação Financeira': 'educacao_financeira',
+            'Filosofia': 'filosofia',
+            'Química': 'quimica',
+            'Física': 'fisica'
+        }
+    else:
+        # Para fundamental (6º, 7º, 8º, 9º ano)
+        mapeamento_temas = {
+            'Português': 'portugues',
+            'Matemática': 'matematica',
+            'Ciências': 'ciencias',
+            'História': 'historia',
+            'Geografia': 'geografia',
+            'Língua Inglesa': 'lingua_inglesa',
+            'Educação Física': 'educacao_fisica'
+        }
+    
+    tema_db = mapeamento_temas.get(tema, tema.lower() if tema else None)
+    
+    if not tema_db:
+        return f"Erro: Disciplina '{tema}' não disponível para {turma.nome}", 400
+    
+    # Verificar se a disciplina é válida para a turma
+    disciplinas_validas = obter_disciplinas_por_turma(turma.nome)
+    if tema_db not in disciplinas_validas:
+        return f"Erro: Disciplina '{tema}' não disponível para {turma.nome}", 400
     
     questoes = Questao.query.filter_by(turma_id=turma.id, tema=tema_db).all()
     if not questoes:
@@ -322,7 +494,7 @@ def estado_jogo():
             pontos = db.session.query(db.func.count(Rodada.id)).filter_by(
                 equipe_id=eq.id, 
                 acertou=True
-            ).scalar() * 10
+            ).scalar() * 1
             
             equipes.append({
                 'id': eq.id,
@@ -332,7 +504,8 @@ def estado_jogo():
             })
     return jsonify({
         'equipes': equipes,
-        'turma': turma.nome if turma else None
+        'turma': turma.nome if turma else None,
+        'turma_ativa': turma.nome if turma else None
     })
 
 # Estado do jogo
@@ -344,8 +517,8 @@ jogo_estado = {
     'pontuacao': {}
 }
 
-# Disciplinas disponíveis
-DISCIPLINAS = [
+# Disciplinas disponíveis por nível de ensino
+DISCIPLINAS_FUNDAMENTAL = [
     'portugues',
     'matematica', 
     'lingua_inglesa',
@@ -355,16 +528,43 @@ DISCIPLINAS = [
     'educacao_fisica'
 ]
 
+DISCIPLINAS_ENSINO_MEDIO = [
+    'portugues',
+    'matematica', 
+    'lingua_inglesa',
+    'biologia',  # Ciências vira Biologia no ensino médio
+    'geografia',
+    'historia',
+    'educacao_fisica',
+    'educacao_financeira',
+    'filosofia',
+    'quimica',
+    'fisica'
+]
+
 # Mapeamento de disciplinas para nomes amigáveis
 NOMES_DISCIPLINAS = {
     'portugues': 'Português',
     'matematica': 'Matemática',
     'lingua_inglesa': 'Língua Inglesa', 
     'ciencias': 'Ciências',
+    'biologia': 'Biologia',
     'geografia': 'Geografia',
     'historia': 'História',
-    'educacao_fisica': 'Educação Física'
+    'educacao_fisica': 'Educação Física',
+    'educacao_financeira': 'Educação Financeira',
+    'filosofia': 'Filosofia',
+    'quimica': 'Química',
+    'fisica': 'Física'
 }
+
+# Função para obter disciplinas baseada na turma
+def obter_disciplinas_por_turma(turma_nome):
+    """Retorna as disciplinas disponíveis para uma turma específica"""
+    if turma_nome == 'ensino_medio':
+        return DISCIPLINAS_ENSINO_MEDIO
+    else:
+        return DISCIPLINAS_FUNDAMENTAL
 
 # Cores disponíveis para as equipes (cores personalizadas da gincana)
 CORES_EQUIPES = [
@@ -410,8 +610,14 @@ def roleta():
 def configurar_jogo():
     """Configura o jogo com turma e equipes selecionadas, salvando no banco"""
     dados = request.get_json()
-    print(f"Configurando jogo com dados: {dados}")
     turma_nome = dados.get('turma')
+    
+    # Obter disciplinas disponíveis para a turma
+    disciplinas_disponiveis = obter_disciplinas_por_turma(turma_nome)
+    
+    print(f"Configurando jogo com dados: {dados}")
+    print(f"Disciplinas disponíveis para {turma_nome}: {disciplinas_disponiveis}")
+    
     num_equipes = dados.get('num_equipes')
     cores_selecionadas = dados.get('cores_equipes', [])
     if not turma_nome or turma_nome not in ['6_ano', '7_ano', '8_ano', '9_ano', 'ensino_medio']:
@@ -474,8 +680,9 @@ def sortear_disciplina():
     if turma not in perguntas:
         return jsonify({'erro': f'Perguntas não encontradas para {turma}'}), 404
     
-    # Sortear disciplina
-    disciplina = random.choice(DISCIPLINAS)
+    # Sortear disciplina baseada na turma
+    disciplinas_disponiveis = obter_disciplinas_por_turma(turma)
+    disciplina = random.choice(disciplinas_disponiveis)
     
     # Verificar se a disciplina tem perguntas
     if disciplina not in perguntas[turma] or not perguntas[turma][disciplina]:
@@ -516,12 +723,12 @@ def responder():
     if acertou and equipe_id:
         equipe_key = f'equipe_{equipe_id}'
         if equipe_key in jogo_estado['pontuacao']:
-            jogo_estado['pontuacao'][equipe_key] += 10
+            jogo_estado['pontuacao'][equipe_key] += 1
             
             # Atualizar também na lista de equipes
             for equipe in jogo_estado['equipes']:
                 if equipe['id'] == int(equipe_id):
-                    equipe['pontos'] += 10
+                    equipe['pontos'] += 1
                     break
     
     return jsonify({

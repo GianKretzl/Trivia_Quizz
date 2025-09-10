@@ -40,7 +40,7 @@
                 </div>
                 
                 <!-- Padre Eureka -->
-                <img src="{{ url_for('static', filename='img/sem fundo eureka-Photoroom.png') }}" alt="Padre Eureka" class="padre-img">
+                <img src="{{ url_for('static', filename='img/sem_fundo_eureka-Photoroom.png') }}" alt="Padre Eureka" class="padre-img">
             </div>
             
             <!-- Botão de sorteio abaixo da imagem -->
@@ -64,16 +64,23 @@
     // Função para atualizar o placar dinamicamente
     function atualizarPlacar(equipes) {
         const placarDiv = document.getElementById('placar');
+        const placarCol = document.querySelector('.placar-col');
         placarDiv.innerHTML = '';
         
         // Remover todas as classes primeiro
         placarDiv.classList.remove('muitas-equipes', 'super-compacto');
+        placarCol.classList.remove('cinco-equipes');
         
         // Adicionar classes baseadas no número de equipes
         if (equipes.length >= 6) {
             placarDiv.classList.add('muitas-equipes', 'super-compacto');
         } else if (equipes.length >= 4) {
             placarDiv.classList.add('muitas-equipes');
+        }
+        
+        // Ajuste especial para 5 equipes - placar sobe
+        if (equipes.length === 5) {
+            placarCol.classList.add('cinco-equipes');
         }
         
         equipes.forEach(eq => {
@@ -93,16 +100,70 @@
             // Variável para guardar o tema sorteado da rodada
             let temaSorteadoRodada = null;
             
-            // Disciplinas disponíveis
-            const disciplinas = [
-                { emoji: '📖', nome: 'Português' },
-                { emoji: '🔢', nome: 'Matemática' },
-                { emoji: '🌍', nome: 'Geografia' },
-                { emoji: '🇺🇸', nome: 'Língua Inglesa' },
-                { emoji: '🔬', nome: 'Ciências' },
-                { emoji: '🏛️', nome: 'História' },
-                { emoji: '⚽', nome: 'Educação Física' }
-            ];
+            // Disciplinas disponíveis - será carregado dinamicamente baseado na turma
+            let disciplinas = [];
+            
+            // Função para obter disciplinas da turma ativa
+            async function carregarDisciplinas() {
+                try {
+                    const response = await fetch('/api/estado_jogo');
+                    const data = await response.json();
+                    
+                    if (data.turma_ativa) {
+                        // Mapear disciplinas baseado na turma
+                        const disciplinasPorTurma = {
+                            'ensino_medio': [
+                                { emoji: '📖', nome: 'Português' },
+                                { emoji: '🔢', nome: 'Matemática' },
+                                { emoji: '🌍', nome: 'Geografia' },
+                                { emoji: '🇺🇸', nome: 'Língua Inglesa' },
+                                { emoji: '🧬', nome: 'Biologia' },
+                                { emoji: '🏛️', nome: 'História' },
+                                { emoji: '⚽', nome: 'Educação Física' },
+                                { emoji: '🧪', nome: 'Química' },
+                                { emoji: '⚛️', nome: 'Física' },
+                                { emoji: '🤔', nome: 'Filosofia' },
+                                { emoji: '💰', nome: 'Educação Financeira' }
+                            ],
+                            'default': [
+                                { emoji: '📖', nome: 'Português' },
+                                { emoji: '🔢', nome: 'Matemática' },
+                                { emoji: '🌍', nome: 'Geografia' },
+                                { emoji: '🇺🇸', nome: 'Língua Inglesa' },
+                                { emoji: '🔬', nome: 'Ciências' },
+                                { emoji: '🏛️', nome: 'História' },
+                                { emoji: '⚽', nome: 'Educação Física' }
+                            ]
+                        };
+                        
+                        disciplinas = disciplinasPorTurma[data.turma_ativa] || disciplinasPorTurma['default'];
+                        console.log(`Disciplinas carregadas para ${data.turma_ativa}:`, disciplinas.map(d => d.nome));
+                    } else {
+                        // Fallback para fundamental
+                        disciplinas = [
+                            { emoji: '📖', nome: 'Português' },
+                            { emoji: '🔢', nome: 'Matemática' },
+                            { emoji: '🌍', nome: 'Geografia' },
+                            { emoji: '🇺🇸', nome: 'Língua Inglesa' },
+                            { emoji: '🔬', nome: 'Ciências' },
+                            { emoji: '🏛️', nome: 'História' },
+                            { emoji: '⚽', nome: 'Educação Física' }
+                        ];
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar disciplinas:', error);
+                    // Fallback para fundamental em caso de erro
+                    disciplinas = [
+                        { emoji: '📖', nome: 'Português' },
+                        { emoji: '🔢', nome: 'Matemática' },
+                        { emoji: '🌍', nome: 'Geografia' },
+                        { emoji: '🇺🇸', nome: 'Língua Inglesa' },
+                        { emoji: '🔬', nome: 'Ciências' },
+                        { emoji: '🏛️', nome: 'História' },
+                        { emoji: '⚽', nome: 'Educação Física' }
+                    ];
+                }
+            }
 
             // Função para criar o slot com a disciplina sorteada no meio
             function criarSlotComDisciplinaSorteada(disciplinaSorteada) {
@@ -283,7 +344,10 @@
             }
 
             // Adicionar evento de clique ao botão IR PARA PERGUNTA
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', async function() {
+                // Carregar disciplinas primeiro
+                await carregarDisciplinas();
+                
                 // Inicializar o slot com disciplinas
                 inicializarSlot();
                 
