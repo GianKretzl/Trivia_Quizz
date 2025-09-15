@@ -419,6 +419,8 @@ def pergunta(tema=None):
         return f"Erro: Nenhuma pergunta encontrada para o tema {tema}", 404
     
     questao_escolhida = random.choice(questoes)
+    alternativas = json.loads(questao_escolhida.alternativas)
+    
     print("-" * 50)
     print("### LOG: Questão Selecionada para a Rodada ###")
     print(f"Turma: {turma.nome}")
@@ -428,7 +430,6 @@ def pergunta(tema=None):
     print(f"Alternativas: {alternativas}")
     print(f"Resposta Correta: {alternativas[int(questao_escolhida.resposta_correta)]}")
     print("-" * 50)
-    alternativas = json.loads(questao_escolhida.alternativas)
     
     # Buscar equipes da turma
     equipes = Equipe.query.filter_by(turma_id=turma.id).all()
@@ -452,20 +453,20 @@ def processar_respostas():
         
         questao = Questao.query.get(questao_id)
         if not questao:
-            print(f"Questão {questao_id} não encontrada")
+            print(f"[DEBUG] ❌ Questão {questao_id} não encontrada")
             return jsonify({'erro': 'Questão não encontrada', 'sucesso': False}), 404
         
         # Pegar o último número de rodada
         ultima_rodada = db.session.query(db.func.max(Rodada.numero)).scalar() or 0
         novo_numero_rodada = ultima_rodada + 1
         
-        print(f"Nova rodada número: {novo_numero_rodada}")
+        print(f"[DEBUG] Nova rodada número: {novo_numero_rodada}")
         
         # Registrar rodadas para todas as equipes
         # Buscar a turma que tem equipes cadastradas
         turma = db.session.query(Turma).join(Equipe).first()
         if not turma:
-            print("Nenhuma turma com equipes encontrada")
+            print("[DEBUG] ❌ Nenhuma turma com equipes encontrada")
             return jsonify({'erro': 'Nenhuma turma com equipes encontrada', 'sucesso': False}), 404
             
         print(f"[DEBUG] Turma selecionada: {turma.id} - {turma.nome}")
@@ -475,7 +476,7 @@ def processar_respostas():
         rodadas_criadas = 0
         for equipe in equipes:
             acertou = equipe.id in equipes_acertos
-            print(f"Equipe {equipe.nome} (ID: {equipe.id}): {'ACERTOU' if acertou else 'ERROU'}")
+            print(f"[DEBUG] Equipe {equipe.nome} (ID: {equipe.id}): {'ACERTOU' if acertou else 'ERROU'}")
             
             rodada = Rodada(
                 equipe_id=equipe.id,
@@ -489,7 +490,7 @@ def processar_respostas():
             rodadas_criadas += 1
         
         db.session.commit()
-        print(f"[DEBUG] Sucesso! {rodadas_criadas} rodadas criadas, commit realizado")
+        print(f"[DEBUG] ✅ Sucesso! {rodadas_criadas} rodadas criadas, commit realizado")
         
         # Verificar se as rodadas foram salvas
         total_rodadas = Rodada.query.count()
@@ -498,7 +499,7 @@ def processar_respostas():
         return jsonify({'sucesso': True, 'rodada': novo_numero_rodada, 'rodadas_criadas': rodadas_criadas})
         
     except Exception as e:
-        print(f"Erro ao processar respostas: {str(e)}")
+        print(f"[DEBUG] ❌ Erro ao processar respostas: {str(e)}")
         db.session.rollback()
         return jsonify({'erro': f'Erro interno: {str(e)}', 'sucesso': False}), 500
 
@@ -641,11 +642,11 @@ def configurar_jogo():
     # Obter disciplinas disponíveis para a turma
     disciplinas_disponiveis = obter_disciplinas_por_turma(turma_nome)
     
-    print(f"Configurando jogo com dados: {dados}")
+    print(f"[DEBUG] Configurando jogo com dados: {dados}")
     turma = Turma.query.filter_by(nome=turma_nome).first()
     # Adicionar o log da turma selecionada
-    print(f"### LOG: Jogo configurado para a turma: {turma.nome} ###")
-    print(f"Disciplinas disponíveis para {turma_nome}: {disciplinas_disponiveis}")
+    print(f"[DEBUG] ### LOG: Jogo configurado para a turma: {turma.nome if turma else turma_nome} ###")
+    print(f"[DEBUG] Disciplinas disponíveis para {turma_nome}: {disciplinas_disponiveis}")
     
     num_equipes = dados.get('num_equipes')
     cores_selecionadas = dados.get('cores_equipes', [])
@@ -685,7 +686,7 @@ def configurar_jogo():
             'pontos': 0
         })
     db.session.commit()
-    print(f"Jogo configurado com sucesso! Equipes: {equipes}")
+    print(f"[DEBUG] Jogo configurado com sucesso! Equipes: {equipes}")
     return jsonify({
         'sucesso': True,
         'turma': turma_nome,
@@ -851,7 +852,7 @@ def ajustar_pontos():
         
         db.session.commit()
         
-        print(f"✅ Pontos ajustados no banco: {nome_equipe} {'+' if pontos > 0 else ''}{pontos} = {nova_pontuacao}")
+        print(f"[DEBUG] ✅ Pontos ajustados no banco: {nome_equipe} {'+' if pontos > 0 else ''}{pontos} = {nova_pontuacao}")
         
         return jsonify({
             'sucesso': True, 
@@ -861,7 +862,7 @@ def ajustar_pontos():
         })
         
     except Exception as e:
-        print(f"❌ Erro ao ajustar pontos: {e}")
+        print(f"[DEBUG] ❌ Erro ao ajustar pontos: {e}")
         db.session.rollback()
         return jsonify({'sucesso': False, 'erro': str(e)}), 500
 
