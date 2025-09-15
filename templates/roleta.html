@@ -88,9 +88,52 @@
             let corClasse = eq.cor.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').replace(/\s+/g, '_');
             const el = document.createElement('div');
             el.className = `equipe-placar cor-${corClasse}`;
-            el.innerHTML = `<span class='equipe-nome'>${eq.nome}</span><span class='equipe-pontos'>${eq.pontos}</span>`;
+            el.innerHTML = `
+                <div class="equipe-info">
+                    <span class='equipe-nome'>${eq.nome}</span>
+                    <div class="equipe-controles">
+                        <button class="btn-pontos btn-menos" onclick="ajustarPontos('${eq.nome}', -1)" title="Remover 1 ponto">-1</button>
+                        <span class='equipe-pontos'>${eq.pontos}</span>
+                        <button class="btn-pontos btn-mais" onclick="ajustarPontos('${eq.nome}', 1)" title="Adicionar 1 ponto">+1</button>
+                    </div>
+                </div>
+            `;
             placarDiv.appendChild(el);
         });
+    }
+    
+    // Função para ajustar pontos das equipes
+    async function ajustarPontos(nomeEquipe, pontos) {
+        try {
+            const response = await fetch('/api/ajustar_pontos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    equipe: nomeEquipe,
+                    pontos: pontos
+                })
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                if (result.sucesso) {
+                    // Recarregar placar imediatamente para mostrar a atualização
+                    carregarPlacar();
+                    console.log(`Pontos ajustados: ${nomeEquipe} ${pontos > 0 ? '+' : ''}${pontos}`);
+                } else {
+                    console.error('Erro ao ajustar pontos:', result.erro);
+                    alert('Erro ao ajustar pontos: ' + result.erro);
+                }
+            } else {
+                console.error('Erro na requisição:', response.status);
+                alert('Erro ao comunicar com o servidor');
+            }
+        } catch (error) {
+            console.error('Erro ao ajustar pontos:', error);
+            alert('Erro ao ajustar pontos');
+        }
     }
     
 

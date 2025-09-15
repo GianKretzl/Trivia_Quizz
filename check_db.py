@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from models import db, Turma, Equipe
+from models import db, Turma, Equipe, Questao
 from app import app
 
 with app.app_context():
@@ -14,4 +14,11 @@ with app.app_context():
                 print(f"  - {equipe.nome} ({equipe.cor})")
         else:
             print("  Nenhuma equipe encontrada!")
+        
+        # Verificar questões
+        questoes = Questao.query.filter_by(turma_id=turma.id).all()
+        print(f"Questões na turma {turma.nome}: {len(questoes)}")
+        if questoes:
+            temas = set(q.tema for q in questoes)
+            print(f"  Temas: {', '.join(temas)}")
         print()

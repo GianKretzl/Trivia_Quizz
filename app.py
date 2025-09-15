@@ -769,6 +769,90 @@ def cores_disponiveis():
     """Retorna as cores disponíveis para as equipes"""
     return jsonify({'cores': CORES_EQUIPES})
 
+@app.route('/api/ajustar_pontos', methods=['POST'])
+def ajustar_pontos():
+    """Ajusta pontos de uma equipe (+1 ou -1) criando uma rodada fictícia no banco"""
+    try:
+        data = request.get_json()
+        nome_equipe = data.get('equipe')
+        pontos = data.get('pontos', 0)
+        
+        if not nome_equipe:
+            return jsonify({'sucesso': False, 'erro': 'Nome da equipe é obrigatório'}), 400
+            
+        if pontos not in [-1, 1]:
+            return jsonify({'sucesso': False, 'erro': 'Apenas +1 ou -1 ponto permitido'}), 400
+        
+        # Buscar a equipe no banco de dados
+        equipe = Equipe.query.filter_by(nome=nome_equipe).first()
+        if not equipe:
+            return jsonify({'sucesso': False, 'erro': 'Equipe não encontrada no banco'}), 404
+        
+        # Calcular pontuação atual da equipe
+        pontos_atuais = db.session.query(db.func.count(Rodada.id)).filter_by(
+            equipe_id=equipe.id, 
+            acertou=True
+        ).scalar() or 0
+        
+        # Calcular nova pontuação
+        nova_pontuacao = pontos_atuais + pontos
+        
+        # Não permitir pontuação negativa
+        if nova_pontuacao < 0:
+            return jsonify({'sucesso': False, 'erro': 'Pontuação não pode ser negativa'}), 400
+        
+        if pontos == 1:
+            # Adicionar ponto: criar uma rodada fictícia com acerto
+            # Buscar qualquer questão disponível (não necessariamente da turma)
+            questao = Questao.query.first()
+            if not questao:
+                return jsonify({'sucesso': False, 'erro': 'Nenhuma questão encontrada no sistema'}), 404
+            
+            # Pegar o último número de rodada
+            ultima_rodada = db.session.query(db.func.max(Rodada.numero)).scalar() or 0
+            novo_numero_rodada = ultima_rodada + 1
+            
+            # Criar rodada de ajuste com acerto
+            rodada_ajuste = Rodada(
+                equipe_id=equipe.id,
+                questao_id=questao.id,
+                tema='ajuste_manual',
+                acertou=True,
+                resposta=questao.resposta_correta,
+                numero=novo_numero_rodada
+            )
+            db.session.add(rodada_ajuste)
+            
+        else:  # pontos == -1
+            # Remover ponto: encontrar a última rodada com acerto desta equipe e marcar como erro
+            ultima_rodada_acerto = Rodada.query.filter_by(
+                equipe_id=equipe.id, 
+                acertou=True
+            ).order_by(Rodada.id.desc()).first()
+            
+            if not ultima_rodada_acerto:
+                return jsonify({'sucesso': False, 'erro': 'Equipe não tem pontos para remover'}), 400
+            
+            # Marcar como erro (ou excluir a rodada - vou marcar como erro para manter histórico)
+            ultima_rodada_acerto.acertou = False
+            ultima_rodada_acerto.tema = 'ajuste_manual_remocao'
+        
+        db.session.commit()
+        
+        print(f"✅ Pontos ajustados no banco: {nome_equipe} {'+' if pontos > 0 else ''}{pontos} = {nova_pontuacao}")
+        
+        return jsonify({
+            'sucesso': True, 
+            'equipe': nome_equipe,
+            'pontos_ajustados': pontos,
+            'nova_pontuacao': nova_pontuacao
+        })
+        
+    except Exception as e:
+        print(f"❌ Erro ao ajustar pontos: {e}")
+        db.session.rollback()
+        return jsonify({'sucesso': False, 'erro': str(e)}), 500
+
 @app.route('/api/reset_jogo', methods=['POST'])
 def reset_jogo():
     """Reinicia o jogo"""
