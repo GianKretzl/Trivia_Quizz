@@ -419,6 +419,15 @@ def pergunta(tema=None):
         return f"Erro: Nenhuma pergunta encontrada para o tema {tema}", 404
     
     questao_escolhida = random.choice(questoes)
+    print("-" * 50)
+    print("### LOG: Questão Selecionada para a Rodada ###")
+    print(f"Turma: {turma.nome}")
+    print(f"Disciplina: {tema}")
+    print(f"ID da Questão: {questao_escolhida.id}")
+    print(f"Enunciado: {questao_escolhida.enunciado}")
+    print(f"Alternativas: {alternativas}")
+    print(f"Resposta Correta: {alternativas[int(questao_escolhida.resposta_correta)]}")
+    print("-" * 50)
     alternativas = json.loads(questao_escolhida.alternativas)
     
     # Buscar equipes da turma
@@ -633,6 +642,9 @@ def configurar_jogo():
     disciplinas_disponiveis = obter_disciplinas_por_turma(turma_nome)
     
     print(f"Configurando jogo com dados: {dados}")
+    turma = Turma.query.filter_by(nome=turma_nome).first()
+    # Adicionar o log da turma selecionada
+    print(f"### LOG: Jogo configurado para a turma: {turma.nome} ###")
     print(f"Disciplinas disponíveis para {turma_nome}: {disciplinas_disponiveis}")
     
     num_equipes = dados.get('num_equipes')
