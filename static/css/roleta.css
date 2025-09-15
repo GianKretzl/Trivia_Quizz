@@ -112,7 +112,7 @@ html, body {
 
 .roleta-layout {
     display: grid;
-    grid-template-columns: 280px 1fr 280px;
+    grid-template-columns: 320px 1fr 320px;
     gap: 20px;
     align-items: start;
     justify-items: center;
@@ -148,16 +148,18 @@ html, body {
     padding: 25px 28px;
     text-align: center;
     width: 100%;
-    max-width: 340px;
+    max-width: 300px;
     max-height: 85vh;
-    overflow: hidden;
+    overflow: visible;
     backdrop-filter: blur(10px);
     position: relative;
     display: flex;
     flex-direction: column;
     min-height: 350px;
-    backdrop-filter: blur(10px);
-    position: relative;
+    /* Sempre visível */
+    opacity: 1;
+    visibility: visible;
+    transform: none;
 }
 
 .placar-header::before {
@@ -207,12 +209,12 @@ html, body {
 .placar-grid {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     flex: 1;
     overflow-y: auto;
-    padding: 10px 8px 10px 0;
-    margin: 10px 0;
-    max-height: calc(85vh - 220px);
+    padding: 8px 8px 8px 0;
+    margin: 8px 0;
+    max-height: calc(85vh - 200px);
 }
 
 /* Scrollbar customizada */
@@ -267,26 +269,30 @@ html, body {
     background: linear-gradient(135deg, 
         rgba(255, 255, 255, 0.95), 
         rgba(248, 249, 250, 0.9));
-    border-radius: 18px;
-    padding: 16px 18px;
+    border-radius: 15px;
+    padding: 12px 15px;
     text-align: center;
     border: 2px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     font-weight: 700;
     color: #2d3748;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.12),
-        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 6px 20px rgba(0, 0, 0, 0.1),
+        0 3px 10px rgba(0, 0, 0, 0.06),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
-    min-height: 70px;
+    min-height: 55px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    /* Sempre visível */
+    opacity: 1;
+    visibility: visible;
+    transform: none;
 }
 
 .equipe-placar::before {
@@ -312,15 +318,15 @@ html, body {
     display: block;
     font-weight: 800;
     color: #2d3748;
-    margin-bottom: 6px;
-    font-size: 1.1rem;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     letter-spacing: 0.3px;
 }
 
 .equipe-pontos {
     display: block;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 900;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #118AB2 100%);
     -webkit-background-clip: text;
@@ -1057,168 +1063,63 @@ html, body {
     font-size: 1rem;
 }
 
-/* Responsividade para telas menores */
+/* Responsividade melhorada */
 @media (max-width: 1200px) {
     .roleta-layout {
-        grid-template-columns: 250px 1fr 250px;
+        grid-template-columns: 280px 1fr 280px;
         gap: 15px;
         padding: 15px;
     }
     
-    .placar-col, .tema-col {
-        margin-top: 60px;
+    .placar-header {
+        max-width: 260px;
+        padding: 20px 22px;
     }
     
-    .padre-img {
-        width: 350px;
+    .equipe-placar {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+        min-height: 50px;
     }
     
-    .speech-bubble {
-        width: 280px;
-        height: 160px;
-        right: -120px;
-        top: 0px;
-    }
-    
-    .speech-bubble::after {
-        bottom: -15px;
-        left: 35px;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-top: 15px solid #ffffff;
-    }
-    
-    .speech-bubble::before {
-        bottom: -18px;
-        left: 32px;
-        border-left: 18px solid transparent;
-        border-right: 18px solid transparent;
-        border-top: 18px solid #FFD700;
-    }
-    
-    .botao-sorteio-container {
-        bottom: 8%;
-        right: 30%;
-    }
-    
-    .btn-sortear {
-        font-size: 1rem;
-        padding: 12px 25px;
-        min-width: 140px;
-    }
-    
-    .placar-header, .tema-sorteado-box {
-        max-width: 240px;
-        padding: 16px 20px;
-    }
-    
-    /* Ajustes específicos para muitas equipes em telas menores */
-    .placar-grid {
-        gap: 6px;
-    }
-    
-    .placar-grid.muitas-equipes .equipe-placar {
-        padding: 5px 8px;
-        font-size: 0.8rem;
-        min-height: 40px;
-    }
-    
-    .placar-grid.muitas-equipes .equipe-pontos {
-        font-size: 0.9rem !important;
-    }
-    
-    .placar-grid.super-compacto .equipe-placar {
-        padding: 3px 6px;
-        font-size: 0.75rem;
-        min-height: 35px;
-    }
-    
-    .placar-grid.super-compacto .equipe-pontos {
-        font-size: 0.85rem !important;
+    .equipe-pontos {
+        font-size: 1.2rem;
     }
 }
 
 @media (max-width: 900px) {
-    .placar-col, .tema-col {
-        margin-top: 40px;
+    .roleta-layout {
+        grid-template-columns: 240px 1fr 240px;
+        gap: 12px;
+        padding: 12px;
     }
     
-    .padre-img {
-        width: 320px;
+    .placar-header {
+        max-width: 220px;
+        padding: 18px 20px;
+        min-height: 300px;
     }
     
-    .speech-bubble {
-        width: 250px;
-        height: 140px;
-        right: -90px;
-        top: 10px;
+    .equipe-placar {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+        min-height: 45px;
     }
     
-    .speech-bubble::after {
-        bottom: -12px;
-        left: 30px;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-top: 12px solid #ffffff;
+    .equipe-pontos {
+        font-size: 1.1rem;
     }
     
-    .speech-bubble::before {
-        bottom: -15px;
-        left: 27px;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-top: 15px solid #FFD700;
-    }
-    
-    .slot-item {
-        font-size: 1rem;
-    }
-    
-    .texto-resultado {
-        font-size: 1rem;
-    }
-    
-    .botao-sorteio-container {
-        bottom: 6%;
-        right: 25%;
-    }
-    
-    .btn-sortear {
-        font-size: 1rem;
-        padding: 12px 24px;
-        min-width: 130px;
-    }
-    
-    /* Ajustes para muitas equipes em telas médias */
     .placar-grid {
-        gap: 4px;
-    }
-    
-    .placar-grid.muitas-equipes .equipe-placar {
-        padding: 4px 6px;
-        font-size: 0.75rem;
-        min-height: 35px;
-    }
-    
-    .placar-grid.muitas-equipes .equipe-pontos {
-        font-size: 0.85rem !important;
-    }
-    
-    .placar-grid.super-compacto .equipe-placar {
-        padding: 2px 4px;
-        font-size: 0.7rem;
-        min-height: 30px;
-    }
-    
-    .placar-grid.super-compacto .equipe-pontos {
-        font-size: 0.8rem !important;
+        gap: 6px;
+        max-height: calc(85vh - 180px);
     }
 }
 
 /* Media Query para TV 43 polegadas - Fullscreen (1920x1080 e maiores) */
 @media (min-width: 1400px) {
     .roleta-layout {
-        grid-template-columns: 350px 1fr 350px;
+        grid-template-columns: 380px 1fr 380px;
         gap: 40px;
         padding: 40px;
         max-width: 1800px;
@@ -1226,156 +1127,69 @@ html, body {
     }
     
     .placar-col, .tema-col {
-        margin-top: 120px;
+        margin-top: 80px;
     }
     
-    .placar-header, .tema-sorteado-box {
-        font-size: 1.4rem;
-        padding: 25px;
-        min-height: 120px;
+    .placar-header {
+        max-width: 360px;
+        padding: 30px 35px;
+        min-height: 400px;
     }
     
-    .placar-header h2, .tema-sorteado-box h2 {
-        font-size: 1.8rem;
-        margin-bottom: 20px;
+    .equipe-placar {
+        padding: 15px 18px;
+        font-size: 1.1rem;
+        min-height: 65px;
     }
     
-    .placar-item {
-        font-size: 1.2rem;
-        padding: 12px 20px;
-        margin: 8px 0;
-    }
-    
-    .tema-nome {
-        font-size: 1.3rem;
-        padding: 15px 25px;
-    }
-    
-    .padre-img {
-        width: 500px;
-        height: auto;
-    }
-    
-    .speech-bubble {
-        width: 480px;
-        height: 320px;
-        font-size: 1.3rem;
-    }
-    
-    .slot-machine {
-        width: 400px;
-        height: 180px;
-        gap: 15px;
-    }
-    
-    .slot-item {
-        font-size: 1.4rem;
-        padding: 20px;
-        min-height: 80px;
-    }
-    
-    .botao-sorteio-container {
-        bottom: 8%;
-        right: 38%;
-    }
-    
-    .btn-sortear {
-        font-size: 1.3rem;
-        padding: 20px 40px;
-        min-width: 200px;
-        border-radius: 30px;
-    }
-    
-    .btn-sortear.novamente {
-        padding: 15px 35px;
-        min-height: 90px;
-        gap: 12px;
-    }
-    
-    .resultado-sorteio {
+    .equipe-pontos {
         font-size: 1.6rem;
-        padding: 25px;
-    }
-    
-    .confete {
-        width: 12px;
-        height: 12px;
     }
 }
 
-        @media (max-width: 768px) {
+@media (max-width: 768px) {
     .roleta-layout {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto;
-        gap: 15px;
+        grid-template-columns: 200px 1fr 200px;
+        gap: 10px;
         padding: 10px;
     }
     
-    .placar-col, .tema-col {
-        align-self: stretch;
-        margin-top: 0;
+    .placar-header {
+        max-width: 190px;
+        padding: 15px 18px;
+        min-height: 280px;
     }
     
-    .placar-header, .tema-sorteado-box {
-        max-width: 100%;
-        width: 100%;
-        margin: 0 auto;
+    .placar-header h2 {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
     }
     
-    .padre-img {
-        width: 260px;
-    }
-    
-    .speech-bubble {
-        width: 220px;
-        height: 120px;
-        right: -70px;
-        top: 20px;
-    }
-    
-    .speech-bubble::after {
-        bottom: -10px;
-        left: 25px;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid #ffffff;
-    }
-    
-    .speech-bubble::before {
-        bottom: -12px;
-        left: 23px;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-top: 12px solid #FFD700;
-    }
-    
-    .slot-machine {
-        width: 90%;
-        height: 75%;
-    }
-    
-    .slot-reel-unico {
-        height: 100%;
-    }
-    
-    .slot-item {
-        height: 45px;
+    .equipe-placar {
+        padding: 6px 8px;
         font-size: 0.8rem;
+        min-height: 40px;
+        border-radius: 12px;
     }
     
-    .slot-item:nth-child(2) {
-        font-size: 0.85rem;
+    .equipe-nome {
+        font-size: 0.8rem;
+        margin-bottom: 2px;
     }
     
-    .botao-sorteio-container {
-        bottom: 4%;
-        right: 20%;
+    .equipe-pontos {
+        font-size: 1rem;
     }
     
-    .btn-sortear {
-        font-size: 0.9rem;
-        padding: 10px 20px;
-        min-width: 110px;
+    .placar-grid {
+        gap: 4px;
+        max-height: calc(85vh - 160px);
+    }
+    
+    /* Botões do placar menores */
+    .btn-relatorio, .btn-novo-jogo {
+        font-size: 0.8rem;
+        padding: 8px 15px;
     }
 }
 

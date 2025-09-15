@@ -108,18 +108,6 @@ with app.app_context():
     importar_perguntas_9ano()
     importar_perguntas_ensino_medio()
 
-def obter_disciplinas_por_turma(turma_nome):
-    """Retorna as disciplinas disponíveis para uma turma específica."""
-    if turma_nome == 'ensino_medio':
-        # No ensino médio, Ciências vira Biologia e adiciona as novas disciplinas
-        return ['portugues', 'matematica', 'biologia', 'historia', 'geografia', 
-                'lingua_inglesa', 'educacao_fisica', 'educacao_financeira', 
-                'filosofia', 'quimica', 'fisica']
-    else:
-        # Fundamental mantém Ciências
-        return ['portugues', 'matematica', 'ciencias', 'historia', 'geografia', 
-                'lingua_inglesa', 'educacao_fisica']
-
 # Rotas extras para relatório, novo jogo e pergunta
 @app.route('/relatorio')
 def relatorio():
@@ -560,11 +548,16 @@ NOMES_DISCIPLINAS = {
 
 # Função para obter disciplinas baseada na turma
 def obter_disciplinas_por_turma(turma_nome):
-    """Retorna as disciplinas disponíveis para uma turma específica"""
-    if turma_nome == 'ensino_medio':
-        return DISCIPLINAS_ENSINO_MEDIO
-    else:
-        return DISCIPLINAS_FUNDAMENTAL
+    """Retorna as disciplinas disponíveis para uma turma específica (baseado nas questões reais no BD)"""
+    turma = Turma.query.filter_by(nome=turma_nome).first()
+    if not turma:
+        return []
+    
+    # Busca disciplinas que realmente têm questões no banco
+    disciplinas_reais = db.session.query(Questao.tema).filter_by(turma_id=turma.id).distinct().all()
+    disciplinas_disponiveis = [d[0] for d in disciplinas_reais]
+    
+    return disciplinas_disponiveis
 
 # Cores disponíveis para as equipes (cores personalizadas da gincana)
 CORES_EQUIPES = [

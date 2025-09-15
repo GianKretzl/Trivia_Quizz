@@ -461,6 +461,198 @@
         ],
         "resposta_correta": 0
       }
+    ],
+    "ciencias": [
+      {
+        "pergunta": "Qual é a função da membrana plasmática em uma célula?",
+        "opcoes": [
+          "Controlar o núcleo",
+          "Regular o que entra e sai da célula",
+          "Produzir energia",
+          "Armazenar informações genéticas"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual é a característica principal dos vírus?",
+        "opcoes": [
+          "São células vivas",
+          "São organismos multicelulares",
+          "São parasitas intracelulares obrigatórios",
+          "São bactérias"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual é a forma de reprodução mais comum das bactérias?",
+        "opcoes": [
+          "Divisão binária",
+          "Reprodução sexuada",
+          "Esporulação",
+          "Regeneração"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "Qual é a característica principal dos protozoários?",
+        "opcoes": [
+          "São organismos multicelulares",
+          "São autotróficos",
+          "São heterotróficos e unicelulares",
+          "São vírus"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Qual é a função principal dos fungos na natureza?",
+        "opcoes": [
+          "Produzir oxigênio",
+          "Decompor matéria orgânica",
+          "Produzir alimentos",
+          "Causar doenças"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual é o componente celular responsável pela produção de energia?",
+        "opcoes": [
+          "Núcleo",
+          "Mitocôndria",
+          "Ribossomo",
+          "Lisossomo"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Qual é o nome do vírus que causa a AIDS?",
+        "opcoes": [
+          "HIV",
+          "HPV",
+          "Influenza",
+          "Ebola"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "A relação ecológica em que os dois seres se beneficiam é chamada:",
+        "opcoes": [
+          "Predação",
+          "Parasitismo",
+          "Mutualismo",
+          "Inquilinismo"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "O parasitismo é uma relação em que:",
+        "opcoes": [
+          "Ambos se beneficiam",
+          "Apenas o hospedeiro se beneficia",
+          "O parasita se beneficia e o hospedeiro é prejudicado",
+          "Ambos se prejudicam"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A dengue é uma doença causada por:",
+        "opcoes": [
+          "Vírus",
+          "Bactéria",
+          "Protozoário",
+          "Fungo"
+        ],
+        "resposta_correta": 0
+      },
+      {
+        "pergunta": "O agente transmissor da dengue é:",
+        "opcoes": [
+          "Mosca doméstica",
+          "Percevejo",
+          "Aedes aegypti",
+          "Pólvora do campo"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Em uma cadeia alimentar, os produtores são organismos que:",
+        "opcoes": [
+          "Caçam outros seres vivos",
+          "Se alimentam de restos orgânicos",
+          "Produzem seu próprio alimento",
+          "Atuam como decompositores"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A decomposição de matéria orgânica no solo é feita principalmente por:",
+        "opcoes": [
+          "Animais carnívoros",
+          "Fungos e bactérias",
+          "Plantas",
+          "Insetos"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "O comensalismo é uma relação em que:",
+        "opcoes": [
+          "Um organismo se alimenta de outro",
+          "Um se beneficia sem prejudicar o outro",
+          "Ambos se beneficiam",
+          "Ambos se prejudicam"
+        ],
+        "resposta_correta": 1
+      },
+      {
+        "pergunta": "Em uma teia alimentar, os consumidores secundários se alimentam:",
+        "opcoes": [
+          "Apenas de plantas",
+          "Apenas de decompositores",
+          "De consumidores primários",
+          "De produtores"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Um animal que vive exclusivamente no ambiente aquático é:",
+        "opcoes": [
+          "Jacaré",
+          "Tartaruga",
+          "Golfinho",
+          "Peixe"
+        ],
+        "resposta_correta": 3
+      },
+      {
+        "pergunta": "O lixo acumulado em ambientes urbanos pode:",
+        "opcoes": [
+          "Melhorar o solo",
+          "Atrair predadores",
+          "Favorecer a reprodução de vetores de doenças",
+          "Aumentar a oxigenação do ar"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "Uma das formas de evitar a proliferação do mosquito da dengue é:",
+        "opcoes": [
+          "Plantar mais árvores",
+          "Deixar garrafas com água no quintal",
+          "Eliminar água parada",
+          "Usar mais ventiladores"
+        ],
+        "resposta_correta": 2
+      },
+      {
+        "pergunta": "A classificação científica dos seres vivos é importante para:",
+        "opcoes": [
+          "Definir se o organismo pode ser comido",
+          "Organizar e entender suas características",
+          "Impedir a extinção das espécies",
+          "Determinar seu tempo de vida"
+        ],
+        "resposta_correta": 1
+      }
     ]
   }
 }
