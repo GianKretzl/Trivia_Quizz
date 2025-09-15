@@ -95,7 +95,16 @@ import random
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trivia_quizz.db'
+
+# Configuração do banco de dados - SQLite para desenvolvimento e produção
+if os.environ.get('RENDER'):
+    # Em produção no Render, usar pasta writable
+    database_path = '/opt/render/project/src/trivia_quizz.db'
+else:
+    # Local
+    database_path = 'sqlite:///trivia_quizz.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{database_path}' if os.environ.get('RENDER') else 'sqlite:///trivia_quizz.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
@@ -759,6 +768,12 @@ def reset_jogo():
     return jsonify({'sucesso': True})
 
 if __name__ == '__main__':
-    # Para acesso apenas local: app.run(debug=True)
-    # Para acesso na rede local: app.run(host='0.0.0.0', port=5000, debug=True)
-    app.run(debug=True)
+    # Para produção no Render
+    if os.environ.get('RENDER'):
+        port = int(os.environ.get('PORT', 5000))
+        app.run(host='0.0.0.0', port=port, debug=False)
+    else:
+        # Para desenvolvimento local
+        # Para acesso apenas local: app.run(debug=True)
+        # Para acesso na rede local: app.run(host='0.0.0.0', port=5000, debug=True)
+        app.run(debug=True)
