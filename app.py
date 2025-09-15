@@ -96,26 +96,41 @@ import os
 
 app = Flask(__name__)
 
-# Configuração do banco de dados - SQLite para desenvolvimento e produção
+# Configuração do banco de dados
 if os.environ.get('RENDER'):
-    # Em produção no Render, usar pasta writable
-    database_path = '/opt/render/project/src/trivia_quizz.db'
+    # Em produção no Render
+    database_path = 'sqlite:///trivia_quizz.db'
 else:
     # Local
     database_path = 'sqlite:///trivia_quizz.db'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{database_path}' if os.environ.get('RENDER') else 'sqlite:///trivia_quizz.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = database_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Inicializar banco de dados se não existir
 with app.app_context():
-    db.create_all()
-    importar_perguntas_6ano()
-    importar_perguntas_7ano()
-    importar_perguntas_8ano()
-    importar_perguntas_9ano()
-    importar_perguntas_ensino_medio()
+    try:
+        db.create_all()
+        print("✅ Banco de dados criado com sucesso!")
+        
+        # Importar perguntas apenas se não existirem
+        from models import Turma
+        if Turma.query.count() == 0:
+            print("📥 Importando perguntas...")
+            importar_perguntas_6ano()
+            importar_perguntas_7ano()
+            importar_perguntas_8ano()
+            importar_perguntas_9ano()
+            importar_perguntas_ensino_medio()
+            print("✅ Perguntas importadas com sucesso!")
+        else:
+            print("ℹ️  Perguntas já existem no banco")
+    except Exception as e:
+        print(f"❌ Erro na inicialização: {e}")
+        # Em produção, continuar mesmo com erro
+        if not os.environ.get('RENDER'):
+            raise
 
 # Rotas extras para relatório, novo jogo e pergunta
 @app.route('/relatorio')
