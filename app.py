@@ -710,18 +710,32 @@ def sortear_disciplina():
     if turma not in perguntas:
         return jsonify({'erro': f'Perguntas não encontradas para {turma}'}), 404
     
-    # Sortear disciplina baseada na turma
-    disciplinas_disponiveis = obter_disciplinas_por_turma(turma)
-    disciplina = random.choice(disciplinas_disponiveis)
+    # Sorteio sem repetição: ciclo de disciplinas por turma
+    if 'disciplinas_ciclo' not in jogo_estado or jogo_estado.get('turma_ciclo') != turma:
+        # Inicia ciclo novo se mudou de turma ou não existe
+        disciplinas_disponiveis = obter_disciplinas_por_turma(turma)
+        random.shuffle(disciplinas_disponiveis)
+        jogo_estado['disciplinas_ciclo'] = disciplinas_disponiveis
+        jogo_estado['turma_ciclo'] = turma
+        jogo_estado['indice_disciplina_ciclo'] = 0
+    else:
+        disciplinas_disponiveis = jogo_estado['disciplinas_ciclo']
     
-    # Verificar se a disciplina tem perguntas
+    # Seleciona próxima disciplina do ciclo
+    indice = jogo_estado.get('indice_disciplina_ciclo', 0)
+    disciplina = disciplinas_disponiveis[indice]
+    
+    # Verifica se a disciplina tem perguntas
     if disciplina not in perguntas[turma] or not perguntas[turma][disciplina]:
-        return jsonify({'erro': f'Nenhuma pergunta encontrada para {disciplina}'}), 404
+        # Pula para próxima disciplina se não houver perguntas
+        jogo_estado['indice_disciplina_ciclo'] = (indice + 1) % len(disciplinas_disponiveis)
+        return sortear_disciplina()
     
-    # Sortear pergunta da disciplina
+    # Sorteia pergunta da disciplina
     pergunta = random.choice(perguntas[turma][disciplina])
     
-    # Salvar estado atual
+    # Atualiza ciclo para próxima chamada
+    jogo_estado['indice_disciplina_ciclo'] = (indice + 1) % len(disciplinas_disponiveis)
     jogo_estado['disciplina_atual'] = disciplina
     jogo_estado['pergunta_atual'] = pergunta
     
@@ -889,3 +903,10 @@ if __name__ == '__main__':
         # Para acesso apenas local: app.run(debug=True)
         # Para acesso na rede local: app.run(host='0.0.0.0', port=5000, debug=True)
         app.run(debug=True)
+
+# Endpoint para informar a última disciplina sorteada para a roleta
+@app.route('/api/ultima_disciplina', methods=['GET'])
+def ultima_disciplina():
+    global jogo_estado
+    disciplina = jogo_estado.get('disciplina_atual')
+    return jsonify({'disciplina': disciplina})

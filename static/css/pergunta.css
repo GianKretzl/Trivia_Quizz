@@ -1,3 +1,30 @@
+.btn-voltar-roleta {
+    background: linear-gradient(135deg, #118AB2, #0E7490);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 28px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(17, 138, 178, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 10px;
+    margin-top: 8px;
+    text-decoration: none;
+}
+
+.btn-voltar-roleta:hover {
+    background: linear-gradient(135deg, #0E7490, #118AB2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(17, 138, 178, 0.3);
+    filter: brightness(1.1);
+}
 html, body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #FFD23F 50%, #06FFA5 75%, #118AB2 100%);
@@ -142,6 +169,10 @@ html, body {
 
 .acoes {
     margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
 }
 
 .btn-revelar {
