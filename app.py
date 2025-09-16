@@ -870,31 +870,41 @@ def ajustar_pontos():
         equipe = Equipe.query.filter_by(nome=nome_equipe).first()
         if not equipe:
             return jsonify({'sucesso': False, 'erro': 'Equipe não encontrada no banco'}), 404
-        
+
         # Calcular pontuação atual da equipe
         pontos_atuais = db.session.query(db.func.count(Rodada.id)).filter_by(
-            equipe_id=equipe.id, 
+            equipe_id=equipe.id,
             acertou=True
         ).scalar() or 0
-        
+
         # Calcular nova pontuação
         nova_pontuacao = pontos_atuais + pontos
-        
+
         # Não permitir pontuação negativa
         if nova_pontuacao < 0:
             return jsonify({'sucesso': False, 'erro': 'Pontuação não pode ser negativa'}), 400
-        
+
+        # Buscar a turma da equipe
+        turma = Turma.query.get(equipe.turma_id)
+        tabela_map = {
+            '6_ano': Pergunta6Ano,
+            '7_ano': Pergunta7Ano,
+            '8_ano': Pergunta8Ano,
+            '9_ano': Pergunta9Ano,
+            'ensino_medio': PerguntaEnsinoMedio
+        }
+        tabela = tabela_map.get(turma.nome) if turma else None
+
         if pontos == 1:
             # Adicionar ponto: criar uma rodada fictícia com acerto
-            # Buscar qualquer questão disponível (não necessariamente da turma)
-            questao = Questao.query.first()
+            questao = tabela.query.first() if tabela else None
             if not questao:
                 return jsonify({'sucesso': False, 'erro': 'Nenhuma questão encontrada no sistema'}), 404
-            
+
             # Pegar o último número de rodada
             ultima_rodada = db.session.query(db.func.max(Rodada.numero)).scalar() or 0
             novo_numero_rodada = ultima_rodada + 1
-            
+
             # Criar rodada de ajuste com acerto
             rodada_ajuste = Rodada(
                 equipe_id=equipe.id,
@@ -905,17 +915,17 @@ def ajustar_pontos():
                 numero=novo_numero_rodada
             )
             db.session.add(rodada_ajuste)
-            
+
         else:  # pontos == -1
             # Remover ponto: encontrar a última rodada com acerto desta equipe e marcar como erro
             ultima_rodada_acerto = Rodada.query.filter_by(
-                equipe_id=equipe.id, 
+                equipe_id=equipe.id,
                 acertou=True
             ).order_by(Rodada.id.desc()).first()
-            
+
             if not ultima_rodada_acerto:
                 return jsonify({'sucesso': False, 'erro': 'Equipe não tem pontos para remover'}), 400
-            
+
             # Marcar como erro (ou excluir a rodada - vou marcar como erro para manter histórico)
             ultima_rodada_acerto.acertou = False
             ultima_rodada_acerto.tema = 'ajuste_manual_remocao'
