@@ -1,3 +1,60 @@
+import json
+from flask import render_template
+from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
+from sqlalchemy import func, case
+
+def relatorio():
+    rodadas_db = Rodada.query.order_by(Rodada.numero.asc()).all()
+    rodadas = []
+    for rodada in rodadas_db:
+        equipe = Equipe.query.get(rodada.equipe_id)
+        turma = Turma.query.get(equipe.turma_id) if equipe else None
+        tabela_map = {
+            '6_ano': Pergunta6Ano,
+            '7_ano': Pergunta7Ano,
+            '8_ano': Pergunta8Ano,
+            '9_ano': Pergunta9Ano,
+            'ensino_medio': PerguntaEnsinoMedio
+        }
+        tabela = tabela_map.get(turma.nome) if turma else None
+        questao = tabela.query.get(rodada.questao_id) if tabela else None
+        alternativas = []
+        resposta_texto = None
+        tema = None
+        enunciado = None
+        if questao:
+            alternativas = json.loads(questao.alternativas)
+            tema = questao.tema
+            enunciado = questao.enunciado
+            try:
+                posicao = int(questao.resposta_correta)
+                if 0 <= posicao < len(alternativas):
+                    resposta_texto = alternativas[posicao]
+            except Exception:
+                resposta_texto = questao.resposta_correta
+        rodadas.append({
+            'numero': rodada.numero,
+            'turma': turma.nome if turma else None,
+            'tema': tema,
+            'enunciado': enunciado,
+            'resposta': resposta_texto,
+            'alternativas': alternativas,
+            'equipe': equipe.nome if equipe else None,
+            'cor': equipe.cor if equipe else None,
+            'acertou': rodada.acertou
+        })
+    total_participacoes = len(rodadas)
+    total_acertos = sum(1 for r in rodadas if r['acertou'])
+    total_erros = total_participacoes - total_acertos
+    taxa_acerto = (total_acertos / total_participacoes * 100) if total_participacoes > 0 else 0
+    estatisticas = {
+        'total_rodadas': len(rodadas),
+        'total_participacoes': total_participacoes,
+        'total_acertos': total_acertos,
+        'total_erros': total_erros,
+        'taxa_acerto': taxa_acerto
+    }
+    return render_template('relatorio.html', rodadas=rodadas, stats=estatisticas)
 def importar_perguntas(ano, arquivo):
     """Importa perguntas de um arquivo específico para uma tabela específica do ano"""
     try:
@@ -15,7 +72,6 @@ def importar_perguntas(ano, arquivo):
             print(f'Tabela para o ano {ano} não encontrada.')
             return
 
-        # Só importa se não houver perguntas desse ano
         existe = tabela.query.first()
         if not existe:
             turma_nome = f'{ano}_ano'
@@ -80,39 +136,32 @@ def importar_perguntas_ensino_medio():
             print('Perguntas do ensino médio importadas automaticamente.')
     except Exception as e:
         print(f'Erro ao importar perguntas do ensino médio:', e)
-import json
 
-# ...existing code...
-
-# Adiciona a rota após definição do app
-from flask import Flask, render_template, jsonify, request, redirect, url_for
 import os
-from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
-from sqlalchemy import func, case
 import random
+import json
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 
 app = Flask(__name__)
 
-# ...existing code...
+# Configuração do banco de dados
+if os.environ.get('RENDER'):
+    database_path = 'sqlite:///trivia_quizz.db'
+else:
+    database_path = 'sqlite:///trivia_quizz.db'
 
-# Rota para consultar a quantidade de perguntas em cada tabela
-@app.route('/api/contagem_perguntas')
-def contagem_perguntas():
-    return {
-        '6_ano': Pergunta6Ano.query.count(),
-        '7_ano': Pergunta7Ano.query.count(),
-        '8_ano': Pergunta8Ano.query.count(),
-        '9_ano': Pergunta9Ano.query.count(),
-        'ensino_medio': PerguntaEnsinoMedio.query.count()
-    }
-import json
+app.config['SQLALCHEMY_DATABASE_URI'] = database_path
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
+from sqlalchemy import func, case
+db.init_app(app)
 
 def importar_perguntas(ano, arquivo):
     """Importa perguntas de um arquivo específico para uma tabela específica do ano"""
     try:
         with open(arquivo, encoding='utf-8') as f:
             perguntas = json.load(f)
-
         tabela_map = {
             6: Pergunta6Ano,
             7: Pergunta7Ano,
@@ -123,8 +172,6 @@ def importar_perguntas(ano, arquivo):
         if not tabela:
             print(f'Tabela para o ano {ano} não encontrada.')
             return
-
-        # Só importa se não houver perguntas desse ano
         existe = tabela.query.first()
         if not existe:
             turma_nome = f'{ano}_ano'
@@ -145,103 +192,51 @@ def importar_perguntas(ano, arquivo):
             print(f'Perguntas do {ano}º ano importadas automaticamente.')
     except Exception as e:
         print(f'Erro ao importar perguntas do {ano}º ano:', e)
-
-# Inicializar banco de dados se não existir
-with app.app_context():
-    try:
-        db.create_all()
-        print("✅ Banco de dados criado com sucesso!")
-        
-        # Importar perguntas de todos os anos se não existirem nas tabelas específicas
-        print("📥 Importando perguntas...")
-        importar_perguntas_6ano()
-        importar_perguntas_7ano()
-        importar_perguntas_8ano()
-        importar_perguntas_9ano()
-        importar_perguntas_ensino_medio()
-        print("✅ Perguntas importadas com sucesso!")
-    except Exception as e:
-        print(f"❌ Erro na inicialização: {e}")
-        # Em produção, continuar mesmo com erro
-        if not os.environ.get('RENDER'):
-            raise
-
-# Rotas extras para relatório, novo jogo e pergunta
-@app.route('/relatorio')
-def relatorio():
-    # Busca rodadas com informações básicas agrupadas por número
-    from sqlalchemy import func
-    import json
-    
-    # Primeiro, busca informações básicas das rodadas (uma por número de rodada)
-    rodadas_base = (
-        db.session.query(
-            Rodada.numero,
-            func.min(Turma.nome).label('turma'),
-            func.min(Questao.tema).label('tema'),
-            func.min(Questao.enunciado).label('enunciado'),
-            func.min(Questao.resposta_correta).label('resposta_pos'),
-            func.min(Questao.alternativas).label('alternativas')
-        )
-        .join(Equipe, Rodada.equipe_id == Equipe.id)
-        .join(Questao, Rodada.questao_id == Questao.id)
-        .join(Turma, Equipe.turma_id == Turma.id)
-        .group_by(Rodada.numero)
-        .order_by(Rodada.numero.asc())
-        .all()
-    )
-    
-    # Depois, busca os resultados de todas as equipes para cada rodada
-    rodadas_equipes = (
-        db.session.query(
-            Rodada.numero,
-            Equipe.nome.label('equipe_nome'),
-            Equipe.cor.label('equipe_cor'),
-            Rodada.acertou
-        )
-        .join(Equipe, Rodada.equipe_id == Equipe.id)
-        .order_by(Rodada.numero.asc(), Equipe.nome.asc())
-        .all()
-    )
-    
-    # Combina os dados
+    # Nada relacionado a rodadas aqui, bloco removido
+    # Função relatorio corrigida
+    rodadas_db = Rodada.query.order_by(Rodada.numero.asc()).all()
     rodadas = []
-    for rodada_base in rodadas_base:
-        # Busca as equipes desta rodada
-        equipes_da_rodada = [
-            {
-                'nome': eq.equipe_nome,
-                'cor': eq.equipe_cor,
-                'acertou': eq.acertou
-            }
-            for eq in rodadas_equipes if eq.numero == rodada_base.numero
-        ]
-        
-        # Converte a posição da resposta para o texto da alternativa
-        resposta_texto = rodada_base.resposta_pos
-        try:
-            alternativas = json.loads(rodada_base.alternativas)
-            posicao = int(rodada_base.resposta_pos)
-            if 0 <= posicao < len(alternativas):
-                resposta_texto = alternativas[posicao]
-        except (json.JSONDecodeError, ValueError, IndexError):
-            resposta_texto = rodada_base.resposta_pos
-        
+    for rodada in rodadas_db:
+        equipe = Equipe.query.get(rodada.equipe_id)
+        turma = Turma.query.get(equipe.turma_id) if equipe else None
+        tabela_map = {
+            '6_ano': Pergunta6Ano,
+            '7_ano': Pergunta7Ano,
+            '8_ano': Pergunta8Ano,
+            '9_ano': Pergunta9Ano,
+            'ensino_medio': PerguntaEnsinoMedio
+        }
+        tabela = tabela_map.get(turma.nome) if turma else None
+        questao = tabela.query.get(rodada.questao_id) if tabela else None
+        alternativas = []
+        resposta_texto = None
+        tema = None
+        enunciado = None
+        if questao:
+            alternativas = json.loads(questao.alternativas)
+            tema = questao.tema
+            enunciado = questao.enunciado
+            try:
+                posicao = int(questao.resposta_correta)
+                if 0 <= posicao < len(alternativas):
+                    resposta_texto = alternativas[posicao]
+            except Exception:
+                resposta_texto = questao.resposta_correta
         rodadas.append({
-            'numero': rodada_base.numero,
-            'turma': rodada_base.turma,
-            'tema': rodada_base.tema,
-            'enunciado': rodada_base.enunciado,
+            'numero': rodada.numero,
+            'turma': turma.nome if turma else None,
+            'tema': tema,
+            'enunciado': enunciado,
             'resposta': resposta_texto,
-            'equipes': equipes_da_rodada
+            'alternativas': alternativas,
+            'equipe': equipe.nome if equipe else None,
+            'cor': equipe.cor if equipe else None,
+            'acertou': rodada.acertou
         })
-    
-    # Calcular estatísticas
-    total_participacoes = sum(len(r['equipes']) for r in rodadas)
-    total_acertos = sum(len([eq for eq in r['equipes'] if eq['acertou']]) for r in rodadas)
+    total_participacoes = len(rodadas)
+    total_acertos = sum(1 for r in rodadas if r['acertou'])
     total_erros = total_participacoes - total_acertos
     taxa_acerto = (total_acertos / total_participacoes * 100) if total_participacoes > 0 else 0
-    
     estatisticas = {
         'total_rodadas': len(rodadas),
         'total_participacoes': total_participacoes,
@@ -249,7 +244,6 @@ def relatorio():
         'total_erros': total_erros,
         'taxa_acerto': taxa_acerto
     }
-    
     return render_template('relatorio.html', rodadas=rodadas, stats=estatisticas)
 
 @app.route('/api/relatorio/dados')
@@ -258,68 +252,45 @@ def api_relatorio_dados():
     from sqlalchemy import func
     import json
     
-    # Busca informações básicas das rodadas
-    rodadas_base = (
-        db.session.query(
-            Rodada.numero,
-            func.min(Turma.nome).label('turma'),
-            func.min(Questao.tema).label('tema'),
-            func.min(Questao.enunciado).label('enunciado'),
-            func.min(Questao.resposta_correta).label('resposta_pos'),
-            func.min(Questao.alternativas).label('alternativas')
-        )
-        .join(Equipe, Rodada.equipe_id == Equipe.id)
-        .join(Questao, Rodada.questao_id == Questao.id)
-        .join(Turma, Equipe.turma_id == Turma.id)
-        .group_by(Rodada.numero)
-        .order_by(Rodada.numero.asc())
-        .all()
-    )
-    
-    # Busca os resultados de todas as equipes
-    rodadas_equipes = (
-        db.session.query(
-            Rodada.numero,
-            Equipe.nome.label('equipe_nome'),
-            Equipe.cor.label('equipe_cor'),
-            Rodada.acertou
-        )
-        .join(Equipe, Rodada.equipe_id == Equipe.id)
-        .order_by(Rodada.numero.asc(), Equipe.nome.asc())
-        .all()
-    )
-    
-    # Converter para formato JSON
+    rodadas_db = Rodada.query.order_by(Rodada.numero.asc()).all()
     dados = []
-    for rodada_base in rodadas_base:
-        equipes_da_rodada = [
-            {
-                'nome': eq.equipe_nome,
-                'cor': eq.equipe_cor,
-                'acertou': eq.acertou
-            }
-            for eq in rodadas_equipes if eq.numero == rodada_base.numero
-        ]
-        
-        # Converte a posição da resposta para o texto da alternativa
-        resposta_texto = rodada_base.resposta_pos
-        try:
-            alternativas = json.loads(rodada_base.alternativas)
-            posicao = int(rodada_base.resposta_pos)
-            if 0 <= posicao < len(alternativas):
-                resposta_texto = alternativas[posicao]
-        except (json.JSONDecodeError, ValueError, IndexError):
-            resposta_texto = rodada_base.resposta_pos
-        
+    for rodada in rodadas_db:
+        equipe = Equipe.query.get(rodada.equipe_id)
+        turma = Turma.query.get(equipe.turma_id) if equipe else None
+        tabela_map = {
+            '6_ano': Pergunta6Ano,
+            '7_ano': Pergunta7Ano,
+            '8_ano': Pergunta8Ano,
+            '9_ano': Pergunta9Ano,
+            'ensino_medio': PerguntaEnsinoMedio
+        }
+        tabela = tabela_map.get(turma.nome) if turma else None
+        questao = tabela.query.get(rodada.questao_id) if tabela else None
+        alternativas = []
+        resposta_texto = None
+        tema = None
+        enunciado = None
+        if questao:
+            alternativas = json.loads(questao.alternativas)
+            tema = questao.tema
+            enunciado = questao.enunciado
+            try:
+                posicao = int(questao.resposta_correta)
+                if 0 <= posicao < len(alternativas):
+                    resposta_texto = alternativas[posicao]
+            except Exception:
+                resposta_texto = questao.resposta_correta
         dados.append({
-            'numero': rodada_base.numero,
-            'turma': rodada_base.turma,
-            'tema': rodada_base.tema,
-            'enunciado': rodada_base.enunciado,
+            'numero': rodada.numero,
+            'turma': turma.nome if turma else None,
+            'tema': tema,
+            'enunciado': enunciado,
             'resposta': resposta_texto,
-            'equipes': equipes_da_rodada
+            'alternativas': alternativas,
+            'equipe': equipe.nome if equipe else None,
+            'cor': equipe.cor if equipe else None,
+            'acertou': rodada.acertou
         })
-    
     return jsonify(dados)
 
 @app.route('/api/relatorio/estatisticas')
