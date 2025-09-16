@@ -32,3 +32,39 @@ class Rodada(db.Model):
     acertou = db.Column(db.Boolean)
     resposta = db.Column(db.String(255))
     numero = db.Column(db.Integer)
+
+# Modelos separados para perguntas de cada ano
+class Pergunta6Ano(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    enunciado = db.Column(db.Text, nullable=False)
+    resposta_correta = db.Column(db.String(255), nullable=False)
+    alternativas = db.Column(db.Text, nullable=False)
+    tema = db.Column(db.String(50), nullable=False)
+
+class Pergunta7Ano(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    enunciado = db.Column(db.Text, nullable=False)
+    resposta_correta = db.Column(db.String(255), nullable=False)
+    alternativas = db.Column(db.Text, nullable=False)
+    tema = db.Column(db.String(50), nullable=False)
+
+class Pergunta8Ano(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    enunciado = db.Column(db.Text, nullable=False)
+    resposta_correta = db.Column(db.String(255), nullable=False)
+    alternativas = db.Column(db.Text, nullable=False)
+    tema = db.Column(db.String(50), nullable=False)
+
+class Pergunta9Ano(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    enunciado = db.Column(db.Text, nullable=False)
+    resposta_correta = db.Column(db.String(255), nullable=False)
+    alternativas = db.Column(db.Text, nullable=False)
+    tema = db.Column(db.String(50), nullable=False)
+
+class PerguntaEnsinoMedio(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    enunciado = db.Column(db.Text, nullable=False)
+    resposta_correta = db.Column(db.String(255), nullable=False)
+    alternativas = db.Column(db.Text, nullable=False)
+    tema = db.Column(db.String(50), nullable=False)

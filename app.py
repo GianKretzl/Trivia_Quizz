@@ -1,35 +1,64 @@
 import json
 
+# ...existing code...
+
+# Adiciona a rota após definição do app
+from flask import Flask, render_template, jsonify, request, redirect, url_for
+import os
+from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
+from sqlalchemy import func, case
+import random
+
+app = Flask(__name__)
+
+# ...existing code...
+
+# Rota para consultar a quantidade de perguntas em cada tabela
+@app.route('/api/contagem_perguntas')
+def contagem_perguntas():
+    return {
+        '6_ano': Pergunta6Ano.query.count(),
+        '7_ano': Pergunta7Ano.query.count(),
+        '8_ano': Pergunta8Ano.query.count(),
+        '9_ano': Pergunta9Ano.query.count(),
+        'ensino_medio': PerguntaEnsinoMedio.query.count()
+    }
+import json
+
 def importar_perguntas(ano, arquivo):
-    """Importa perguntas de um arquivo específico para uma turma específica"""
+    """Importa perguntas de um arquivo específico para uma tabela específica do ano"""
     try:
         with open(arquivo, encoding='utf-8') as f:
             perguntas = json.load(f)
-        
-        turma_nome = f'{ano}_ano'
-        turma = Turma.query.filter_by(nome=turma_nome).first()
-        if not turma:
-            turma = Turma(nome=turma_nome)
-            db.session.add(turma)
-            db.session.commit()
-        
-        # Só importa se não houver questões dessa turma
-        existe = Questao.query.filter_by(turma_id=turma.id).first()
+
+        tabela_map = {
+            6: Pergunta6Ano,
+            7: Pergunta7Ano,
+            8: Pergunta8Ano,
+            9: Pergunta9Ano
+        }
+        tabela = tabela_map.get(ano)
+        if not tabela:
+            print(f'Tabela para o ano {ano} não encontrada.')
+            return
+
+        # Só importa se não houver perguntas desse ano
+        existe = tabela.query.first()
         if not existe:
+            turma_nome = f'{ano}_ano'
             for disciplina, lista in perguntas[turma_nome].items():
                 for p in lista:
                     enunciado = p['pergunta']
                     alternativas = json.dumps(p['opcoes'], ensure_ascii=False)
                     resposta_correta = str(p['resposta_correta'])
                     tema = disciplina
-                    questao = Questao(
-                        turma_id=turma.id,
+                    pergunta = tabela(
                         enunciado=enunciado,
                         resposta_correta=resposta_correta,
                         alternativas=alternativas,
                         tema=tema
                     )
-                    db.session.add(questao)
+                    db.session.add(pergunta)
             db.session.commit()
             print(f'Perguntas do {ano}º ano importadas automaticamente.')
     except Exception as e:
@@ -52,35 +81,28 @@ def importar_perguntas_9ano():
     importar_perguntas(9, 'data/perguntas_9_ano.json')
 
 def importar_perguntas_ensino_medio():
-    """Importa perguntas do ensino médio"""
+    """Importa perguntas do ensino médio para tabela específica"""
     try:
         with open('data/perguntas_ensino_medio.json', encoding='utf-8') as f:
             perguntas = json.load(f)
-        
-        turma_nome = 'ensino_medio'
-        turma = Turma.query.filter_by(nome=turma_nome).first()
-        if not turma:
-            turma = Turma(nome=turma_nome)
-            db.session.add(turma)
-            db.session.commit()
-        
-        # Só importa se não houver questões dessa turma
-        existe = Questao.query.filter_by(turma_id=turma.id).first()
+
+        tabela = PerguntaEnsinoMedio
+        existe = tabela.query.first()
         if not existe:
+            turma_nome = 'ensino_medio'
             for disciplina, lista in perguntas[turma_nome].items():
                 for p in lista:
                     enunciado = p['pergunta']
                     alternativas = json.dumps(p['opcoes'], ensure_ascii=False)
                     resposta_correta = str(p['resposta_correta'])
                     tema = disciplina
-                    questao = Questao(
-                        turma_id=turma.id,
+                    pergunta = tabela(
                         enunciado=enunciado,
                         resposta_correta=resposta_correta,
                         alternativas=alternativas,
                         tema=tema
                     )
-                    db.session.add(questao)
+                    db.session.add(pergunta)
             db.session.commit()
             print('Perguntas do ensino médio importadas automaticamente.')
     except Exception as e:
@@ -88,7 +110,7 @@ def importar_perguntas_ensino_medio():
 
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 import os
-from models import db, Turma, Equipe, Questao, Rodada
+from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
 from sqlalchemy import func, case
 import json
 import random
@@ -114,18 +136,14 @@ with app.app_context():
         db.create_all()
         print("✅ Banco de dados criado com sucesso!")
         
-        # Importar perguntas apenas se não existirem
-        from models import Turma
-        if Turma.query.count() == 0:
-            print("📥 Importando perguntas...")
-            importar_perguntas_6ano()
-            importar_perguntas_7ano()
-            importar_perguntas_8ano()
-            importar_perguntas_9ano()
-            importar_perguntas_ensino_medio()
-            print("✅ Perguntas importadas com sucesso!")
-        else:
-            print("ℹ️  Perguntas já existem no banco")
+        # Importar perguntas de todos os anos se não existirem nas tabelas específicas
+        print("📥 Importando perguntas...")
+        importar_perguntas_6ano()
+        importar_perguntas_7ano()
+        importar_perguntas_8ano()
+        importar_perguntas_9ano()
+        importar_perguntas_ensino_medio()
+        print("✅ Perguntas importadas com sucesso!")
     except Exception as e:
         print(f"❌ Erro na inicialização: {e}")
         # Em produção, continuar mesmo com erro
@@ -414,10 +432,21 @@ def pergunta(tema=None):
     if tema_db not in disciplinas_validas:
         return f"Erro: Disciplina '{tema}' não disponível para {turma.nome}", 400
     
-    questoes = Questao.query.filter_by(turma_id=turma.id, tema=tema_db).all()
+    tabela_map = {
+        '6_ano': Pergunta6Ano,
+        '7_ano': Pergunta7Ano,
+        '8_ano': Pergunta8Ano,
+        '9_ano': Pergunta9Ano,
+        'ensino_medio': PerguntaEnsinoMedio
+    }
+    tabela = tabela_map.get(turma.nome)
+    if not tabela:
+        return f"Erro: Tabela de perguntas não encontrada para {turma.nome}", 400
+
+    questoes = tabela.query.filter_by(tema=tema_db).all()
     if not questoes:
         return f"Erro: Nenhuma pergunta encontrada para o tema {tema}", 404
-    
+
     questao_escolhida = random.choice(questoes)
     alternativas = json.loads(questao_escolhida.alternativas)
     
@@ -583,14 +612,21 @@ NOMES_DISCIPLINAS = {
 # Função para obter disciplinas baseada na turma
 def obter_disciplinas_por_turma(turma_nome):
     """Retorna as disciplinas disponíveis para uma turma específica (baseado nas questões reais no BD)"""
-    turma = Turma.query.filter_by(nome=turma_nome).first()
-    if not turma:
+    tabela_map = {
+        '6_ano': Pergunta6Ano,
+        '7_ano': Pergunta7Ano,
+        '8_ano': Pergunta8Ano,
+        '9_ano': Pergunta9Ano,
+        'ensino_medio': PerguntaEnsinoMedio
+    }
+    tabela = tabela_map.get(turma_nome)
+    if not tabela:
+        print(f"[LOG] Tabela de perguntas não encontrada para '{turma_nome}'.", flush=True)
         return []
-    
-    # Busca disciplinas que realmente têm questões no banco
-    disciplinas_reais = db.session.query(Questao.tema).filter_by(turma_id=turma.id).distinct().all()
+    print(f"[LOG] Buscando disciplinas na tabela: {tabela.__name__}", flush=True)
+    disciplinas_reais = db.session.query(tabela.tema).distinct().all()
     disciplinas_disponiveis = [d[0] for d in disciplinas_reais]
-    
+    print(f"[LOG] Disciplinas reais encontradas para turma '{turma_nome}': {disciplinas_disponiveis}", flush=True)
     return disciplinas_disponiveis
 
 # Cores disponíveis para as equipes (cores personalizadas da gincana)
@@ -614,7 +650,8 @@ def carregar_perguntas(ano=None):
     else:
         # Para manter compatibilidade
         arquivo = 'data/perguntas_6_ano.json'
-    
+
+    print(f"[LOG] Carregando perguntas do arquivo: {arquivo}", flush=True)
     try:
         with open(arquivo, 'r', encoding='utf-8') as file:
             return json.load(file)
@@ -641,13 +678,20 @@ def configurar_jogo():
     
     # Obter disciplinas disponíveis para a turma
     disciplinas_disponiveis = obter_disciplinas_por_turma(turma_nome)
-    
+
+    # Se não houver disciplinas, importar perguntas automaticamente
+    if not disciplinas_disponiveis:
+        print(f"[LOG] Nenhuma disciplina encontrada para '{turma_nome}'. Importando perguntas automaticamente...", flush=True)
+        ano_param = turma_nome.split('_')[0] if turma_nome != 'ensino_medio' else 'ensino_medio'
+        importar_perguntas(int(ano_param) if ano_param.isdigit() else ano_param, f'data/perguntas_{ano_param}_ano.json' if ano_param != 'ensino_medio' else 'data/perguntas_ensino_medio.json')
+        disciplinas_disponiveis = obter_disciplinas_por_turma(turma_nome)
+
     print(f"[DEBUG] Configurando jogo com dados: {dados}")
     turma = Turma.query.filter_by(nome=turma_nome).first()
     # Adicionar o log da turma selecionada
     print(f"[DEBUG] ### LOG: Jogo configurado para a turma: {turma.nome if turma else turma_nome} ###")
     print(f"[DEBUG] Disciplinas disponíveis para {turma_nome}: {disciplinas_disponiveis}")
-    
+
     num_equipes = dados.get('num_equipes')
     cores_selecionadas = dados.get('cores_equipes', [])
     if not turma_nome or turma_nome not in ['6_ano', '7_ano', '8_ano', '9_ano', 'ensino_medio']:
@@ -705,8 +749,9 @@ def sortear_disciplina():
     
     turma = jogo_estado['turma_selecionada']
     ano_param = turma.split('_')[0] if turma != 'ensino_medio' else 'ensino_medio'
+    arquivo_perguntas = f"data/perguntas_{ano_param}_ano.json" if ano_param != 'ensino_medio' else "data/perguntas_ensino_medio.json"
     perguntas = carregar_perguntas(ano=ano_param)
-    print(f"[LOG] Carregando perguntas da turma/ano: {ano_param}")
+    print(f"[LOG] Arquivo de perguntas utilizado: {arquivo_perguntas}")
     
     if turma not in perguntas:
         return jsonify({'erro': f'Perguntas não encontradas para {turma}'}), 404
