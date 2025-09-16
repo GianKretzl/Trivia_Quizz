@@ -703,9 +703,10 @@ def sortear_disciplina():
     if not jogo_estado['turma_selecionada']:
         return jsonify({'erro': 'Jogo não configurado'}), 400
     
-    # Carregar perguntas
-    perguntas = carregar_perguntas()
     turma = jogo_estado['turma_selecionada']
+    ano_param = turma.split('_')[0] if turma != 'ensino_medio' else 'ensino_medio'
+    perguntas = carregar_perguntas(ano=ano_param)
+    print(f"[LOG] Carregando perguntas da turma/ano: {ano_param}")
     
     if turma not in perguntas:
         return jsonify({'erro': f'Perguntas não encontradas para {turma}'}), 404
