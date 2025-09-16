@@ -1,30 +1,3 @@
-import json
-
-# ...existing code...
-
-# Adiciona a rota após definição do app
-from flask import Flask, render_template, jsonify, request, redirect, url_for
-import os
-from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
-from sqlalchemy import func, case
-import random
-
-app = Flask(__name__)
-
-# ...existing code...
-
-# Rota para consultar a quantidade de perguntas em cada tabela
-@app.route('/api/contagem_perguntas')
-def contagem_perguntas():
-    return {
-        '6_ano': Pergunta6Ano.query.count(),
-        '7_ano': Pergunta7Ano.query.count(),
-        '8_ano': Pergunta8Ano.query.count(),
-        '9_ano': Pergunta9Ano.query.count(),
-        'ensino_medio': PerguntaEnsinoMedio.query.count()
-    }
-import json
-
 def importar_perguntas(ano, arquivo):
     """Importa perguntas de um arquivo específico para uma tabela específica do ano"""
     try:
@@ -107,28 +80,71 @@ def importar_perguntas_ensino_medio():
             print('Perguntas do ensino médio importadas automaticamente.')
     except Exception as e:
         print(f'Erro ao importar perguntas do ensino médio:', e)
+import json
 
+# ...existing code...
+
+# Adiciona a rota após definição do app
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 import os
 from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
 from sqlalchemy import func, case
-import json
 import random
-import os
 
 app = Flask(__name__)
 
-# Configuração do banco de dados
-if os.environ.get('RENDER'):
-    # Em produção no Render
-    database_path = 'sqlite:///trivia_quizz.db'
-else:
-    # Local
-    database_path = 'sqlite:///trivia_quizz.db'
+# ...existing code...
 
-app.config['SQLALCHEMY_DATABASE_URI'] = database_path
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
+# Rota para consultar a quantidade de perguntas em cada tabela
+@app.route('/api/contagem_perguntas')
+def contagem_perguntas():
+    return {
+        '6_ano': Pergunta6Ano.query.count(),
+        '7_ano': Pergunta7Ano.query.count(),
+        '8_ano': Pergunta8Ano.query.count(),
+        '9_ano': Pergunta9Ano.query.count(),
+        'ensino_medio': PerguntaEnsinoMedio.query.count()
+    }
+import json
+
+def importar_perguntas(ano, arquivo):
+    """Importa perguntas de um arquivo específico para uma tabela específica do ano"""
+    try:
+        with open(arquivo, encoding='utf-8') as f:
+            perguntas = json.load(f)
+
+        tabela_map = {
+            6: Pergunta6Ano,
+            7: Pergunta7Ano,
+            8: Pergunta8Ano,
+            9: Pergunta9Ano
+        }
+        tabela = tabela_map.get(ano)
+        if not tabela:
+            print(f'Tabela para o ano {ano} não encontrada.')
+            return
+
+        # Só importa se não houver perguntas desse ano
+        existe = tabela.query.first()
+        if not existe:
+            turma_nome = f'{ano}_ano'
+            for disciplina, lista in perguntas[turma_nome].items():
+                for p in lista:
+                    enunciado = p['pergunta']
+                    alternativas = json.dumps(p['opcoes'], ensure_ascii=False)
+                    resposta_correta = str(p['resposta_correta'])
+                    tema = disciplina
+                    pergunta = tabela(
+                        enunciado=enunciado,
+                        resposta_correta=resposta_correta,
+                        alternativas=alternativas,
+                        tema=tema
+                    )
+                    db.session.add(pergunta)
+            db.session.commit()
+            print(f'Perguntas do {ano}º ano importadas automaticamente.')
+    except Exception as e:
+        print(f'Erro ao importar perguntas do {ano}º ano:', e)
 
 # Inicializar banco de dados se não existir
 with app.app_context():
