@@ -480,9 +480,19 @@ def processar_respostas():
         
         print(f"[DEBUG] Processando questao_id: {questao_id}, equipes_acertos: {equipes_acertos}")
         
-        questao = Questao.query.get(questao_id)
+        # Buscar turma ativa
+        turma = db.session.query(Turma).join(Equipe).first()
+        tabela_map = {
+            '6_ano': Pergunta6Ano,
+            '7_ano': Pergunta7Ano,
+            '8_ano': Pergunta8Ano,
+            '9_ano': Pergunta9Ano,
+            'ensino_medio': PerguntaEnsinoMedio
+        }
+        tabela = tabela_map.get(turma.nome) if turma else None
+        questao = tabela.query.get(questao_id) if tabela else None
         if not questao:
-            print(f"[DEBUG] ❌ Questão {questao_id} não encontrada")
+            print(f"[DEBUG] ❌ Questão {questao_id} não encontrada na tabela {tabela.__name__ if tabela else 'N/A'}")
             return jsonify({'erro': 'Questão não encontrada', 'sucesso': False}), 404
         
         # Pegar o último número de rodada
