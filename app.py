@@ -6,6 +6,15 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 app = Flask(__name__)
 
 from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
+import logging
+logging.basicConfig(level=logging.INFO)
+
+with app.app_context():
+    logging.info('[LOG] Criando todas as tabelas do banco de dados...')
+    db.create_all()
+    logging.info('[LOG] Tabelas criadas com sucesso.')
+with app.app_context():
+    db.create_all()
 from sqlalchemy import func, case
 
 if os.environ.get('RENDER'):
@@ -644,13 +653,18 @@ def obter_disciplinas_por_turma(turma_nome):
     }
     tabela = tabela_map.get(turma_nome)
     if not tabela:
-        print(f"[LOG] Tabela de perguntas não encontrada para '{turma_nome}'.", flush=True)
+        logging.warning(f"[LOG] Tabela de perguntas não encontrada para '{turma_nome}'.")
         return []
-    print(f"[LOG] Buscando disciplinas na tabela: {tabela.__name__}", flush=True)
-    disciplinas_reais = db.session.query(tabela.tema).distinct().all()
-    disciplinas_disponiveis = [d[0] for d in disciplinas_reais]
-    print(f"[LOG] Disciplinas reais encontradas para turma '{turma_nome}': {disciplinas_disponiveis}", flush=True)
-    return disciplinas_disponiveis
+    logging.info(f"[LOG] Buscando disciplinas na tabela: {tabela.__name__}")
+    try:
+        disciplinas_reais = db.session.query(tabela.tema).distinct().all()
+        disciplinas_disponiveis = [d[0] for d in disciplinas_reais]
+        logging.info(f"[LOG] Disciplinas reais encontradas para turma '{turma_nome}': {disciplinas_disponiveis}")
+        return disciplinas_disponiveis
+    except Exception as e:
+        logging.error(f'[ERRO] Falha ao buscar disciplinas: {e}')
+        return []
+    logging.info(f'[LOG] Sorteando disciplina para turma: {jogo_estado.get("turma_selecionada")}, ciclo atual: {jogo_estado.get("disciplinas_ciclo")}, índice: {jogo_estado.get("indice_disciplina_ciclo")}')
 
 # Cores disponíveis para as equipes (cores personalizadas da gincana)
 CORES_EQUIPES = [
