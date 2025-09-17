@@ -884,11 +884,7 @@ def reset_jogo():
     }
     return jsonify({'sucesso': True})
 
-# ROTA DO RELATÓRIO
-@app.route('/relatorio')
-def relatorio_route():
-    print('[LOG] /relatorio acessado')
-    return relatorio()
+
 
 if __name__ == '__main__':
 
