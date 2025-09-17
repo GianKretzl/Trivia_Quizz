@@ -1,40 +1,26 @@
+
 import os
 import random
 import json
+import logging
 from flask import Flask, render_template, jsonify, request, redirect, url_for
+from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
+from sqlalchemy import func, case
+
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 
-from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
-import logging
-logging.basicConfig(level=logging.INFO)
-
 # Configuração do banco e inicialização do SQLAlchemy
-if os.environ.get('RENDER'):
-    database_path = 'sqlite:///trivia_quizz.db'
-else:
-    database_path = 'sqlite:///trivia_quizz.db'
-
+database_path = 'sqlite:///trivia_quizz.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = database_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 db.init_app(app)
 
 with app.app_context():
     logging.info('[LOG] Criando todas as tabelas do banco de dados...')
     db.create_all()
     logging.info('[LOG] Tabelas criadas com sucesso.')
-from sqlalchemy import func, case
-
-if os.environ.get('RENDER'):
-    database_path = 'sqlite:///trivia_quizz.db'
-else:
-    database_path = 'sqlite:///trivia_quizz.db'
-
-app.config['SQLALCHEMY_DATABASE_URI'] = database_path
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db.init_app(app)
 
 # ROTA DO RELATÓRIO
 
@@ -181,114 +167,7 @@ def importar_perguntas_ensino_medio():
     except Exception as e:
         print(f'Erro ao importar perguntas do ensino médio:', e)
 
-import os
-import random
-import json
-from flask import Flask, render_template, jsonify, request, redirect, url_for
 
-app = Flask(__name__)
-
-# Configuração do banco de dados
-if os.environ.get('RENDER'):
-    database_path = 'sqlite:///trivia_quizz.db'
-else:
-    database_path = 'sqlite:///trivia_quizz.db'
-
-app.config['SQLALCHEMY_DATABASE_URI'] = database_path
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
-from sqlalchemy import func, case
-db.init_app(app)
-
-def importar_perguntas(ano, arquivo):
-    """Importa perguntas de um arquivo específico para uma tabela específica do ano"""
-    try:
-        with open(arquivo, encoding='utf-8') as f:
-            perguntas = json.load(f)
-        tabela_map = {
-            6: Pergunta6Ano,
-            7: Pergunta7Ano,
-            8: Pergunta8Ano,
-            9: Pergunta9Ano
-        }
-        tabela = tabela_map.get(ano)
-        if not tabela:
-            print(f'Tabela para o ano {ano} não encontrada.')
-            return
-        existe = tabela.query.first()
-        if not existe:
-            turma_nome = f'{ano}_ano'
-            for disciplina, lista in perguntas[turma_nome].items():
-                for p in lista:
-                    enunciado = p['pergunta']
-                    alternativas = json.dumps(p['opcoes'], ensure_ascii=False)
-                    resposta_correta = str(p['resposta_correta'])
-                    tema = disciplina
-                    pergunta = tabela(
-                        enunciado=enunciado,
-                        resposta_correta=resposta_correta,
-                        alternativas=alternativas,
-                        tema=tema
-                    )
-                    db.session.add(pergunta)
-            db.session.commit()
-            print(f'Perguntas do {ano}º ano importadas automaticamente.')
-    except Exception as e:
-        print(f'Erro ao importar perguntas do {ano}º ano:', e)
-    # Nada relacionado a rodadas aqui, bloco removido
-    # Função relatorio corrigida
-    rodadas_db = Rodada.query.order_by(Rodada.numero.asc()).all()
-    rodadas = []
-    for rodada in rodadas_db:
-        equipe = Equipe.query.get(rodada.equipe_id)
-        turma = Turma.query.get(equipe.turma_id) if equipe else None
-        tabela_map = {
-            '6_ano': Pergunta6Ano,
-            '7_ano': Pergunta7Ano,
-            '8_ano': Pergunta8Ano,
-            '9_ano': Pergunta9Ano,
-            'ensino_medio': PerguntaEnsinoMedio
-        }
-        tabela = tabela_map.get(turma.nome) if turma else None
-        questao = tabela.query.get(rodada.questao_id) if tabela else None
-        alternativas = []
-        resposta_texto = None
-        tema = None
-        enunciado = None
-        if questao:
-            alternativas = json.loads(questao.alternativas)
-            tema = questao.tema
-            enunciado = questao.enunciado
-            try:
-                posicao = int(questao.resposta_correta)
-                if 0 <= posicao < len(alternativas):
-                    resposta_texto = alternativas[posicao]
-            except Exception:
-                resposta_texto = questao.resposta_correta
-        rodadas.append({
-            'numero': rodada.numero,
-            'turma': turma.nome if turma else None,
-            'tema': tema,
-            'enunciado': enunciado,
-            'resposta': resposta_texto,
-            'alternativas': alternativas,
-            'equipe': equipe.nome if equipe else None,
-            'cor': equipe.cor if equipe else None,
-            'acertou': rodada.acertou
-        })
-    total_participacoes = len(rodadas)
-    total_acertos = sum(1 for r in rodadas if r['acertou'])
-    total_erros = total_participacoes - total_acertos
-    taxa_acerto = (total_acertos / total_participacoes * 100) if total_participacoes > 0 else 0
-    estatisticas = {
-        'total_rodadas': len(rodadas),
-        'total_participacoes': total_participacoes,
-        'total_acertos': total_acertos,
-        'total_erros': total_erros,
-        'taxa_acerto': taxa_acerto
-    }
-    return render_template('relatorio.html', rodadas=rodadas, stats=estatisticas)
 
 @app.route('/api/relatorio/dados')
 def api_relatorio_dados():
