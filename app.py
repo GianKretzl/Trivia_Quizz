@@ -991,6 +991,8 @@ def relatorio_route():
 if __name__ == '__main__':
 
 
+    # Importa explicitamente todos os modelos para garantir registro
+    from models import Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
     # Garante que todas as tabelas do banco existem antes de iniciar o app
     with app.app_context():
         db.create_all()
