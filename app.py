@@ -9,12 +9,21 @@ from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7An
 import logging
 logging.basicConfig(level=logging.INFO)
 
+# Configuração do banco e inicialização do SQLAlchemy
+if os.environ.get('RENDER'):
+    database_path = 'sqlite:///trivia_quizz.db'
+else:
+    database_path = 'sqlite:///trivia_quizz.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_path
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
 with app.app_context():
     logging.info('[LOG] Criando todas as tabelas do banco de dados...')
     db.create_all()
     logging.info('[LOG] Tabelas criadas com sucesso.')
-with app.app_context():
-    db.create_all()
 from sqlalchemy import func, case
 
 if os.environ.get('RENDER'):
