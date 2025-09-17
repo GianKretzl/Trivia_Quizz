@@ -1,10 +1,36 @@
+import os
+import random
 import json
-from flask import render_template
+from flask import Flask, render_template, jsonify, request, redirect, url_for
+
+app = Flask(__name__)
+
 from models import db, Turma, Equipe, Questao, Rodada, Pergunta6Ano, Pergunta7Ano, Pergunta8Ano, Pergunta9Ano, PerguntaEnsinoMedio
 from sqlalchemy import func, case
 
+if os.environ.get('RENDER'):
+    database_path = 'sqlite:///trivia_quizz.db'
+else:
+    database_path = 'sqlite:///trivia_quizz.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_path
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
+# ROTA DO RELATÓRIO
+
+# ROTA DO RELATÓRIO (escopo global, antes do main)
+@app.route('/relatorio')
+def relatorio_route():
+    print('[LOG] /relatorio acessado')
+    return relatorio()
+
+# ROTA DO RELATÓRIO
+
 def relatorio():
     rodadas_db = Rodada.query.order_by(Rodada.numero.asc()).all()
+    print(f'[LOG] Rodadas encontradas: {len(rodadas_db)}')
     rodadas = []
     for rodada in rodadas_db:
         equipe = Equipe.query.get(rodada.equipe_id)
@@ -746,42 +772,53 @@ def sortear_disciplina():
     
     turma = jogo_estado['turma_selecionada']
     ano_param = turma.split('_')[0] if turma != 'ensino_medio' else 'ensino_medio'
-    arquivo_perguntas = f"data/perguntas_{ano_param}_ano.json" if ano_param != 'ensino_medio' else "data/perguntas_ensino_medio.json"
+    # Corrige para garantir que o bloco de perguntas seja do ano correto
+    if ano_param != 'ensino_medio':
+        arquivo_perguntas = f"data/perguntas_{ano_param}_ano.json"
+    else:
+        arquivo_perguntas = "data/perguntas_ensino_medio.json"
     perguntas = carregar_perguntas(ano=ano_param)
     print(f"[LOG] Arquivo de perguntas utilizado: {arquivo_perguntas}")
-    
-    if turma not in perguntas:
+
+    # Garante que o bloco de perguntas seja do ano/turma correto
+    bloco_turma = turma if turma in perguntas else f"{ano_param}_ano"
+    if bloco_turma not in perguntas:
+        print(f"[ERRO] Bloco de perguntas '{bloco_turma}' não encontrado no arquivo {arquivo_perguntas}", flush=True)
         return jsonify({'erro': f'Perguntas não encontradas para {turma}'}), 404
     
     # Sorteio sem repetição: ciclo de disciplinas por turma
     if 'disciplinas_ciclo' not in jogo_estado or jogo_estado.get('turma_ciclo') != turma:
         # Inicia ciclo novo se mudou de turma ou não existe
         disciplinas_disponiveis = obter_disciplinas_por_turma(turma)
+        print(f"[LOG] Disciplinas disponíveis para sorteio: {disciplinas_disponiveis}", flush=True)
+        if 'geografia' not in [d.lower() for d in disciplinas_disponiveis]:
+            print(f"[ALERTA] Geografia NÃO está entre as disciplinas sorteáveis para a turma '{turma}'. Verifique perguntas cadastradas!", flush=True)
         random.shuffle(disciplinas_disponiveis)
         jogo_estado['disciplinas_ciclo'] = disciplinas_disponiveis
         jogo_estado['turma_ciclo'] = turma
         jogo_estado['indice_disciplina_ciclo'] = 0
     else:
         disciplinas_disponiveis = jogo_estado['disciplinas_ciclo']
-    
-    # Seleciona próxima disciplina do ciclo
+
+    print(f"[LOG] Ciclo atual de disciplinas: {disciplinas_disponiveis}", flush=True)
     indice = jogo_estado.get('indice_disciplina_ciclo', 0)
     disciplina = disciplinas_disponiveis[indice]
-    
+    print(f"[LOG] Sorteando disciplina: {disciplina} (índice {indice})", flush=True)
+
     # Verifica se a disciplina tem perguntas
     if disciplina not in perguntas[turma] or not perguntas[turma][disciplina]:
-        # Pula para próxima disciplina se não houver perguntas
+        print(f"[LOG] Disciplina '{disciplina}' não tem perguntas disponíveis. Pulando para próxima.", flush=True)
         jogo_estado['indice_disciplina_ciclo'] = (indice + 1) % len(disciplinas_disponiveis)
         return sortear_disciplina()
-    
-    # Sorteia pergunta da disciplina
+
     pergunta = random.choice(perguntas[turma][disciplina])
-    
-    # Atualiza ciclo para próxima chamada
+
     jogo_estado['indice_disciplina_ciclo'] = (indice + 1) % len(disciplinas_disponiveis)
     jogo_estado['disciplina_atual'] = disciplina
     jogo_estado['pergunta_atual'] = pergunta
-    
+
+    print(f"[LOG] Pergunta sorteada para disciplina '{disciplina}': {pergunta['pergunta']}", flush=True)
+
     return jsonify({
         'disciplina': NOMES_DISCIPLINAS.get(disciplina, disciplina.replace('_', ' ').title()),
         'disciplina_id': disciplina,
@@ -935,7 +972,6 @@ def ajustar_pontos():
 
 @app.route('/api/reset_jogo', methods=['POST'])
 def reset_jogo():
-    """Reinicia o jogo"""
     global jogo_estado
     jogo_estado = {
         'turma_selecionada': None,
@@ -946,7 +982,15 @@ def reset_jogo():
     }
     return jsonify({'sucesso': True})
 
+# ROTA DO RELATÓRIO
+@app.route('/relatorio')
+def relatorio_route():
+    print('[LOG] /relatorio acessado')
+    return relatorio()
+
 if __name__ == '__main__':
+
+
     # Para produção no Render
     if os.environ.get('RENDER'):
         port = int(os.environ.get('PORT', 5000))
